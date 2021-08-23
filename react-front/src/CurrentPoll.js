@@ -1,3 +1,4 @@
+
 import {useState} from "react";
 
 function UserForm(props){
@@ -14,15 +15,51 @@ function UserForm(props){
 }
 
 
+function PollItem(props){
+    return(
+      <div className="poll-item">
+          <p>{props.prompt}<button>Vote ({props.votes})</button></p>
+
+
+      </div>
+    );
+}
+
+function PollList(props){
+    //props : pollingItems : [{prompt : .., votes : ..}, ...]
+    // Should already be sorted by votes ascending
+    const items = props.pollingItems.map(item => <PollItem prompt={item.prompt} votes={item.votes}/>);
+    return(
+        <div className="poll-list">
+            {items}
+        </div>
+    )
+}
+
+
 function CurrentPoll() {
+    const pollingItems = [
+        {
+            prompt : "SCP 202-GPT is a pink pig being the best Minecraft player",
+            votes  : 54
+        },
+        {
+            prompt : "SCP 202-GPT is a black panther that fight for racial justice",
+            votes  : 24
+        },
+        {
+            prompt : "SCP 202-GPT is a pink burger that can turn people vegan",
+            votes  : 12
+        }
+    ]
   return (
     <div className="CurrentPoll">
 
-        <p>Current Winning prompt :</p>
-        <p> SCP 127-GPT is a burger that can turn people vegan</p>
-        <p> Got an idea ? Go to http://www.strawpoll.fr to propose it !</p>
-        <UserForm starting_value="SCP 102-GPT is a "
-                  />
+        <p>Current Poll :</p>
+        <PollList pollingItems={pollingItems}/>
+
+        <UserForm starting_value="This SCP is a "/>
+
     </div>
   );
 }
