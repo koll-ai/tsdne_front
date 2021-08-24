@@ -62,7 +62,7 @@ function CurrentPoll() {
   return (
     <div className="CurrentPoll">
 
-        <p>Current Poll :</p>
+        <strong>Current Poll :</strong>
         <PollList pollingItems={pollingItems}/>
 
         <UserForm starting_value="This SCP is a "/>
