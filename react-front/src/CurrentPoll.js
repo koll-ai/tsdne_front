@@ -17,8 +17,8 @@ function UserForm(props){
 
 function PollItem(props){
     return(
-      <div className="poll-item">
-          <p>{props.prompt}<button>Vote ({props.votes})</button></p>
+      <div className="pollItem">
+          <p>{props.prompt} ({props.scpClass}) <button>Vote ({props.votes})</button></p>
 
 
       </div>
@@ -28,7 +28,11 @@ function PollItem(props){
 function PollList(props){
     //props : pollingItems : [{prompt : .., votes : ..}, ...]
     // Should already be sorted by votes ascending
-    const items = props.pollingItems.map(item => <PollItem prompt={item.prompt} votes={item.votes}/>);
+    const items = props.pollingItems.map(item => <PollItem prompt={item.prompt}
+                                                           scpClass={item.scpClass}
+                                                           votes={item.votes}
+
+    />);
     return(
         <div className="poll-list">
             {items}
@@ -41,14 +45,17 @@ function CurrentPoll() {
     const pollingItems = [
         {
             prompt : "SCP 202-GPT is a pink pig being the best Minecraft player",
+            scpClass : "Keter",
             votes  : 54
         },
         {
             prompt : "SCP 202-GPT is a black panther that fight for racial justice",
+            scpClass : 'Euclid',
             votes  : 24
         },
         {
             prompt : "SCP 202-GPT is a pink burger that can turn people vegan",
+            scpClass: 'Safe',
             votes  : 12
         }
     ]
