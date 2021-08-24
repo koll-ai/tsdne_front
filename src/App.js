@@ -8,8 +8,8 @@ function App() {
   return (
     <div className="App">
 
-      <CurrentPoll />
-        <PastScp/>
+      {/*<CurrentPoll />*/}
+        {/*<PastScp/>*/}
 
     </div>
   );
