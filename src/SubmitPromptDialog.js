@@ -18,25 +18,28 @@ function UserForm(props){
         onChange={event => {
             if (event.target.value.startsWith(props.starting_value)){
                 setValue(event.target.value);
+                props.onValueChange(event);
+
             }
         }}
     />;
 }
 
 
-function ClassSelect() {
-    const [scpClass, setScpClass] = React.useState(0);
+function ClassSelect(props) {
+    const [scpClass, setScpClass] = React.useState(props.value);
 
     const handleChange = (event) => {
         setScpClass(event.target.value);
+        props.onClassChange(event);
     };
 
     return (
         <div>
             <InputLabel id="demo-simple-select-label">Classe</InputLabel>
                 <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
+                  labelId="SCP-Class"
+                  id="scpClassSelect"
                   value={scpClass}
                   onChange={handleChange}
                 >
@@ -54,12 +57,23 @@ function ClassSelect() {
 export default function FormDialog() {
   const [open, setOpen] = React.useState(false);
 
+  const [prompt, setPrompt] = React.useState("");
+  const [scpClass, setScpClass] = React.useState(0);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleSubmit = () =>{
+      let url = "http://thisscpdoesnotexist.pythonanywhere.com/add_prompt/?prompt=" + prompt + "&class=" + scpClass.toString() + "&ip=" + Math.floor(Math.random() * 100).toString()
+        fetch(url, {
+    mode: 'no-cors'
+  });
+      console.log("fetched");
   };
 
   return (
@@ -74,12 +88,19 @@ export default function FormDialog() {
           <DialogContentText>
             Describe your SCP :
           </DialogContentText>
-            <UserForm starting_value="SCP 104 is " />
+            <UserForm starting_value="SCP 104 is " onValueChange={(event) =>{
+                setPrompt(event.target.value);
+            }} />
 
             <br/>
             <br/>
 
-            <ClassSelect />
+            <ClassSelect onClassChange={(event) => {
+                console.log(event.target.value);
+                setScpClass( event.target.value);
+            }}
+                         value={scpClass}
+            />
 
 
 
@@ -89,7 +110,7 @@ export default function FormDialog() {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleSubmit} color="primary">
             Submit
           </Button>
         </DialogActions>
