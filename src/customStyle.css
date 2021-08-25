@@ -1,3 +1,8 @@
 /*.PastScp{*/
 /*    white-space: pre-line*/
 /*}*/
+
+.PastScp {
+  text-align: justify;
+  text-justify: inter-word;
+}

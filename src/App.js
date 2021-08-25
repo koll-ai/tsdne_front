@@ -3,16 +3,32 @@ import CurrentPoll from './CurrentPoll.js'
 import PastScp from './PastScp.js'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./customStyle.css"
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Navigation from "./Navigation";
+import About from "./About";
+import Footer from "./Footer";
 
 function App() {
   return (
-    <div className="App">
+    // <div className="App">
+    //
+    //   <CurrentPoll />
+    //     <PastScp/>
+    //
+    // </div>
 
-      {/*<CurrentPoll />*/}
-        {/*<PastScp/>*/}
-
+      <div className="App">
+      <Router>
+        <Navigation />
+        <Switch>
+          <Route path="/" exact component={() => <CurrentPoll />} />
+          <Route path="/list" exact component={() => <PastScp />} />
+          <Route path="/about" exact component={() => <About />} />
+        </Switch>
+        <Footer/>
+      </Router>
     </div>
-  );
+  )
 }
 
 export default App;

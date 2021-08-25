@@ -1,7 +1,6 @@
 import './App.css';
 import {useEffect, useState} from "react";
 import  {pastScps} from './scpData';
-
 import {Accordion} from 'react-bootstrap';
 
 function PastScp() {
@@ -13,14 +12,19 @@ function PastScp() {
 
     // WARNING, use dangerouslySetInnerHTML, may be unsafe
 
+    // const listPastScp = pastScps.map((scp, index) =>
+    //     <Accordion.Item eventKey={index.toString()}>
+    //         <Accordion.Header>{scp.prompt}</Accordion.Header>
+    //         <Accordion.Body><div dangerouslySetInnerHTML={{__html: scp.text}} /></Accordion.Body>
+    //     </Accordion.Item>
+    // );
     const listPastScp = pastScps.map((scp, index) =>
-        <Accordion.Item eventKey={index.toString()}>
-            <Accordion.Header>{scp.prompt}</Accordion.Header>
-            <Accordion.Body><div dangerouslySetInnerHTML={{__html: scp.text}} /></Accordion.Body>
-        </Accordion.Item>
-    )
-
-
+            <Accordion.Item eventKey={index.toString()}>
+                <Accordion.Header><strong>{scp.prompt}</strong></Accordion.Header>
+                <Accordion.Body><div dangerouslySetInnerHTML={{__html: scp.text}} /></Accordion.Body>
+            </Accordion.Item>
+    );
+console.log('aaaaaaaaaaa');
 console.log(listPastScp);
 
 
@@ -48,25 +52,11 @@ console.log(listPastScp);
   return (
     <div className="PastScp">
 
-        <h2> List of Past SCdddPs</h2>
+        <h2> List of Past SCPs</h2>
 
         <Accordion>
             {listPastScp}
         </Accordion>
-
-
-
-        {/*{scps.map((scp, index) => (*/}
-        {/*    <div key={index}>*/}
-        {/*        <div className={"prompt"}>*/}
-        {/*            <h3>scp.prompt</h3>*/}
-        {/*        </div>*/}
-        {/*        <div className={"text"}>*/}
-        {/*            <h3>scp.text</h3>*/}
-        {/*        </div>*/}
-        {/*    </div>*/}
-
-        {/*))}*/}
 
     </div>
   )
