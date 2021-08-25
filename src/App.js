@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navigation from "./Navigation";
 import About from "./About";
 import Footer from "./Footer";
+import ButtonAppBar from "./ButtonAppBar";
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
 
       <div className="App">
       <Router>
-        <Navigation />
+        <ButtonAppBar />
+        <br/>
         <Switch>
           <Route path="/" exact component={() => <CurrentPoll />} />
           <Route path="/list" exact component={() => <PastScp />} />

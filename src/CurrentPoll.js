@@ -155,7 +155,6 @@ function CurrentPoll() {
     ];
   return (
     <div className="CurrentPoll">
-        <br/>
 
         <strong>Current Poll :</strong>
         <br/>

@@ -65,7 +65,7 @@ export default function FormDialog() {
   return (
     <div>
       <Button variant="contained" color="primary" onClick={handleClickOpen} fullWidth>
-        Submit a prompt !
+        <h3>Submit a prompt !</h3>
       </Button>
       <Dialog fullWidth maxWidth="sm" open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Submit your SCP idea !</DialogTitle>
