@@ -88,6 +88,3 @@ def add_prompt():
 @app.route('/current_scp_number/', methods=['GET'])
 def current_scp_number():
     return SCP_NUMBER
-
-if __name__ == '__main__':
-    app.run(host='127.0.0.1')
