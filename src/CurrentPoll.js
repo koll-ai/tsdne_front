@@ -1,5 +1,13 @@
 
 import {useState} from "react";
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import CardActions from '@material-ui/core/CardActions';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 
 function UserForm(props){
     // Champ de texte qui commencera toujours par la valeur de son prop starting_value
@@ -14,14 +22,45 @@ function UserForm(props){
     />;
 }
 
+const useStyles = makeStyles({
+  root: {
+    maxWidth: 500,
+  },
+  title: {
+    fontSize: 14,
+  },
+    Card:{
+      marginBottom: "-50%"
+    },
+
+
+
+});
+
 
 function PollItem(props){
+    const classes = useStyles();
+
     return(
-      <div className="pollItem">
-          <p>{props.prompt} ({props.scpClass}) <button>Vote ({props.votes})</button></p>
+      // <div className="pollItem">
+      //     <p>{props.prompt} ({props.scpClass}) <button>Vote ({props.votes})</button></p>
+      // </div>
+
+        <Grid item xs={3}>
+            <Card className={classes.root}>
+                <CardContent>
+                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                        {props.scpClass}
+                    </Typography>
+                    {props.prompt}
+                    <CardActions>
+                        <Button size="small"><strong>Votes !</strong> ({props.votes})</Button>
+                    </CardActions>
+                </CardContent>
+            </Card>
+        </Grid>
 
 
-      </div>
     );
 }
 
@@ -35,7 +74,9 @@ function PollList(props){
     />);
     return(
         <div className="poll-list">
-            {items}
+            <Grid container spacing={3}>
+                {items}
+            </Grid>
         </div>
     )
 }
@@ -58,7 +99,7 @@ function CurrentPoll() {
             scpClass: 'Safe',
             votes  : 12
         }
-    ]
+    ];
   return (
     <div className="CurrentPoll">
 
