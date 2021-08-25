@@ -8,6 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import "./CurrentPoll.css";
+import Badge from 'react-bootstrap/Badge'
 
 function UserForm(props){
     // Champ de texte qui commencera toujours par la valeur de son prop starting_value
@@ -32,6 +34,16 @@ const useStyles = makeStyles({
     Card:{
       marginBottom: "-50%"
     },
+    //
+    // Keter:{
+    //   backgroundColor: "#ffaaa7"
+    // },
+    // Euclid:{
+    //   backgroundColor:"#ffd3b4"
+    // },
+    // Safe:{
+    //   backgroundColor:"#d5ecc2"
+    // }
 
 
 
@@ -40,19 +52,26 @@ const useStyles = makeStyles({
 
 function PollItem(props){
     const classes = useStyles();
+    let gridclass = classes.root + ' ' + props.scpClass;
 
     return(
       // <div className="pollItem">
       //     <p>{props.prompt} ({props.scpClass}) <button>Vote ({props.votes})</button></p>
       // </div>
 
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={6} md={3}>
             <Card className={classes.root}>
                 <CardContent>
-                    <Typography className={classes.title} color="textSecondary" gutterBottom>
-                        {props.scpClass}
-                    </Typography>
+
+                    <Badge bg={props.scpClass == "Keter" ? "danger" : props.scpClass == "Euclid" ? "warning" : "success" }>
+                        {/*<Typography className={classes.title} color="textSecondary" gutterBottom>*/}
+                            {props.scpClass}
+                        {/*</Typography>*/}
+                    </Badge>
+                    <br />
+                    <br/>
                     {props.prompt}
+
                     <CardActions>
                         <Button size="small"><strong>Votes !</strong> ({props.votes})</Button>
                     </CardActions>
@@ -85,6 +104,51 @@ function PollList(props){
 function CurrentPoll() {
     const pollingItems = [
         {
+            prompt : "SCP 202-GPT is a pink pig being the best Minecraft player",
+            scpClass : "Keter",
+            votes  : 54
+        },
+        {
+            prompt : "SCP 202-GPT is a black panther that fight for racial justice",
+            scpClass : 'Euclid',
+            votes  : 24
+        },
+        {
+            prompt : "SCP 202-GPT is a pink burger that can turn people vegan",
+            scpClass: 'Safe',
+            votes  : 12
+        },
+                {
+            prompt : "SCP 202-GPT is a pink pig being the best Minecraft player",
+            scpClass : "Keter",
+            votes  : 54
+        },
+        {
+            prompt : "SCP 202-GPT is a black panther that fight for racial justice",
+            scpClass : 'Euclid',
+            votes  : 24
+        },
+        {
+            prompt : "SCP 202-GPT is a pink burger that can turn people vegan",
+            scpClass: 'Safe',
+            votes  : 12
+        },
+                {
+            prompt : "SCP 202-GPT is a pink pig being the best Minecraft player",
+            scpClass : "Keter",
+            votes  : 54
+        },
+        {
+            prompt : "SCP 202-GPT is a black panther that fight for racial justice",
+            scpClass : 'Euclid',
+            votes  : 24
+        },
+        {
+            prompt : "SCP 202-GPT is a pink burger that can turn people vegan",
+            scpClass: 'Safe',
+            votes  : 12
+        },
+                {
             prompt : "SCP 202-GPT is a pink pig being the best Minecraft player",
             scpClass : "Keter",
             votes  : 54
