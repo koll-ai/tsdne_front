@@ -12,12 +12,6 @@ function PastScp() {
 
     // WARNING, use dangerouslySetInnerHTML, may be unsafe
 
-    // const listPastScp = pastScps.map((scp, index) =>
-    //     <Accordion.Item eventKey={index.toString()}>
-    //         <Accordion.Header>{scp.prompt}</Accordion.Header>
-    //         <Accordion.Body><div dangerouslySetInnerHTML={{__html: scp.text}} /></Accordion.Body>
-    //     </Accordion.Item>
-    // );
     const listPastScp = pastScps.map((scp, index) =>
             <Accordion.Item eventKey={index.toString()}>
                 <Accordion.Header><strong>{scp.prompt}</strong></Accordion.Header>

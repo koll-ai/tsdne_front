@@ -1,0 +1,15 @@
+Item #: SCP-864-GPT
+
+Object Class: Safe
+
+Special Containment Procedures: SCP-864-GPT is to be kept in a secure safe on Site-██. Two instances of SCP-864-GPT are allowed for testing on D-Class personnel. At no time should any personnel attempt to transport SCP-864-GPT into SCP-864.
+
+Description: SCP-864-GPT is a ████████ brand yo-yo measuring approximately 2.5 inches long. SCP-864-GPT appears to possess an electromagnetically charged frame, allowing it to be attracted to and repelled from metallic surfaces. SCP-864-GPT's anomalous properties only manifest when it is in contact with a human subject.
+
+When in contact with a human subject, SCP-864-GPT will begin to rapidly spin. The rate of rotation will increase to the point at which the human subject appears to be suspended in mid air. Subjects will remain suspended in this position for approximately 10 minutes, after which time they will begin to fall to the ground. However, before the subject is able to make contact with the ground, the yo-yo will return to them, causing them to float in the air again.
+
+The subject will remain suspended in this state for an indefinite period of time. Should the subject be forced from the surface that SCP-864-GPT is touching, or if they touch the ground, the yo-yo will once again return to them, restarting the process. Should SCP-864-GPT touch any other surface, it will be immediately repelled from the subject, causing them to fall to the ground.
+
+Discovery: SCP-864-GPT was discovered in the possession of a 16 year old male, ████ ██████, who was found in a similar state, floating in the air. ████ ██████ was later determined to have been missing for approximately 3 months, and was found within the boundaries of SCP-████, which was believed to have been the point of origin for SCP-864-GPT.
+
+Addendum: ████ ██████ later claimed that he was forced to continually play with SCP-864-GPT by an unknown individual, who threatened to harm his family if he did not comply. ████ ██████ was subsequently given a class-A amnestic, and the location of the individual who threatened him remains unknown.

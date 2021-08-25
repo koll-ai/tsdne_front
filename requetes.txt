@@ -1,1 +1,3 @@
 http://thisscpdoesnotexist.pythonanywhere.com/add_prompt/?prompt=lalalalala&class=0&ip=monip
+http://thisscpdoesnotexist.pythonanywhere.com/get_poll
+http://thisscpdoesnotexist.pythonanywhere.com/my_vote?ip=monip
