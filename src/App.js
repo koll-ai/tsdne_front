@@ -23,9 +23,9 @@ function App() {
         <ButtonAppBar />
         <br/>
         <Switch>
-          <Route path="/" exact component={() => <CurrentPoll />} />
-          <Route path="/list" exact component={() => <PastScp />} />
-          <Route path="/about" exact component={() => <About />} />
+          <Route path="/" exact component={ CurrentPoll} />
+          <Route path="/list" exact component={ PastScp } />
+          <Route path="/about" exact component={ About } />
         </Switch>
         <Footer/>
       </Router>

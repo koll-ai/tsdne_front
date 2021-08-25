@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import {Link} from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
+import Countdown from "react-countdown";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,15 +44,17 @@ export default function ButtonAppBar() {
                   </Button>
                 </Grid>
                 
-                <Grid item sm={5}></Grid>
+                <Grid item sm={5}>
+                    <h1><Countdown date={Date.now() + 3600 * 1000} /></h1>
+                </Grid>
                 
                 <Grid item xs={12}  sm={1}>
                     <Link to={'/'}>
-                  <Button color="inherit">
-                      {/*<Typography variant="h6" className={classes.title}>*/}
-                      <strong>Poll</strong>
-                      {/*</Typography>*/}
-                  </Button>
+                          <Button color="inherit">
+                              {/*<Typography variant="h6" className={classes.title}>*/}
+                              <strong>Poll</strong>
+                              {/*</Typography>*/}
+                          </Button>
                         </Link>
                 </Grid>
 
