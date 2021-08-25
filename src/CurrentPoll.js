@@ -9,20 +9,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import "./CurrentPoll.css";
-import Badge from 'react-bootstrap/Badge'
+import Badge from 'react-bootstrap/Badge';
 
-function UserForm(props){
-    // Champ de texte qui commencera toujours par la valeur de son prop starting_value
-    const [value, setValue] = useState(props.starting_value);
-    return  <input type="text" name="user_prompt" value={value}
-
-        onChange={event => {
-            if (event.target.value.startsWith(props.starting_value)){
-                setValue(event.target.value);
-            }
-        }}
-    />;
-}
+import SubmitPromptDialog from './SubmitPromptDialog';
 
 const useStyles = makeStyles({
   root: {
@@ -166,11 +155,16 @@ function CurrentPoll() {
     ];
   return (
     <div className="CurrentPoll">
+        <br/>
 
         <strong>Current Poll :</strong>
-        <PollList pollingItems={pollingItems}/>
+        <br/>
+        <br/>
 
-        <UserForm starting_value="This SCP is a "/>
+        <PollList pollingItems={pollingItems}/>
+        <br/>
+        <br/>
+        <SubmitPromptDialog className="openDialogBtn" />
 
     </div>
   );
