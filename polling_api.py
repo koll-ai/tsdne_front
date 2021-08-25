@@ -11,6 +11,10 @@ poll = []
 votes = dict()
 submitted_ips = []
 
+@app.route('/', methods=['GET'])
+def main():
+    return "polling api live and running"
+
 @app.route('/get_poll/', methods=['GET'])
 def get_poll():
     if len(poll) == 0:
