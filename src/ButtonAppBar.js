@@ -46,28 +46,33 @@ export default function ButtonAppBar() {
                 <Grid item sm={5}></Grid>
                 
                 <Grid item xs={12}  sm={1}>
-
-                  <Button href={'/'} color="inherit">
+                    <Link to={'/'}>
+                  <Button color="inherit">
                       {/*<Typography variant="h6" className={classes.title}>*/}
                       <strong>Poll</strong>
                       {/*</Typography>*/}
                   </Button>
+                        </Link>
                 </Grid>
-                <Grid item xs={12} sm={1}>
 
-                  <Button href={'/list'} color="inherit">
+                <Grid item xs={12} sm={1}>
+                    <Link to={'/list'}>
+
+                  <Button color="inherit">
                       {/*<Typography variant="h6" className={classes.title}>*/}
                       <strong>Past SCPs</strong>
                       {/*</Typography>*/}
                   </Button>
+                    </Link>
                 </Grid>
                 <Grid item xs={12}  sm={1}>
-
-                  <Button href={'/about'} color="inherit">
+                <Link to={'/about'}>
+                  <Button color="inherit">
                       {/*<Typography variant="h6" className={classes.title}>*/}
                       <strong>About</strong>
                       {/*</Typography>*/}
                   </Button>
+                </Link>
                 </Grid>
             </Grid>
 
