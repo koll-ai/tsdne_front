@@ -113,10 +113,6 @@ def add_prompt():
         submitted_ips.append(ip)        
         return Response(response="submission has been added!",status=200)
 
-@app.route('/current_scp_number/', methods=['GET'])
-def current_scp_number():
-    return SCP_NUMBER
-
 @app.route('/past_scps/', methods=['GET'])
 def past_scps():
     with open('./tsde/scp_data.json') as f:
