@@ -121,8 +121,8 @@ def past_scps():
 
 @app.route('/current_scp_number/', methods=['GET'])
 def current_scp_number():
-    return scp_number
+    return "" + scp_number
 
 @app.route('/next_time/', methods=['GET'])
 def next_time():
-    return next_time
+    return "" + next_time
