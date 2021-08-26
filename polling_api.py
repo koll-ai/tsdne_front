@@ -1,4 +1,5 @@
 from flask import Flask, request, Response
+import json
 
 MAX_PROMPT_LEN = 300
 
@@ -94,3 +95,11 @@ def add_prompt():
 @app.route('/current_scp_number/', methods=['GET'])
 def current_scp_number():
     return SCP_NUMBER
+
+
+
+@app.route('/past_scps/', methods=['GET'])
+def current_scp_number():
+    with open('./scp_data.json') as f:
+        scpdata = json.load(f)
+    return scpdata
