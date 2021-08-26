@@ -54,7 +54,7 @@ function ClassSelect(props) {
 }
 
 
-export default function FormDialog() {
+export default function FormDialog(props) {
   const [open, setOpen] = React.useState(false);
 
   const [prompt, setPrompt] = React.useState("");
@@ -87,7 +87,7 @@ export default function FormDialog() {
           <DialogContentText>
             Describe your SCP :
           </DialogContentText>
-            <UserForm starting_value="SCP 104 is " onValueChange={(event) =>{
+            <UserForm starting_value={"SCP " + props.curscp + " is "} onValueChange={(event) =>{
                 setPrompt(event.target.value);
             }} />
 

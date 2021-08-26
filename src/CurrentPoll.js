@@ -103,16 +103,24 @@ function PollList(props){
 
 function CurrentPoll() {
 
-    const [pollingItems, setPollingItems] = useState([])
+    const [pollingItems, setPollingItems] = useState([]);
+    const [curscp, setCurscp] = useState("");
 
     useEffect(() => {
         let cur_url = 'https://thisscpdoesnotexist.pythonanywhere.com/get_poll/';
-        fetch( cur_url)
+        fetch(cur_url)
             .then((res) => res.json())
             .then((data) => {
                 setPollingItems(data.poll);
-            })}, []
-    );
+            })
+
+        fetch("https://thisscpdoesnotexist.pythonanywhere.com/current_scp_number/")
+            .then((res) => res.json())
+            .then((data) =>{
+                setCurscp(data);
+            })
+
+    }, []);
 
 
 
@@ -127,7 +135,7 @@ function CurrentPoll() {
         <PollList pollingItems={pollingItems}/>
         <br/>
         <br/>
-        <SubmitPromptDialog className="openDialogBtn" />
+        <SubmitPromptDialog className="openDialogBtn" curscp ={curscp} />
 
     </div>
   );
