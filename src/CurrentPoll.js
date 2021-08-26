@@ -43,8 +43,8 @@ function PollItem(props){
     const classes = useStyles();
     let gridclass = classes.root + ' ' + props.scpClass;
 
-    function handleClick() {
-        fetch('http://thisscpdoesnotexist.pythonanywhere.com/vote/?n=0&ip=' +Math.floor(Math.random() * 100).toString())
+    function handleClick(n) {
+        fetch('https://thisscpdoesnotexist.pythonanywhere.com/vote/?n=' + n.toString()  + '&ip=' +Math.floor(Math.random() * 100).toString())
     }
 
     return(
@@ -66,7 +66,7 @@ function PollItem(props){
                     {props.prompt}
 
                     <CardActions>
-                        <Button size="small" onClick={handleClick}><strong>Votes !</strong> ({props.votes})</Button>
+                        <Button size="small" onClick={() => handleClick(props.idx)}><strong>Votes !</strong> ({props.votes})</Button>
                     </CardActions>
                 </CardContent>
             </Card>
@@ -78,10 +78,14 @@ function PollItem(props){
 
 function PollList(props){
     //props : pollingItems : [{prompt : .., votes : ..}, ...]
-    // Should already be sorted by votes ascending
-    const items = props.pollingItems.map(item => <PollItem prompt={item.prompt}
+    // sort by ascending
+    
+    const sorted = props.pollingItems.sort(((a, b) => b.votes - a.votes));
+    
+    const items = sorted.map((item, idx) => <PollItem prompt={item.prompt}
                                                            scpClass={item.scpClass}
                                                            votes={item.votes}
+                                                           idx={idx}
 
     />);
     return(
@@ -102,7 +106,7 @@ function CurrentPoll() {
     const [pollingItems, setPollingItems] = useState([])
 
     useEffect(() => {
-        let cur_url = 'http://thisscpdoesnotexist.pythonanywhere.com/get_poll/';
+        let cur_url = 'https://thisscpdoesnotexist.pythonanywhere.com/get_poll/';
         fetch( cur_url)
             .then((res) => res.json())
             .then((data) => {

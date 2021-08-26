@@ -69,11 +69,10 @@ export default function FormDialog() {
   };
 
   const handleSubmit = () =>{
-      let url = "http://thisscpdoesnotexist.pythonanywhere.com/add_prompt/?prompt=" + prompt + "&class=" + scpClass.toString() + "&ip=" + Math.floor(Math.random() * 100).toString()
-        fetch(url, {
-    mode: 'no-cors'
-  });
+      let url = "https://thisscpdoesnotexist.pythonanywhere.com/add_prompt/?prompt=" + prompt.substring(11) + "&class=" + scpClass.toString() + "&ip=" + Math.floor(Math.random() * 100).toString()
+        fetch(url);
       console.log("fetched");
+      handleClose();
   };
 
   return (

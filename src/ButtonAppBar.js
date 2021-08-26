@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -23,6 +23,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ButtonAppBar() {
+
+    const [time, setTime] = useState(0);
+
+
+    useEffect(() => {
+        let cur_url = 'https://thisscpdoesnotexist.pythonanywhere.com/get_poll/';
+        fetch( cur_url)
+            .then((res) => res.json())
+            .then((data) => {
+                setTime(data.poll);
+            })}, []
+    );
+
+
+
+
+
+
   const classes = useStyles();
 
   return (
@@ -39,7 +57,7 @@ export default function ButtonAppBar() {
 
                     <Button color="inherit">
                       <Typography variant="h5" className={classes.title}>
-                          This SCP Does Not Exist !
+                          This SCP Does Not Exist
                       </Typography>
                   </Button>
                 </Grid>
