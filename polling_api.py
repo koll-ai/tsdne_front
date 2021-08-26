@@ -100,7 +100,7 @@ def current_scp_number():
 
 @app.route('/past_scps/', methods=['GET'])
 def past_scps():
-    with open('./scp_data.json') as f:
+    with open('./tsde/scp_data.json') as f:
         scpdata = json.load(f)
     return dict(data=scpdata)
 
