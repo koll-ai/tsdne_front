@@ -30,7 +30,7 @@ function ListScp2(scpList){
                 </Badge>
                 </Accordion.Header>
             <Accordion.Body>
-                {scp.desc}
+                <div dangerouslySetInnerHTML={{__html: scp.desc}}/>;
             </Accordion.Body>
         </Accordion.Item>
     )
