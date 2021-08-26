@@ -1,14 +1,28 @@
 import './App.css';
 import {useEffect, useState} from "react";
-import  {pastScps} from './scpData';
+// import  {pastScps} from './scpData';
 import {Accordion} from 'react-bootstrap';
+import scp from './SCP_files/';
 
 function PastScp() {
 
-    console.log(pastScps);
+    // console.log(pastScps);
 
     const [scps, setScps] = useState(null);
 
+    let pastScps = [];
+    // for(let i = 101; i < 104; i++ ){
+    //     fetch('SCP_files/SCP-' + i.toString() + '-GPT.json')
+    //         .then((res) => res.json)
+    //         .then((data) => {
+    //             console.log(data);
+    //             pastScps.push(data);
+    //         });
+    // }
+
+
+    console.log("aaaaaa");
+    console.log(scp);
 
     // WARNING, use dangerouslySetInnerHTML, may be unsafe
 
