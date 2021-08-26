@@ -14,7 +14,7 @@ CORS(app)
 
 next_time = time.time() + 3600
 
-scp_number = 202
+scp_number = 9000
 poll = []
 votes = dict()
 submitted_ips = []
@@ -26,6 +26,11 @@ def main():
 @app.route('/next_round/', methods=['GET'])
 def next_round():
     global scp_number
+    global poll
+    global votes
+    global submitted_ips
+    global next_time
+
     k = request.args.get('key')
     nt = request.args.get('next_time')
     
@@ -33,7 +38,7 @@ def next_round():
         poll = []
         votes = dict()
         submitted_ips = []
-        next_time = nt
+        next_time = int(nt)
         scp_number += 1
         return Response(status=200)
 
