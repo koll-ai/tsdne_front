@@ -24,15 +24,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ButtonAppBar() {
 
+
     const [time, setTime] = useState(0);
 
 
     useEffect(() => {
-        let cur_url = 'https://thisscpdoesnotexist.pythonanywhere.com/get_poll/';
+        let cur_url = 'https://thisscpdoesnotexist.pythonanywhere.com/next_time/';
         fetch( cur_url)
-            .then((res) => res.json())
+            .then((res) => res.text())
             .then((data) => {
-                setTime(data.poll);
+                setTime(parseInt(data) * 1000);
             })}, []
     );
 
@@ -63,7 +64,7 @@ export default function ButtonAppBar() {
                 </Grid>
                 
                 <Grid item sm={5}>
-                    <h1><Countdown date={Date.now() + 3600 * 1000} /></h1>
+                    <h1><Countdown date={new Date(time)} /></h1>
                 </Grid>
                 
                 <Grid item xs={12}  sm={1}>
