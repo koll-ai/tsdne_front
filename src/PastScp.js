@@ -5,7 +5,7 @@ import {Accordion} from 'react-bootstrap';
 import { readString } from 'react-papaparse';
 import Badge from 'react-bootstrap/Badge';
 
-let scp_url = "https://raw.githubusercontent.com/thisscpdoesnotexist/thisscpdoesnotexist.github.io/main/raw_scp/"
+let scp_url = "https://raw.githubusercontent.com/thisscpdoesnotexist/SCP-GPT_db/master/"
 
 function getScp(file) {
     let cur_url = scp_url + file
