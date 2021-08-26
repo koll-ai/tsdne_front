@@ -106,7 +106,8 @@ def add_prompt():
         submission = {
             'prompt': "SCP " + str(scp_number) + "-GPT is " + prompt,
             'scpClass': object_classes[scp_class],
-            'votes': 0
+            'votes': 0,
+            'index': len(poll)
         }
         
         poll.append(submission)
