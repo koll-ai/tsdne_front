@@ -82,7 +82,7 @@ export default function ButtonAppBar() {
 
                   <Button color="inherit">
                       {/*<Typography variant="h6" className={classes.title}>*/}
-                      <strong>Past SCPs</strong>
+                      <strong>Archives</strong>
                       {/*</Typography>*/}
                   </Button>
                     </Link>

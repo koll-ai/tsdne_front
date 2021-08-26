@@ -72,7 +72,10 @@ export default function FormDialog(props) {
       let url = "https://thisscpdoesnotexist.pythonanywhere.com/add_prompt/?prompt=" + prompt.substring(11) + "&class=" + scpClass.toString() + "&ip=" + Math.floor(Math.random() * 100).toString()
         fetch(url);
       console.log("fetched");
+
       handleClose();
+      window.location.reload(true);
+
   };
 
   return (

@@ -44,7 +44,8 @@ function PollItem(props){
     let gridclass = classes.root + ' ' + props.scpClass;
 
     function handleClick(n) {
-        fetch('https://thisscpdoesnotexist.pythonanywhere.com/vote/?n=' + n.toString()  + '&ip=' +Math.floor(Math.random() * 100).toString())
+        fetch('https://thisscpdoesnotexist.pythonanywhere.com/vote/?n=' + n.toString()  + '&ip=' +Math.floor(Math.random() * 100).toString());
+        // window.location.reload(true);
     }
 
     return(
