@@ -105,7 +105,7 @@ def current_scp_number():
 def past_scps():
     with open('./tsde/scp_data.json') as f:
         scpdata = json.load(f)
-    return dict(data=scpdata)
+    return scpdata
 
 
 if __name__ == '__main__':
