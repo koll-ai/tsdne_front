@@ -1,16 +1,19 @@
 from flask import Flask, request, Response
 import json
+import time
 from flask_cors import CORS
 
 MAX_PROMPT_LEN = 300
+NEXT_ROUND_KEY = open("polling_api.key", "r").read()
 
 object_classes = ['Safe', 'Euclid', 'Keter', 'Thaumiel']
 
 app = Flask(__name__)
 CORS(app)
 
+next_time = time.time() + 3600
 
-SCP_NUMBER = 202
+scp_number = 202
 poll = []
 votes = dict()
 submitted_ips = []
@@ -18,6 +21,21 @@ submitted_ips = []
 @app.route('/', methods=['GET'])
 def main():
     return "polling api live and running"
+
+@app.route('/next_round/', methods=['GET'])
+def next_round():
+    k = request.args.get('key')
+    nt = request.args.get('next_time')
+    
+    if k == NEXT_ROUND_KEY:
+        poll = []
+        votes = dict()
+        submitted_ips = []
+        next_time = nt
+        scp_number += 1
+        return Response(status=200)
+
+    return Response(status=403)
 
 @app.route('/get_poll/', methods=['GET'])
 def get_poll():
@@ -99,14 +117,16 @@ def add_prompt():
 def current_scp_number():
     return SCP_NUMBER
 
-
-
 @app.route('/past_scps/', methods=['GET'])
 def past_scps():
     with open('./tsde/scp_data.json') as f:
         scpdata = json.load(f)
     return scpdata
 
+@app.route('/current_scp_number/', methods=['GET'])
+def current_scp_number():
+    return scp_number
 
-if __name__ == '__main__':
-    app.run(debug=True)
+@app.route('/next_time/', methods=['GET'])
+def next_time():
+    return next_time
