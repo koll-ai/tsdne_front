@@ -85,7 +85,7 @@ function PollList(props){
     const items = sorted.map((item) => <PollItem prompt={item.prompt}
                                                            scpClass={item.scpClass}
                                                            votes={item.votes}
-                                                           idx={idx}
+                                                           idx={item.index}
 
     />);
     return(
