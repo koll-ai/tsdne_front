@@ -1,5 +1,5 @@
 
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
@@ -90,69 +90,25 @@ function PollList(props){
 }
 
 
+
+
+
 function CurrentPoll() {
-    const pollingItems = [
-        {
-            prompt : "SCP 202-GPT is a pink pig being the best Minecraft player",
-            scpClass : "Keter",
-            votes  : 54
-        },
-        {
-            prompt : "SCP 202-GPT is a black panther that fight for racial justice",
-            scpClass : 'Euclid',
-            votes  : 24
-        },
-        {
-            prompt : "SCP 202-GPT is a pink burger that can turn people vegan",
-            scpClass: 'Safe',
-            votes  : 12
-        },
-                {
-            prompt : "SCP 202-GPT is a pink pig being the best Minecraft player",
-            scpClass : "Keter",
-            votes  : 54
-        },
-        {
-            prompt : "SCP 202-GPT is a black panther that fight for racial justice",
-            scpClass : 'Euclid',
-            votes  : 24
-        },
-        {
-            prompt : "SCP 202-GPT is a pink burger that can turn people vegan",
-            scpClass: 'Safe',
-            votes  : 12
-        },
-                {
-            prompt : "SCP 202-GPT is a pink pig being the best Minecraft player",
-            scpClass : "Keter",
-            votes  : 54
-        },
-        {
-            prompt : "SCP 202-GPT is a black panther that fight for racial justice",
-            scpClass : 'Euclid',
-            votes  : 24
-        },
-        {
-            prompt : "SCP 202-GPT is a pink burger that can turn people vegan",
-            scpClass: 'Safe',
-            votes  : 12
-        },
-                {
-            prompt : "SCP 202-GPT is a pink pig being the best Minecraft player",
-            scpClass : "Keter",
-            votes  : 54
-        },
-        {
-            prompt : "SCP 202-GPT is a black panther that fight for racial justice",
-            scpClass : 'Euclid',
-            votes  : 24
-        },
-        {
-            prompt : "SCP 202-GPT is a pink burger that can turn people vegan",
-            scpClass: 'Safe',
-            votes  : 12
-        }
-    ];
+
+    const [pollingItems, setPollingItems] = useState([])
+
+    useEffect(() => {
+        let cur_url = 'http://thisscpdoesnotexist.pythonanywhere.com/get_poll/';
+        fetch( cur_url)
+            .then((res) => res.json())
+            .then((data) => {
+                setPollingItems(data.poll);
+            })}, []
+    );
+
+
+
+
   return (
     <div className="CurrentPoll">
 
