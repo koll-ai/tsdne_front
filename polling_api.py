@@ -1,11 +1,14 @@
 from flask import Flask, request, Response
 import json
+from flask_cors import CORS
 
 MAX_PROMPT_LEN = 300
 
 object_classes = ['Safe', 'Euclid', 'Keter', 'Thaumiel']
 
 app = Flask(__name__)
+CORS(app)
+
 
 SCP_NUMBER = 202
 poll = []
