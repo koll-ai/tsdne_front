@@ -25,6 +25,7 @@ def main():
 
 @app.route('/next_round/', methods=['GET'])
 def next_round():
+    global scp_number
     k = request.args.get('key')
     nt = request.args.get('next_time')
     
