@@ -43,6 +43,10 @@ function PollItem(props){
     const classes = useStyles();
     let gridclass = classes.root + ' ' + props.scpClass;
 
+    function handleClick() {
+        fetch('http://thisscpdoesnotexist.pythonanywhere.com/vote/?n=0&ip=' +Math.floor(Math.random() * 100).toString())
+    }
+
     return(
       // <div className="pollItem">
       //     <p>{props.prompt} ({props.scpClass}) <button>Vote ({props.votes})</button></p>
@@ -62,7 +66,7 @@ function PollItem(props){
                     {props.prompt}
 
                     <CardActions>
-                        <Button size="small"><strong>Votes !</strong> ({props.votes})</Button>
+                        <Button size="small" onClick={handleClick}><strong>Votes !</strong> ({props.votes})</Button>
                     </CardActions>
                 </CardContent>
             </Card>
