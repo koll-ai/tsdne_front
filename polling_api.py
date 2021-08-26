@@ -4,7 +4,8 @@ import time
 from flask_cors import CORS
 
 MAX_PROMPT_LEN = 300
-NEXT_ROUND_KEY = open("/home/thisscpdoesnotexist/tsde/polling_api.key", "r").read()
+
+NEXT_ROUND_KEY = open("/home/thisscpdoesnotexist/tsde/polling_api.key", "r").read().rstrip()
 
 object_classes = ['Safe', 'Euclid', 'Keter', 'Thaumiel']
 
