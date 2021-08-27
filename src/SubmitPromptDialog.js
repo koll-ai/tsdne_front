@@ -74,7 +74,6 @@ export default function FormDialog(props) {
       console.log("fetched");
 
       handleClose();
-      window.location.reload(true);
 
   };
 
