@@ -32,6 +32,7 @@ export default function ButtonAppBar() {
         fetch( cur_url)
             .then((res) => res.text())
             .then((data) => {
+                console.log(data);
                 setTime(parseInt(data));
             })}, []
     );
@@ -60,6 +61,7 @@ export default function ButtonAppBar() {
                 
                 <Grid item sm={5}>
                     <h1><Countdown date={new Date(time)} /></h1>
+                    {/*<h1><Countdown date={time} /></h1>*/}
                 </Grid>
                 
                 <Grid item xs={12}  sm={1}>
