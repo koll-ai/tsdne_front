@@ -5,7 +5,8 @@ from flask_cors import CORS
 
 MAX_PROMPT_LEN = 300
 
-NEXT_ROUND_KEY = open("/home/thisscpdoesnotexist/tsde/polling_api.key", "r").read().rstrip()
+with open("/home/thisscpdoesnotexist/tsde/polling_api.key", "r") as f:
+    NEXT_ROUND_KEY = f.read().rstrip()
 
 object_classes = ['Safe', 'Euclid', 'Keter', 'Thaumiel']
 
