@@ -27,22 +27,17 @@ export default function ButtonAppBar() {
 
     const [time, setTime] = useState(0);
 
-
     useEffect(() => {
         let cur_url = 'https://thisscpdoesnotexist.pythonanywhere.com/next_time/';
         fetch( cur_url)
             .then((res) => res.text())
             .then((data) => {
-                setTime(parseInt(data) * 1000);
+                setTime(parseInt(data));
             })}, []
     );
 
 
-
-
-
-
-  const classes = useStyles();
+    const classes = useStyles();
 
   return (
     <div className={classes.root}>
