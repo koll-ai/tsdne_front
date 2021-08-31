@@ -146,4 +146,4 @@ def current_scp_number():
 
 @app.route('/next_time/', methods=['GET'])
 def next_time_():
-    return str( math.trunc(next_time * 1000 ) )
+    return str( math.trunc(next_time * 1000 ) )[0:-2] + "00"
