@@ -15,7 +15,11 @@ CORS(app)
 
 next_time = time.time() + 3600
 
-scp_number = 9000
+with open('/home/thisscpdoesnotexist/tsde/current_scp.txt') as f:
+    scp_number = int(f.read().rstrip())
+
+
+
 poll = []
 votes = dict()
 submitted_ips = []
@@ -41,6 +45,12 @@ def next_round():
         submitted_ips = []
         next_time = int(nt)
         scp_number += 1
+
+        # save scp number
+        with open('/home/thisscpdoesnotexist/tsde/current_scp.txt') as f:
+            f.write(str(scp_number+1))
+
+
         return Response(status=200)
 
     return Response(status=403)
