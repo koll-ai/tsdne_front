@@ -1,3 +1,5 @@
+import math
+
 from flask import Flask, request, Response
 import json
 import time
@@ -144,4 +146,4 @@ def current_scp_number():
 
 @app.route('/next_time/', methods=['GET'])
 def next_time_():
-    return str(next_time)
+    return str( math.trunc(time.time() * 1000 ) )
