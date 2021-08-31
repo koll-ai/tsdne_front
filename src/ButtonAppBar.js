@@ -23,24 +23,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ButtonAppBar() {
-
-
     const [time, setTime] = useState(0);
-
 
     useEffect(() => {
         let cur_url = 'https://thisscpdoesnotexist.pythonanywhere.com/next_time/';
-        fetch( cur_url)
+        fetch(cur_url)
             .then((res) => res.text())
             .then((data) => {
                 setTime(parseInt(data) * 1000);
             })}, []
     );
-
-
-
-
-
 
   const classes = useStyles();
 
@@ -82,7 +74,7 @@ export default function ButtonAppBar() {
 
                   <Button color="inherit">
                       {/*<Typography variant="h6" className={classes.title}>*/}
-                      <strong>Past SCPs</strong>
+                      <strong>Archives</strong>
                       {/*</Typography>*/}
                   </Button>
                     </Link>

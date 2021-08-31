@@ -1,4 +1,6 @@
 
+import Footer from "./Footer";
+
 function About() {
   return (
     <div className="App">

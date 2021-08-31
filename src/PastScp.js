@@ -60,9 +60,6 @@ function ReadRawGithub() {
             );
         }
 
-        console.log("there it is");
-        console.log(scp);
-
         setScpList(scp);
     }, []);
 

@@ -6,7 +6,6 @@ import "./customStyle.css"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navigation from "./Navigation";
 import About from "./About";
-import Footer from "./Footer";
 import ButtonAppBar from "./ButtonAppBar";
 
 function App() {
@@ -27,7 +26,6 @@ function App() {
           <Route path="/list" exact component={ PastScp } />
           <Route path="/about" exact component={ About } />
         </Switch>
-        <Footer/>
       </Router>
     </div>
   )
