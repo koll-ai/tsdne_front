@@ -12,7 +12,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 function UserForm(props){
     // Champ de texte qui commencera toujours par la valeur de son prop starting_value
     const [value, setValue] = useState(props.starting_value);
-    return  <textarea type="text" name="user_prompt" value={value} fullWidth
+    return  <textarea type="text" name="user_prompt" value={value} fullWidth maxlength={300}
 
         onChange={event => {
             if (event.target.value.startsWith(props.starting_value)){
@@ -52,7 +52,7 @@ function ClassSelect(props) {
 }
 
 
-export default function FormDialog() {
+export default function FormDialog(props) {
   const [open, setOpen] = React.useState(false);
 
   const [prompt, setPrompt] = React.useState("");
@@ -70,7 +70,9 @@ export default function FormDialog() {
       let url = "https://thisscpdoesnotexist.pythonanywhere.com/add_prompt/?prompt=" + prompt.substring(11) + "&class=" + scpClass.toString() + "&ip=" + Math.floor(Math.random() * 100).toString()
         fetch(url);
       console.log("fetched");
+
       handleClose();
+
   };
 
   return (
@@ -85,7 +87,7 @@ export default function FormDialog() {
           <DialogContentText>
             Describe your SCP :
           </DialogContentText>
-            <UserForm starting_value="SCP 104 is " onValueChange={(event) =>{
+            <UserForm starting_value={"SCP " + props.curscp + " is "} onValueChange={(event) =>{
                 setPrompt(event.target.value);
             }} />
 
