@@ -9,6 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import {Link} from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Countdown from "react-countdown";
+import CountDown from './CountDown'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,8 +58,9 @@ export default function ButtonAppBar() {
                 </Grid>
                 
                 <Grid item sm={5}>
-                    <h1><Countdown date={new Date(time)} /></h1>
-                    {/*<h1><Countdown date={time} /></h1>*/}
+                    {/*<h1><CountDown epoch={parseInt(time)}/> </h1>*/}
+                    <h1><Countdown date={Date.now() + (time - Date.now())  } /></h1>
+
                 </Grid>
                 
                 <Grid item xs={12}  sm={1}>
