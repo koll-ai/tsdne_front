@@ -14,7 +14,7 @@ with open("/home/thisscpdoesnotexist/tsde/polling_api.key", "r") as f:
     NEXT_ROUND_KEY = f.read().rstrip()
 
 with open("/home/thisscpdoesnotexist/tsde/last.txt", "r") as f:
-    last_scp = f.read().rstrip()
+    last_scp_str = f.read().rstrip()
 
 with open('/home/thisscpdoesnotexist/tsde/current_scp.txt') as f:
     scp_number = int(f.read().rstrip())
@@ -151,4 +151,4 @@ def next_time_():
 
 @app.route('/last_scp/',  methods=['GET'])
 def last_scp():
-    return last_scp
+    return last_scp_str
