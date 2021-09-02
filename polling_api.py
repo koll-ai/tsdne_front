@@ -1,3 +1,5 @@
+import math
+
 from flask import Flask, request, Response
 import json
 import time
@@ -5,16 +7,22 @@ from flask_cors import CORS
 
 MAX_PROMPT_LEN = 300
 
-NEXT_ROUND_KEY = open("/home/thisscpdoesnotexist/tsde/polling_api.key", "r").read().rstrip()
-last_scp = open("/home/thisscpdoesnotexist/tsde/last.txt", "r").read().rstrip()
-
-object_classes = ['Safe', 'Euclid', 'Keter', 'Thaumiel']
-
 app = Flask(__name__)
 CORS(app)
 
-next_time = 0
-scp_number = 0
+with open("/home/thisscpdoesnotexist/tsde/polling_api.key", "r") as f:
+    NEXT_ROUND_KEY = f.read().rstrip()
+
+with open("/home/thisscpdoesnotexist/tsde/last.txt", "r") as f:
+    last_scp = f.read().rstrip()
+
+with open('/home/thisscpdoesnotexist/tsde/current_scp.txt') as f:
+    scp_number = int(f.read().rstrip())
+
+object_classes = ['Safe', 'Euclid', 'Keter', 'Thaumiel']
+
+next_time = time.time() + 3600
+
 poll = []
 votes = dict()
 submitted_ips = []
@@ -40,6 +48,12 @@ def next_round():
         submitted_ips = []
         next_time = int(nt)
         scp_number += 1
+
+        # save scp number
+        with open('/home/thisscpdoesnotexist/tsde/current_scp.txt') as f:
+            f.write(str(scp_number+1))
+
+
         return Response(status=200)
 
     return Response(status=403)
@@ -133,7 +147,7 @@ def current_scp_number():
 
 @app.route('/next_time/', methods=['GET'])
 def next_time_():
-    return str(next_time)
+    return str( math.trunc(next_time * 1000 ) )[0:-2] + "00"
 
 @app.route('/last_scp/',  methods=['GET'])
 def last_scp():
