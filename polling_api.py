@@ -137,6 +137,10 @@ def add_prompt():
         submitted_ips.append(ip)        
         return Response(response="submission has been added!",status=200)
 
+@app.route('/last_scp_desc/',  methods=['GET'])
+def last_scp_desc():
+    return str(last_scp_str)
+
 @app.route('/current_scp_number/', methods=['GET'])
 def current_scp_number():
     return str(scp_number)
@@ -144,7 +148,3 @@ def current_scp_number():
 @app.route('/next_time/', methods=['GET'])
 def next_time_():
     return str( math.trunc(next_time * 1000 ) )[0:-2] + "00"
-
-@app.route('/last_scp/',  methods=['GET'])
-def last_scp():
-    return last_scp_str
