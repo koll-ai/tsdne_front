@@ -6,15 +6,15 @@ from flask_cors import CORS
 MAX_PROMPT_LEN = 300
 
 NEXT_ROUND_KEY = open("/home/thisscpdoesnotexist/tsde/polling_api.key", "r").read().rstrip()
+last_scp = open("/home/thisscpdoesnotexist/tsde/last.txt", "r").read().rstrip()
 
 object_classes = ['Safe', 'Euclid', 'Keter', 'Thaumiel']
 
 app = Flask(__name__)
 CORS(app)
 
-next_time = time.time() + 3600
-
-scp_number = 9000
+next_time = 0
+scp_number = 0
 poll = []
 votes = dict()
 submitted_ips = []
@@ -134,3 +134,7 @@ def current_scp_number():
 @app.route('/next_time/', methods=['GET'])
 def next_time_():
     return str(next_time)
+
+@app.route('/last_scp/',  methods=['GET'])
+def last_scp():
+    return last_scp
