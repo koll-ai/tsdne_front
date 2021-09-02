@@ -40,6 +40,7 @@ def next_round():
     global votes
     global submitted_ips
     global next_time
+    global last_scp_str
 
     k = request.args.get('key')
     nt = request.args.get('next_time')
@@ -55,6 +56,8 @@ def next_round():
         with open('/home/thisscpdoesnotexist/tsde/current_scp.txt') as f:
             f.write(str(scp_number+1))
 
+        with open("/home/thisscpdoesnotexist/tsde/last.txt", "r") as f:
+            last_scp_str = f.read().rstrip()
 
         return Response(status=200)
 
