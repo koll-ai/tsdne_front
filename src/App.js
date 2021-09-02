@@ -10,13 +10,6 @@ import ButtonAppBar from "./ButtonAppBar";
 
 function App() {
   return (
-    // <div className="App">
-    //
-    //   <CurrentPoll />
-    //     <PastScp/>
-    //
-    // </div>
-
       <div className="App">
       <Router>
         <ButtonAppBar />
