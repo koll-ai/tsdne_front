@@ -16,6 +16,8 @@ with open("/home/thisscpdoesnotexist/tsde/polling_api.key", "r") as f:
 with open("/home/thisscpdoesnotexist/tsde/last.txt", "r") as f:
     last_scp_str = f.read().rstrip()
 
+print(last_scp_str)
+
 with open('/home/thisscpdoesnotexist/tsde/current_scp.txt') as f:
     scp_number = int(f.read().rstrip())
 
@@ -134,12 +136,6 @@ def add_prompt():
         poll.append(submission)
         submitted_ips.append(ip)        
         return Response(response="submission has been added!",status=200)
-
-@app.route('/past_scps/', methods=['GET'])
-def past_scps():
-    with open('./tsde/scp_data.json') as f:
-        scpdata = json.load(f)
-    return scpdata
 
 @app.route('/current_scp_number/', methods=['GET'])
 def current_scp_number():
