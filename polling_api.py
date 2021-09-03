@@ -10,13 +10,13 @@ MAX_PROMPT_LEN = 300
 app = Flask(__name__)
 CORS(app)
 
+last_scp_str = ""
+
 with open("/home/thisscpdoesnotexist/tsde/polling_api.key", "r") as f:
     NEXT_ROUND_KEY = f.read().rstrip()
 
 with open("/home/thisscpdoesnotexist/tsde/last.txt", "r") as f:
     last_scp_str = f.read().rstrip()
-
-print(last_scp_str)
 
 with open('/home/thisscpdoesnotexist/tsde/current_scp.txt') as f:
     scp_number = int(f.read().rstrip())
