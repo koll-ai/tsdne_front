@@ -142,6 +142,7 @@ def add_prompt():
 
 @app.route('/last_scp_desc/',  methods=['GET'])
 def last_scp_desc():
+    global last_scp_str
     return str(last_scp_str)
 
 @app.route('/current_scp_number/', methods=['GET'])
