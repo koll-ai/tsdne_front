@@ -14,12 +14,10 @@ function getScp(file) {
         .then((data) => {return data});
 }
 
-function ListScp2(scpList){
+function ListScp(scpList){
     if(scpList.data === undefined){
         return "Loading...";
     }
-
-    console.log(scpList.data);
 
     const listPastScp = scpList.data.map((scp, index) =>
         <Accordion.Item eventKey={index.toString()}>
@@ -69,7 +67,7 @@ function ReadRawGithub() {
             <h2> List of Past SCPs</h2>
 
             <Accordion>
-                <ListScp2 data={scp_list} />
+                <ListScp data={scp_list} />
             </Accordion>
 
         </div>

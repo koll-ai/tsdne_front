@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import Grid from '@material-ui/core/Grid';
 import "./CurrentPoll.css";
 import PollItem from './PollItem.js'
+import {Accordion} from 'react-bootstrap';
 
 import SubmitPromptDialog from './SubmitPromptDialog';
 
@@ -10,10 +11,9 @@ function PollList(props){
     const sorted = props.pollingItems.sort(((a, b) => b.votes - a.votes));    
     
     const items = sorted.map((item) => <PollItem prompt={item.prompt}
-                                                           scpClass={item.scpClass}
-                                                           votes={item.votes}
-                                                           idx={item.index}
-
+                                    scpClass={item.scpClass}
+                                    votes={item.votes}
+                                    idx={item.index}
     />);
 
     return(
@@ -23,6 +23,24 @@ function PollList(props){
             </Grid>
         </div>
     )
+}
+
+function LastSCP() {
+    const [lastSCP, setLastSCP] = useState("");
+
+    console.log("coucou");
+
+    useEffect(() => {
+        fetch("https://thisscpdoesnotexist.pythonanywhere.com/last_scp_desc/")
+            .then((res) => res.text())
+            .then((data) =>{
+                setLastSCP(data);
+            })
+    }, []);
+
+    return (
+        <div dangerouslySetInnerHTML={{__html: lastSCP}}/>
+    );
 }
 
 function CurrentPoll() {
@@ -48,6 +66,14 @@ function CurrentPoll() {
 
     return (
     <div className="CurrentPoll">
+        <Accordion.Item>
+            <Accordion.Body>
+                <LastSCP/>
+            </Accordion.Body>
+        </Accordion.Item>
+
+        <br/>
+        <br/>
 
         <strong>Current Poll :</strong>
         <br/>
@@ -57,7 +83,6 @@ function CurrentPoll() {
         <br/>
         <br/>
         <SubmitPromptDialog className="openDialogBtn" curscp ={curscp} />
-
     </div>
   );
 }
