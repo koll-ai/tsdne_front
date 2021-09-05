@@ -89,7 +89,7 @@ export default function ButtonAppBar() {
 
             <Grid container spacing={1} style={{display: "flex", alignItems: "center"}}>
 
-                <Grid item xs={12} sm={3} >
+                <Grid item xs={12} sm={4} >
                     <img src={logo} />
                     <Button color="inherit">
                       <Typography variant="h6" className={classes.title}>
@@ -99,14 +99,14 @@ export default function ButtonAppBar() {
 
                 </Grid>
                 
-                <Grid item xs={12} sm={5} >
+                <Grid item xs={12} sm={4} >
                     {/*<h1><CountDown epoch={parseInt(time)}/> </h1>*/}
                     <MyCoundown time ={time}/>
                 </Grid>
-                
+                <Grid item xs={0}  sm={1} > </Grid>
                 <Grid item xs={12}  sm={1} >
                     <Link to={'/'}>
-                          <Button color="inherit" style={{verticalAlign:'bottom'}}>
+                          <Button color="inherit">
                               {/*<Typography variant="h6" className={classes.title}>*/}
                               <strong >Poll</strong>
                               {/*</Typography>*/}
