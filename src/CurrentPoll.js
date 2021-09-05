@@ -76,15 +76,15 @@ function CurrentPoll() {
         <SubmitPromptDialog className="openDialogBtn" curscp ={curscp} />
         <br/>
         <br/>
+
+        <strong>Last SCP :</strong>
+        <br/>
+        <br/>
         <Accordion.Item>
             <Accordion.Body>
                 <LastSCP/>
             </Accordion.Body>
         </Accordion.Item>
-
-
-
-
     </div>
   );
 }
