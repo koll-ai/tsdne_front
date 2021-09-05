@@ -73,6 +73,7 @@ def next_round():
             f.write(str(scp_number+1))
 
         with open("/home/thisscpdoesnotexist/tsde/last.txt", "r") as f:
+            # f.write()
             last_scp_str = f.read().rstrip()
 
         return Response(status=200)
