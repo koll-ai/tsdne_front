@@ -23,12 +23,13 @@ with open('/home/thisscpdoesnotexist/tsde/current_scp.txt') as f:
 
 object_classes = ['Safe', 'Euclid', 'Keter', 'Thaumiel']
 
+initial_data_path = "/home/thisscpdoesnotexist/tsde/initial_data.json"
 
 
 # Set initial variable with savec file or with initial value otherwise
 
 try:
-    with open("initial_params.json", "r") as f:
+    with open(initial_data_path, "r") as f:
         params = json.load(f)
 except FileNotFoundError:
     params = dict(next_time = time.time() + 3600,
@@ -174,7 +175,7 @@ def next_time_():
 def save_data():
     k = request.args.get('key')
     if k == NEXT_ROUND_KEY:
-        with open("initial_data.json", "w") as f:
+        with open(initial_data_path, "w") as f:
             data = dict(next_time = next_time,
                   poll=poll,
                   votes = votes,
