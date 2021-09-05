@@ -10,6 +10,8 @@ import {Link} from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Countdown from "react-countdown";
 import CountDown from './CountDown'
+import Timer from 'react-compound-timer';
+import { useTimer } from "react-compound-timer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,8 +25,46 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+function MyCoundown(props){
+
+
+
+    console.log( (props.time - Date.now() ) );
+
+//         <div>
+//         <h1><Countdown date={Date.now() + (props.time - Date.now())  } /></h1>
+// </div>
+        console.log(Date.now());
+        console.log(props.time);
+
+        const duree = props.time - Date.now()
+    console.log(duree);
+
+    return (<h2>
+{/*        <Timer*/}
+{/*    initialTime={ duree }*/}
+{/*    // initialTime={3600*1000}*/}
+{/*    direction="backward"*/}
+{/*    timeToUpdate={1000}*/}
+{/*>*/}
+{/*    {() => (*/}
+{/*        <React.Fragment>*/}
+{/*            <Timer.Minutes /> : <Timer.Seconds />*/}
+{/*            /!*<Timer.Milliseconds /> milliseconds*!/*/}
+{/*        </React.Fragment>*/}
+{/*    )}*/}
+{/*</Timer>*/}
+{/*                    <h1><Countdown date={Date.now() + (3600 * 1000)  } key={"MyTimer"} /></h1>*/}
+                    <h1><Countdown date={props.time  } key={"MyTimer"} daysInHours={true}/></h1>
+
+
+        </h2>
+    )
+}
+
 export default function ButtonAppBar() {
-    const [time, setTime] = useState(0);
+    const [time, setTime] = useState(Date.now() + 3600 * 1000);
 
     useEffect(() => {
         let cur_url = 'https://thisscpdoesnotexist.pythonanywhere.com/next_time/';
@@ -59,8 +99,7 @@ export default function ButtonAppBar() {
                 
                 <Grid item sm={5}>
                     {/*<h1><CountDown epoch={parseInt(time)}/> </h1>*/}
-                    <h1><Countdown date={Date.now() + (time - Date.now())  } /></h1>
-
+                    <MyCoundown time ={time}/>
                 </Grid>
                 
                 <Grid item xs={12}  sm={1}>
