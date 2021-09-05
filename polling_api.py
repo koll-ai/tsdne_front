@@ -23,11 +23,26 @@ with open('/home/thisscpdoesnotexist/tsde/current_scp.txt') as f:
 
 object_classes = ['Safe', 'Euclid', 'Keter', 'Thaumiel']
 
-next_time = time.time() + 3600
 
-poll = []
-votes = dict()
-submitted_ips = []
+
+# Set initial variable with savec file or with initial value otherwise
+
+try:
+    with open("initial_params.json", "r") as f:
+        params = json.load(f)
+except FileNotFoundError:
+    params = dict(next_time = time.time() + 3600,
+                  poll=[],
+                  votes = dict(),
+                  submitted_ips = []
+    )
+
+
+
+next_time = params['next_time']
+poll = params['poll']
+votes = params['votes']
+submitted_ips = params['submitted_ips']
 
 @app.route('/', methods=['GET'])
 def main():
@@ -153,3 +168,17 @@ def current_scp_number():
 def next_time_():
     """Renvoie le next time au format de javascript"""
     return str( math.trunc(next_time * 1000 ) )[0:-2] + "00"
+
+
+@app.route('/save_data/', methods=['GET'])
+def save_data():
+    k = request.args.get('key')
+    if k == NEXT_ROUND_KEY:
+        with open("initial_data.json", "w") as f:
+            data = dict(next_time = next_time,
+                  poll=poll,
+                  votes = votes,
+                  submitted_ips = submitted_ips
+            )
+
+            json.dump(data, f)
