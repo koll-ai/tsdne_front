@@ -87,28 +87,28 @@ export default function ButtonAppBar() {
           {/*  <MenuIcon />*/}
           {/*</IconButton>*/}
 
-            <Grid container spacing={5}>
+            <Grid container spacing={1} style={{display: "flex", alignItems: "center"}}>
 
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={12} sm={3} >
                     <img src={logo} />
                     <Button color="inherit">
-                      <Typography variant="h5" className={classes.title}>
+                      <Typography variant="h6" className={classes.title}>
                           This SCP Does Not Exist
                       </Typography>
                   </Button>
 
                 </Grid>
                 
-                <Grid item sm={5} style={{textAlign: 'center'}}>
+                <Grid item xs={12} sm={5} >
                     {/*<h1><CountDown epoch={parseInt(time)}/> </h1>*/}
                     <MyCoundown time ={time}/>
                 </Grid>
                 
-                <Grid item xs={12}  sm={1}>
+                <Grid item xs={12}  sm={1} >
                     <Link to={'/'}>
-                          <Button color="inherit">
+                          <Button color="inherit" style={{verticalAlign:'bottom'}}>
                               {/*<Typography variant="h6" className={classes.title}>*/}
-                              <strong>Poll</strong>
+                              <strong >Poll</strong>
                               {/*</Typography>*/}
                           </Button>
                         </Link>
