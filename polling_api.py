@@ -185,8 +185,8 @@ def save_data():
             json.dump(data, f)
 
 
-        return "ok"
-    return "ko"
+    return "ok"
+
 
 if __name__ == '__main__':
     app.run(debug=True)
