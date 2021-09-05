@@ -25,7 +25,7 @@ body {
   backgroundColor:"#d5ecc2"
 }
 
-a, a:hover, a:focus, a:active {
+header a, header a:hover, header a:focus, header a:active {
      text-decoration: none;
      color: inherit;
  }
