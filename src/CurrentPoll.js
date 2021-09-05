@@ -66,15 +66,6 @@ function CurrentPoll() {
 
     return (
     <div className="CurrentPoll">
-        <Accordion.Item>
-            <Accordion.Body>
-                <LastSCP/>
-            </Accordion.Body>
-        </Accordion.Item>
-
-        <br/>
-        <br/>
-
         <strong>Current Poll :</strong>
         <br/>
         <br/>
@@ -83,6 +74,17 @@ function CurrentPoll() {
         <br/>
         <br/>
         <SubmitPromptDialog className="openDialogBtn" curscp ={curscp} />
+        <br/>
+        <br/>
+        <Accordion.Item>
+            <Accordion.Body>
+                <LastSCP/>
+            </Accordion.Body>
+        </Accordion.Item>
+
+
+
+
     </div>
   );
 }

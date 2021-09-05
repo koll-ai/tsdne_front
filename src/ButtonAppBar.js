@@ -12,6 +12,7 @@ import Countdown from "react-countdown";
 import CountDown from './CountDown'
 import Timer from 'react-compound-timer';
 import { useTimer } from "react-compound-timer";
+import logo from './favicon.ico'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,7 +57,7 @@ function MyCoundown(props){
 {/*    )}*/}
 {/*</Timer>*/}
 {/*                    <h1><Countdown date={Date.now() + (3600 * 1000)  } key={"MyTimer"} /></h1>*/}
-                    <h1><Countdown date={props.time  } key={"MyTimer"} daysInHours={true}/></h1>
+                    <h1 ><Countdown date={props.time  } key={"MyTimer"} daysInHours={true}/></h1>
 
 
         </h2>
@@ -86,18 +87,19 @@ export default function ButtonAppBar() {
           {/*  <MenuIcon />*/}
           {/*</IconButton>*/}
 
-            <Grid container spacing={3}>
+            <Grid container spacing={5}>
 
-                <Grid item xs={12} sm={3}>
-
+                <Grid item xs={12} sm={4}>
+                    <img src={logo} />
                     <Button color="inherit">
                       <Typography variant="h5" className={classes.title}>
                           This SCP Does Not Exist
                       </Typography>
                   </Button>
+
                 </Grid>
                 
-                <Grid item sm={5}>
+                <Grid item sm={5} style={{textAlign: 'center'}}>
                     {/*<h1><CountDown epoch={parseInt(time)}/> </h1>*/}
                     <MyCoundown time ={time}/>
                 </Grid>
