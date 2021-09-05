@@ -184,7 +184,6 @@ def save_data():
 
             json.dump(data, f)
 
-
     return "ok"
 
 
