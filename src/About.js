@@ -1,6 +1,3 @@
-
-import Footer from "./Footer";
-
 function About() {
   return (
     <div className="App" style={{textAlign: 'left', backgroundColor:'white' }}>

@@ -17,6 +17,9 @@
     "react-compound-timer": "^1.2.0",
     "react-countdown": "^2.3.2",
     "react-dom": "^17.0.2",
+    "react-native": "^0.65.1",
+    "react-native-collapsible": "^1.6.0",
+    "react-native-web": "^0.17.1",
     "react-papaparse": "^3.17.1",
     "react-polls": "^1.2.0",
     "react-router-dom": "^5.2.0",
@@ -51,6 +54,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/preset-react": "^7.14.5",
     "gh-pages": "^3.2.3"
   }
 }

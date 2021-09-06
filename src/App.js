@@ -4,7 +4,6 @@ import PastScp from './PastScp.js'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./customStyle.css"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Navigation from "./Navigation";
 import About from "./About";
 import ButtonAppBar from "./ButtonAppBar";
 

@@ -1,11 +1,11 @@
 import './App.css';
-import {useEffect, useState} from "react";
-// import  {pastScps} from './scpData';
+import React, { Component } from 'react';
+import AccordionDyn from './AccordionDyn';
 import {Accordion} from 'react-bootstrap';
-import { readString } from 'react-papaparse';
 import Badge from 'react-bootstrap/Badge';
+import { readString } from 'react-papaparse'
 
-let scp_url = "https://raw.githubusercontent.com/thisscpdoesnotexist/SCP-GPT_db/master/"
+const scp_url = "https://raw.githubusercontent.com/thisscpdoesnotexist/SCP-GPT_db/master/"
 
 function getScp(file) {
     let cur_url = scp_url + file
@@ -14,36 +14,66 @@ function getScp(file) {
         .then((data) => {return data});
 }
 
-function ListScp(scpList){
-    if(scpList.data === undefined){
-        return "Loading...";
+export default class PastScp extends Component {
+    state = {
+        activeSections: [],
+        collapsed: true,
+        multipleSelect: false,
+        content: []
+    };
+
+    constructor(props) {
+        super(props);
+
+        this.getAccodionHeader().then((data) => {
+            this.setState({
+                content : data
+            })
+        });
     }
 
-    const listPastScp = scpList.data.map((scp, index) =>
-        <Accordion.Item eventKey={index.toString()}>
+    setSections = (sections) => {
+        const {content} = this.state
+        this.loadContent(content, sections)
+        this.setState({
+          activeSections: sections.includes(undefined) ? [] : sections,
+        });
+    };
+
+    loadContent = (content, sections) => {
+        for(var i = 0; i < sections.length; i++) {
+            var j = sections[i];
+            getScp(content[j].url).then((data) => {
+                content[j].desc = data;
+                this.setState({content});
+            })
+        }
+    }
+    
+    renderHeader = (section, _, isActive) => {
+        return (
             <Accordion.Header>
-                <strong>{scp.prompt} &nbsp;</strong>
-                <Badge bg={scp.class === "Keter" ? "danger" : scp.class === "Euclid" ? "warning" : "success" }>
-                    {scp.class}
+                <strong>{section.prompt} &nbsp;</strong>
+                <Badge bg={section.class === "Keter" ? "danger" : section.class === "Euclid" ? "warning" : "success" }>
+                    {section.class}
                 </Badge>
-                </Accordion.Header>
-            <Accordion.Body>
-                <div dangerouslySetInnerHTML={{__html: scp.desc}}/>;
-            </Accordion.Body>
-        </Accordion.Item>
-    )
+            </Accordion.Header>
+        );
+    };
 
-    return listPastScp;
-}
+    renderContent(section, _, isActive) {
+        return (
+            <Accordion.Item>
+                <div style={{padding: '1.5em'}} dangerouslySetInnerHTML={{__html: section.desc}}/>
+            </Accordion.Item>
+        );
+    }
 
-function ReadRawGithub() {
-    const [scp_list, setScpList] = useState([]);
-
-    useEffect(async function fun() {
+    async getAccodionHeader() {
         let str = await getScp("scp_list.csv");
         let list_scp = readString(str);
 
-        if(list_scp.data[list_scp.data.length - 1].length != 3){
+        if(list_scp.data[list_scp.data.length - 1].length !== 3){
             list_scp.data.pop();
         }
 
@@ -53,25 +83,32 @@ function ReadRawGithub() {
                 {
                     prompt: list_scp.data[i][0],
                     class: list_scp.data[i][1],
-                    desc: await(getScp(list_scp.data[i][2]))
+                    url: list_scp.data[i][2],
+                    desc: 'Loading SCP...'
                 }
             );
         }
 
-        setScpList(scp);
-    }, []);
+        return scp;
+    }
 
-    return (
-        <div className="ReadRawGithub">
+    render() {
+        return (
+            <div className="ListOfSCPs">
+                <h2> List of Past SCPs</h2>
 
-            <h2> List of Past SCPs</h2>
+                <br></br>
 
-            <Accordion>
-                <ListScp data={scp_list} />
-            </Accordion>
-
-        </div>
-    )
+                <AccordionDyn
+                    activeSections={this.state.activeSections}
+                    sections={this.state.content}
+                    expandMultiple={this.multipleSelect}
+                    renderHeader={this.renderHeader}
+                    renderContent={this.renderContent}
+                    onChange={this.setSections.bind(this)}
+                    renderAsFlatList={false}
+                />
+            </div>
+        );
+    }
 }
-
-export default ReadRawGithub;
