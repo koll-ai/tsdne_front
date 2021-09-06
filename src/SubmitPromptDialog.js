@@ -68,8 +68,8 @@ export default function FormDialog(props) {
 
   const handleSubmit = () =>{
       let url = "https://thisscpdoesnotexist.pythonanywhere.com/add_prompt/?prompt=" + prompt.substring(11) + "&class=" + scpClass.toString() + "&ip=" + Math.floor(Math.random() * 100).toString()
-        fetch(url);
-      console.log("fetched");
+        fetch(url).then(value => window.location.href = '/');
+      // console.log("fetched");
 
       handleClose();
 
@@ -103,7 +103,7 @@ export default function FormDialog(props) {
 
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleClose} color="primary" >
             Cancel
           </Button>
           <Button onClick={handleSubmit} color="primary">
