@@ -24,11 +24,27 @@ with open('/home/thisscpdoesnotexist/tsde/current_scp.txt') as f:
 
 object_classes = ['Safe', 'Euclid', 'Keter', 'Thaumiel']
 
-next_time = time.time() + 3600
+initial_data_path = "/home/thisscpdoesnotexist/tsde/initial_data.json"
 
-poll = []
-votes = dict()
-submitted_ips = []
+
+# Set initial variable with savec file or with initial value otherwise
+
+try:
+    with open(initial_data_path, "r") as f:
+        params = json.load(f)
+except FileNotFoundError:
+    params = dict(next_time = time.time() + 3600,
+                  poll=[],
+                  votes = dict(),
+                  submitted_ips = []
+    )
+
+
+
+next_time = params['next_time']
+poll = params['poll']
+votes = params['votes']
+submitted_ips = params['submitted_ips']
 
 @app.route('/', methods=['GET'])
 def main():
@@ -58,6 +74,7 @@ def next_round():
             f.write(str(scp_number+1))
 
         with open("/home/thisscpdoesnotexist/tsde/last.txt", "r") as f:
+            # f.write()
             last_scp_str = f.read().rstrip()
 
         return Response(status=200)
@@ -152,7 +169,11 @@ def add_prompt():
 
 @app.route('/last_scp_desc/',  methods=['GET'])
 def last_scp_desc():
-    global last_scp_str
+
+    with open("/home/thisscpdoesnotexist/tsde/last.txt", "r") as f:
+        last_scp_str = f.read()
+
+
     return str(last_scp_str)
 
 @app.route('/current_scp_number/', methods=['GET'])
@@ -161,4 +182,25 @@ def current_scp_number():
 
 @app.route('/next_time/', methods=['GET'])
 def next_time_():
+    """Renvoie le next time au format de javascript"""
     return str( math.trunc(next_time * 1000 ) )[0:-2] + "00"
+
+
+@app.route('/save_data/', methods=['GET'])
+def save_data():
+    k = request.args.get('key')
+    if k == NEXT_ROUND_KEY:
+        with open(initial_data_path, "w") as f:
+            data = dict(next_time = next_time,
+                  poll=poll,
+                  votes = votes,
+                  submitted_ips = submitted_ips
+            )
+
+            json.dump(data, f)
+
+    return "ok"
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
