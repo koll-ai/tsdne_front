@@ -6,6 +6,7 @@ import time
 from flask_cors import CORS
 
 MAX_PROMPT_LEN = 300
+MAX_AUTHOR_LEN = 20
 
 app = Flask(__name__)
 CORS(app)
@@ -118,9 +119,17 @@ def add_prompt():
     else:
         prompt = request.args.get('prompt')
         scp_class = request.args.get('class')
+        author = request.args.get('author')
         
         if len(prompt) > MAX_PROMPT_LEN:
             return Response(response="prompt is too long", status=412)
+        if len(prompt) <= 0:
+            return Response(response="prompt is too long", status=412)
+
+        if len(author) > MAX_AUTHOR_LEN:
+            return Response(response="author is too long", status=412)
+        if len(author) <= 0:
+            return Response(response="author is too long", status=412)
         
         if scp_class.isdigit():
             scp_class = int(scp_class)
@@ -133,7 +142,8 @@ def add_prompt():
             'prompt': "SCP-" + str(scp_number) + "-GPT is " + prompt,
             'scpClass': object_classes[scp_class],
             'votes': 0,
-            'index': len(poll)
+            'index': len(poll),
+            'author' : author,
         }
         
         poll.append(submission)
