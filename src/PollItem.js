@@ -37,16 +37,12 @@ class PoolItem extends Component {
                           <br/>
                           {this.props.prompt}
       
-                          <CardActions>
-                            {/* 
-                            <button type="button" size="small" class="btn btn-secondary" onClick={() => this.handleClick(this.props.idx)}>
-                                Vote <span class="badge badge-success">{this.state.n_votes}</span>
-                            </button>
-                            */}
-
+                          <CardActions  style={{display: "flex", justifyContent:"space-between"}}>
                             <Button size="small" onClick={() => this.handleClick(this.props.idx)} disabled={this.state.hasClicked}>
                                   <strong>Vote &nbsp;</strong> {this.state.n_votes}
                             </Button>
+
+                            <div style={{color: "grey", fontStyle: "italic"}}>{this.props.author}</div>
                           </CardActions>
                       </CardContent>
                   </Card>

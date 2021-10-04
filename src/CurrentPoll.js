@@ -14,6 +14,7 @@ function PollList(props){
                                     scpClass={item.scpClass}
                                     votes={item.votes}
                                     idx={item.index}
+                                    author={(item.author !== undefined) ? item.author : 'Dr. [REDACTED]'}
     />);
 
     return(

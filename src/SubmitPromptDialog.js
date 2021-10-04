@@ -34,7 +34,7 @@ function ClassSelect(props) {
 
     return (
         <div>
-            <InputLabel id="scpClassLabel">Classe</InputLabel>
+            <InputLabel id="scpClassLabel">Class :</InputLabel>
                 <Select
                   labelId="SCP-Class"
                   id="scpClassSelect"
@@ -42,7 +42,7 @@ function ClassSelect(props) {
                   onChange={handleChange}
                 >
                   <MenuItem value={0}>Safe</MenuItem>
-                  <MenuItem value={1}>Euclide</MenuItem>
+                  <MenuItem value={1}>Euclid</MenuItem>
                   <MenuItem value={2}>Keter</MenuItem>
                   <MenuItem value={3}>Thomiel</MenuItem>
             </Select>
@@ -57,6 +57,7 @@ export default function FormDialog(props) {
 
   const [prompt, setPrompt] = React.useState("");
   const [scpClass, setScpClass] = React.useState(0);
+  const [author, setAuthor] = React.useState("Dr. [REDACTED]");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -67,9 +68,13 @@ export default function FormDialog(props) {
   };
 
   const handleSubmit = () =>{
-      let url = "https://thisscpdoesnotexist.pythonanywhere.com/add_prompt/?prompt=" + prompt.substring(11) + "&class=" + scpClass.toString() + "&ip=" + Math.floor(Math.random() * 100).toString()
-        fetch(url).then(value => window.location.href = '/');
-      // console.log("fetched");
+      let url = "https://thisscpdoesnotexist.pythonanywhere.com/add_prompt/"
+      + "?prompt=" + prompt.substring(11)
+      + "&class=" + scpClass.toString()
+      + "&ip=" + Math.floor(Math.random() * 100).toString()
+      + "&author=" + author;
+
+      fetch(url).then(value => window.location.href = '/');
 
       handleClose();
 
@@ -94,12 +99,22 @@ export default function FormDialog(props) {
             <br/>
             <br/>
 
-            <ClassSelect onClassChange={(event) => {
-                console.log(event.target.value);
+            <div style={{display: "flex", justifyContent:"space-between"}}>
+            
+              <ClassSelect onClassChange={(event) => {
                 setScpClass( event.target.value);
-            }}
-                         value={scpClass}
-            />
+                }} value={scpClass}
+              />
+
+              <div>
+                <InputLabel id="scpClassLabel">Author :</InputLabel>
+                <input name="Author" placeholder="Dr. [REDACTED]" onChange={(event) =>{
+                          setAuthor(event.target.value);
+                      }}></input>
+              </div>
+
+            </div>
+
 
         </DialogContent>
         <DialogActions>
