@@ -39,8 +39,6 @@ except FileNotFoundError:
                   submitted_ips = []
     )
 
-
-
 next_time = params['next_time']
 poll = params['poll']
 votes = params['votes']
@@ -48,7 +46,7 @@ submitted_ips = params['submitted_ips']
 
 @app.route('/', methods=['GET'])
 def main():
-    return "polling api live and running"
+    return "gpt scp api live and running"
 
 @app.route('/next_round/', methods=['GET'])
 def next_round():
@@ -185,6 +183,22 @@ def next_time_():
     """Renvoie le next time au format de javascript"""
     return str( math.trunc(next_time * 1000 ) )[0:-2] + "00"
 
+@app.route('/upvote/')
+def upvote():
+    ip = request.args.get('ip')
+    id_scp = request.args.get('id')
+
+    with open('votes.json') as json_file:
+        data = json.load(json_file)
+
+    if id_scp in data:    
+        data[str(id_scp)][0] += 1
+        data[str(id_scp)][1].append(ip)
+    else:
+        data[str(id_scp)] = [1,[ip]]
+        
+    with open('votes.json', 'w') as outfile:
+        json.dump(data, outfile)
 
 @app.route('/save_data/', methods=['GET'])
 def save_data():
