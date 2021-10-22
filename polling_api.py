@@ -188,17 +188,32 @@ def upvote():
     ip = request.args.get('ip')
     id_scp = request.args.get('id')
 
-    with open('votes.json') as json_file:
+    with open('upvotes.json') as json_file:
         data = json.load(json_file)
 
-    if id_scp in data:    
-        data[str(id_scp)][0] += 1
-        data[str(id_scp)][1].append(ip)
+    if id_scp.isdigit():
+        id_scp = int(id_scp)
+        if id_scp < 9000 or id_scp > scp_number:
+            return Response(response="not a valid id", status=412)   
     else:
-        data[str(id_scp)] = [1,[ip]]
+        return Response(response="not a valid id", status=412)   
+
+    if id_scp in data:
+        if ip not in data[id_scp]["ips"]:
+            data[id_scp]["n_upvotes"] += 1
+            data[id_scp]["ips"].append(ip)
+        else:
+            return Response(response="already voted", status=412)   
+    else:
+        data[id_scp] = {
+            "n_upvotes" : 1,
+            "ips" : [ip]
+        }
         
-    with open('votes.json', 'w') as outfile:
+    with open('upvotes.json', 'w') as outfile:
         json.dump(data, outfile)
+
+    return Response(response="upvote counted",status=200) 
 
 @app.route('/save_data/', methods=['GET'])
 def save_data():
