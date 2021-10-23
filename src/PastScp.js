@@ -4,6 +4,8 @@ import AccordionDyn from './AccordionDyn';
 import {Accordion} from 'react-bootstrap';
 import Badge from 'react-bootstrap/Badge';
 import { readString } from 'react-papaparse'
+import Button from '@material-ui/core/Button';
+import { SuitHeart, SuitHeartFill } from 'react-bootstrap-icons';
 
 const scp_url = "https://raw.githubusercontent.com/thisscpdoesnotexist/SCP-GPT_db/master/"
 
@@ -14,7 +16,7 @@ function getScp(file) {
         .then((data) => {return data});
 }
 
-export default class PastScp extends Component {
+class PastScp extends Component {
     state = {
         activeSections: [],
         collapsed: true,
@@ -53,10 +55,25 @@ export default class PastScp extends Component {
     renderHeader = (section, _, isActive) => {
         return (
             <Accordion.Header>
-                <strong>{section.prompt} &nbsp;</strong>
-                <Badge bg={section.class === "Keter" ? "danger" : section.class === "Euclid" ? "warning" : "success" }>
-                    {section.class}
-                </Badge>
+                <table style={{width : '100%'}}>
+                    <tr>
+                        <td style={{width:70, textAlign:'center'}}>
+                            <Badge bg={section.class === "Keter" ? "danger" : section.class === "Euclid" ? "warning" : "success" }>
+                                {section.class}
+                            </Badge>
+                        </td>
+
+                        <td style={{paddingLeft : 5, paddingRight : 5}}>
+                            <strong>{section.prompt}</strong>
+                        </td>
+
+                        <td style={{textAlign : 'right'}}>
+                            <Button size="small" style={{backgroundColor:'lightgrey'}} disabled={false}>
+                                {section.n_upvotes} &nbsp; <SuitHeart/>                      
+                            </Button>
+                        </td>
+                    </tr>
+                </table>
             </Accordion.Header>
         );
     };
@@ -84,6 +101,7 @@ export default class PastScp extends Component {
                     prompt: list_scp.data[i][0],
                     class: list_scp.data[i][1],
                     url: list_scp.data[i][2],
+                    n_upvotes: 1862,
                     desc: 'Loading SCP...'
                 }
             );
@@ -112,3 +130,5 @@ export default class PastScp extends Component {
         );
     }
 }
+
+export default PastScp;
