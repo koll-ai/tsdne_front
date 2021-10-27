@@ -8,6 +8,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
+import {Switch} from "@material-ui/core";
+
 
 function UserForm(props){
     // Champ de texte qui commencera toujours par la valeur de son prop starting_value
@@ -105,7 +107,8 @@ export default function FormDialog(props) {
                 setScpClass( event.target.value);
                 }} value={scpClass}
               />
-
+                <InputLabel id="scpNSFW">NSFW ? </InputLabel>
+                <Switch />
               <div>
                 <InputLabel id="scpClassLabel">Author :</InputLabel>
                 <input name="Author" placeholder="Dr. [REDACTED]" onChange={(event) =>{
