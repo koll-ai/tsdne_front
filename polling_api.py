@@ -135,17 +135,25 @@ def add_prompt():
         prompt = request.args.get('prompt')
         scp_class = request.args.get('class')
         author = request.args.get('author')
-        
+        nsfw = request.args.get('nsfw')
+
+        # check prompt length
         if len(prompt) > MAX_PROMPT_LEN:
             return Response(response="prompt is too long", status=412)
         if len(prompt) <= 0:
             return Response(response="prompt is too long", status=412)
 
+        # check author lenght
         if len(author) > MAX_AUTHOR_LEN:
             return Response(response="author is too long", status=412)
         if len(author) <= 0:
             return Response(response="author is too long", status=412)
-        
+
+        # check if nsfw is boolean:
+        if not(nsfw == 'true' or nsfw == 'false'):
+            return Response(response="nsfw is not bool", status=412)
+
+        # check if scp_class is a digit
         if scp_class.isdigit():
             scp_class = int(scp_class)
             if scp_class > 3 or scp_class < 0:
@@ -159,6 +167,7 @@ def add_prompt():
             'votes': 0,
             'index': len(poll),
             'author' : author,
+            'nsfw' : nsfw
         }
         
         poll.append(submission)
