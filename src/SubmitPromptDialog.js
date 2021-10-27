@@ -75,7 +75,8 @@ export default function FormDialog(props) {
       + "?prompt=" + prompt.substring(11)
       + "&class=" + scpClass.toString()
       + "&ip=" + Math.floor(Math.random() * 100).toString()
-      + "&author=" + author;
+      + "&author=" + author
+      + "&nswf=" + nsfw;
 
       fetch(url).then(value => window.location.href = '/');
 
