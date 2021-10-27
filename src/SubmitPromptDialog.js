@@ -60,6 +60,7 @@ export default function FormDialog(props) {
   const [prompt, setPrompt] = React.useState("");
   const [scpClass, setScpClass] = React.useState(0);
   const [author, setAuthor] = React.useState("Dr. [REDACTED]");
+  const [nsfw, setNsfw] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -108,7 +109,10 @@ export default function FormDialog(props) {
                 }} value={scpClass}
               />
                 <InputLabel id="scpNSFW">NSFW ? </InputLabel>
-                <Switch />
+                <Switch  onChange={(event => {
+                    console.log(event.target.checked);
+                    setNsfw(event.target.checked);
+                })}/>
               <div>
                 <InputLabel id="scpClassLabel">Author :</InputLabel>
                 <input name="Author" placeholder="Dr. [REDACTED]" onChange={(event) =>{
