@@ -86,7 +86,7 @@ def get_poll():
 
     return {'poll': poll}
 
-@app.route('/upvote/')
+@app.route('/upvote/', methods=['GET'])
 def upvote():
     ip = request.args.get('ip')
     id_scp = request.args.get('id')
@@ -103,7 +103,7 @@ def upvote():
     with open('votes.json', 'w') as outfile:
         json.dump(data, outfile)
 
-@app.route('/get_upvotes/')
+@app.route('/get_upvotes/', methods=['GET'])
 def get_upvotes():
     with open('votes.json') as json_file:
         data = json.load(json_file)
