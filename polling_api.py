@@ -91,7 +91,10 @@ def upvote():
     ip = request.args.get('ip')
     id_scp = request.args.get('id')
 
-    with open('upvotes.json', 'r') as json_file:
+    #open file or create it if it doesn't exist
+
+
+    with open('upvotes.json', 'r+') as json_file:
         data = json.load(json_file)
 
     if id_scp.isdigit():
