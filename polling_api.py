@@ -91,9 +91,14 @@ def upvote():
     ip = request.args.get('ip')
     id_scp = request.args.get('id')
 
-    #open file or create it if it doesn't exist
-    with open('/home/thisscpdoesnotexist/tsde/upvotes.json', 'r+') as json_file:
-        data = json.load(json_file)
+
+    try:
+        #open file
+        with open('./upvotes.json', 'r') as json_file:
+            data = json.load(json_file)
+    except FileNotFoundError:
+        #file does not exist, create it
+        data = dict()
 
     if id_scp.isdigit():
         id_scp = int(id_scp)
