@@ -91,7 +91,7 @@ def upvote():
     ip = request.args.get('ip')
     id_scp = request.args.get('id')
 
-    with open('upvotes.json') as json_file:
+    with open('upvotes.json', 'r') as json_file:
         data = json.load(json_file)
 
     if id_scp.isdigit():
@@ -121,7 +121,7 @@ def upvote():
 
 @app.route('/get_upvotes/', methods=['GET'])
 def get_upvotes():
-    with open('upvotes.json') as json_file:
+    with open('upvotes.json', 'r') as json_file:
         data = json.load(json_file)
 
     return data
