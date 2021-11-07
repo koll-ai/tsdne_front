@@ -83,12 +83,13 @@ function CurrentPoll() {
 
         <br></br>
 
+        <h3><b>Current Poll :</b></h3>
         <div className="pollwrapper">
-        <h3>Current Poll :</h3>
+            <br/>
             <PollList pollingItems={pollingItems} />
-        </div>
-            <SubmitPromptDialog className="openDialogBtn" curscp ={curscp} needupdate={setNeedUpdate}/>
 
+            <SubmitPromptDialog className="openDialogBtn" curscp ={curscp} needupdate={setNeedUpdate}/>
+        </div>
         <br/><br/>
 
         <h3><b>Last SCP :</b></h3>
