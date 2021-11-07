@@ -86,9 +86,9 @@ export default function FormDialog(props) {
 
   return (
     <div>
-      <Button variant="contained" color="primary" onClick={handleClickOpen}>
+      <div className="buttonsubmit" onClick={handleClickOpen}>
         <h5>Submit a prompt</h5>
-      </Button>
+      </div>
       <Dialog fullWidth maxWidth="sm" open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Submit your SCP idea !</DialogTitle>
         <DialogContent>
@@ -109,11 +109,14 @@ export default function FormDialog(props) {
                 setScpClass( event.target.value);
                 }} value={scpClass}
               />
-                <InputLabel id="scpNSFW">NSFW ? </InputLabel>
-                <Switch  onChange={(event => {
-                    console.log(event.target.checked);
-                    setNsfw(event.target.checked);
-                })}/>
+                <InputLabel id="scpNSFW">
+                  NSFW:
+                  <Switch  onChange={(event => {
+                      console.log(event.target.checked);
+                      setNsfw(event.target.checked);
+                  })}/>
+                </InputLabel>
+                
               <div>
                 <InputLabel id="scpClassLabel">Author :</InputLabel>
                 <input name="Author" placeholder="Dr. [REDACTED]" onChange={(event) =>{

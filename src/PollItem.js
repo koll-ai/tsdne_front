@@ -25,8 +25,8 @@ class PoolItem extends Component {
     render() {
         return(
               <Grid item xs={12} sm={6} md={3}>
-                  <Card>
-                      <CardContent>
+                  <Card className="pollitemparent">
+                      <CardContent className="pollitem"> 
       
                           <Badge bg={this.props.scpClass === "Keter" ? "danger" : this.props.scpClass === "Euclid" ? "warning" : this.props.scpClass === "Thaumiel" ? "dark" : "success" }>
                               {/*<Typography className={classes.title} color="textSecondary" gutterBottom>*/}
@@ -37,7 +37,7 @@ class PoolItem extends Component {
                           <br/>
                           {this.props.prompt}
       
-                          <CardActions  style={{display: "flex", justifyContent:"space-between"}}>
+                          <CardActions style={{display: "flex", justifyContent:"space-between"}}>
                             <Button size="small" onClick={() => this.handleClick(this.props.idx)} disabled={this.state.hasClicked}>
                                   <strong>Vote &nbsp;</strong> {this.state.n_votes}
                             </Button>

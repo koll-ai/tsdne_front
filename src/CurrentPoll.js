@@ -2,7 +2,7 @@
 import {useEffect, useState} from "react";
 import Grid from '@material-ui/core/Grid';
 import "./CurrentPoll.css";
-import PollItem from './PollItem.js'
+import PollItem from './PollItem.js';
 import {Accordion} from 'react-bootstrap';
 
 import SubmitPromptDialog from './SubmitPromptDialog';
@@ -10,7 +10,8 @@ import SubmitPromptDialog from './SubmitPromptDialog';
 function PollList(props){
     const sorted = props.pollingItems.sort(((a, b) => b.votes - a.votes));    
     
-    const items = sorted.map((item) => <PollItem prompt={item.prompt}
+    const items = sorted.map((item) => <PollItem
+                                    prompt={item.prompt}
                                     scpClass={item.scpClass}
                                     votes={item.votes}
                                     idx={item.index}
@@ -66,26 +67,36 @@ function CurrentPoll() {
     }, [needupdate]);
 
     return (
-    <div className="CurrentPoll">
-        <strong>Current Poll :</strong>
-        <br/>
-        <br/>
+    <div>
 
-        <PollList pollingItems={pollingItems}/>
-        <br/>
-        <br/>
-        <SubmitPromptDialog className="openDialogBtn" curscp ={curscp} needupdate={setNeedUpdate}/>
-        <br/>
-        <br/>
+        <div className="presentation">
+            <h2> What is this website ? </h2>
+            <p>
+                This website uses artifical intelligence to generate customs SCP from a simple prompt.
+                Every hour the prompt with the most votes is chosen to create a new SCP. Previous SCPs can be found in the <a href="./list"> archives</a>.
+                You can vote for your favorite SCP or submit your own description on the poll <a href="./poll"> here</a>.
 
-        <strong>Last SCP :</strong>
-        <br/>
-        <br/>
-        <Accordion.Item>
-            <Accordion.Body>
-                <LastSCP/>
-            </Accordion.Body>
-        </Accordion.Item>
+                <br/>
+                If you're still  lost please check out our <a href="./about">FAQ</a>.
+            </p>
+        </div>
+
+        <br></br>
+
+        <div className="pollwrapper">
+        <h3>Current Poll :</h3>
+            <PollList pollingItems={pollingItems} />
+        </div>
+            <SubmitPromptDialog className="openDialogBtn" curscp ={curscp} needupdate={setNeedUpdate}/>
+
+        <br/><br/>
+
+        <h3><b>Last SCP :</b></h3>
+            <Accordion.Item className="scpcont">
+                <Accordion.Body>
+                    <LastSCP/>
+                </Accordion.Body>
+            </Accordion.Item>
     </div>
   );
 }

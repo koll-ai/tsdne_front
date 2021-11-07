@@ -8,30 +8,114 @@
 }
 
 body {
-  background: #f5f5f5;
-  /*width: 80%;*/
+  background-image: url('bkg.jpg');
+  background-size: 300px;
       margin-left: auto;
     margin-right: auto;
+
+  color: white;
+}
+
+.socialstable {
+  width: 100%;
+  text-align: center;
+}
+
+.right {
+  text-align: right;
+}
+
+.smallpadding {
+  padding-left: 10px;
+}
+
+.accordionheader {
+  background-color: #3a3a3a;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: justify;
+  outline: none;
+  font-size: 15px;
+  transition: 0.4s;
+  margin-top: 10px;
+  border-radius: 10px;
+}
+
+.presentation {
+  background-color: #3a3a3a;
+  color: white;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: justify;
+  font-size: 15px;;
+  border-radius: 10px;
+}
+
+.scpcont{
+  background-color: #252525;
+  color: white;
+  border-radius: 20px;
+}
+
+.buttonsubmit {
+  border-radius: 15px;
+  border: 2px solid white;
+
+  background-color: #111111;
+  color: white;
+
+  text-transform: uppercase;
+  margin-left: auto;
+  margin-right: auto;
+  cursor: pointer;
+  margin: auto;
+  /* set width according to innner content */
+  width: fit-content;
+  padding: 10px;
+}
+
+.pollwrapper {
+  background-color: #3a3a3a;
+  padding: 20px;
+  padding-top: 10px;
+  border-radius: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.pollitem {
+  background-color: #252525;
+  color: white;
+}
+
+/* make the button lighter on hover */
+.buttonsubmit:hover {
+  background-color: #252525;
+  transition: 0.3s;
 }
 
 .appbody{
     width: 80%;
-          margin-left: auto;
+    margin-left: auto;
     margin-right: auto;
-}
-
-
-.Keter{
-  backgroundColor: "#ffaaa7"
-}
-.Euclid{
-  backgroundColor:"#ffd3b4"
-}
-.Safe{
-  backgroundColor:"#d5ecc2"
+    margin-bottom: 20px;
 }
 
 header a, header a:hover, header a:focus, header a:active {
      text-decoration: none;
      color: inherit;
- }
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  text-decoration: underline;
+}
+
+a:hover {
+  color: rgb(255, 112, 112);
+}
