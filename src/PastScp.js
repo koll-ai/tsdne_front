@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import { SuitHeart, SuitHeartFill } from 'react-bootstrap-icons';
 
 const scp_url = "https://raw.githubusercontent.com/thisscpdoesnotexist/SCP-GPT_db/master/"
-const upvotes_url = "http://thisscpdoesnotexist.pythonanywhere.com/get_upvotes/"
+const upvotes_url = "https://thisscpdoesnotexist.pythonanywhere.com/get_upvotes/"
 
 function getScp(file) {
     let cur_url = scp_url + file
