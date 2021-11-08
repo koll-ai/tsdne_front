@@ -186,8 +186,8 @@ def add_prompt():
         # check prompt length
         if len(prompt) > MAX_PROMPT_LEN:
             return Response(response="prompt is too long", status=412)
-        if len(prompt) <= 0:
-            return Response(response="prompt is too long", status=412)
+        if len(prompt) <= 15:
+            return Response(response="prompt is too short", status=412)
 
         # check author lenght
         if len(author) > MAX_AUTHOR_LEN:
