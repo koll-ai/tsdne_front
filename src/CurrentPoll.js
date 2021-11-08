@@ -87,7 +87,7 @@ function CurrentPoll() {
         <div className="pollwrapper">
             <br/>
             <PollList pollingItems={pollingItems} />
-
+            <br/>
             <SubmitPromptDialog className="openDialogBtn" curscp ={curscp} needupdate={setNeedUpdate}/>
         </div>
         <br/><br/>
