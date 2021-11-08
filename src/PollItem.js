@@ -39,7 +39,7 @@ class PoolItem extends Component {
       
                           <CardActions style={{display: "flex", justifyContent:"space-between"}}>
                             <Button size="small" onClick={() => this.handleClick(this.props.idx)} disabled={this.state.hasClicked}>
-                                  <strong>Vote &nbsp;</strong> {this.state.n_votes}
+                                  <strong>Vote&nbsp;</strong>{this.state.n_votes}
                             </Button>
 
                             <div style={{color: "grey", fontStyle: "italic"}}>{this.props.author}</div>
