@@ -68,7 +68,7 @@ function About() {
         <p>
             We are Ruben and Philippe two young passionate data scientist.
             The SCP Foundation is a common interest and we figured it would be an interesting challenge for GPT-3. If you have any question or suggestion, feel free to send us an email at <a href="mailto:thisscpdoesnotexist@gmail.com">thisscpdoesnotexist@gmail.com</a>.
-            <br></br><br></br>
+            <br/><br/>
             You can also reach us on our social medias:
         </p>
 

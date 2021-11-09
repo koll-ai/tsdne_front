@@ -6,12 +6,13 @@ import Badge from 'react-bootstrap/Badge';
 import { readString } from 'react-papaparse'
 import Button from '@material-ui/core/Button';
 import { SuitHeart, SuitHeartFill } from 'react-bootstrap-icons';
+import * as urls from './URLs.js';
 
-const scp_url = "https://raw.githubusercontent.com/thisscpdoesnotexist/SCP-GPT_db/master/"
-const upvotes_url = "http://thisscpdoesnotexist.pythonanywhere.com/get_upvotes/"
+const url_db = urls.URL_DB;
+const upvotes_url = urls.URL_API + "get_upvotes/"
 
 function getScp(file) {
-    let cur_url = scp_url + file
+    let cur_url = url_db + file
     return fetch(cur_url)
         .then((res) => {return res.text()})
         .then((data) => {return data});

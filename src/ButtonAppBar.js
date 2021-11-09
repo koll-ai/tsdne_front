@@ -8,6 +8,9 @@ import {Link} from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Countdown from "react-countdown";
 import logo from './favicon.ico'
+import * as urls from './URLs.js';
+
+const url_api = urls.URL_API;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,7 +37,7 @@ export default function ButtonAppBar() {
     const [time, setTime] = useState(Date.now() + 3600 * 1000);
 
     useEffect(() => {
-        let cur_url = 'https://thisscpdoesnotexist.pythonanywhere.com/next_time/';
+        let cur_url = url_api + 'next_time/';
         fetch(cur_url)
             .then((res) => res.text())
             .then((data) => {

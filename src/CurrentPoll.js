@@ -1,11 +1,13 @@
-
 import {useEffect, useState} from "react";
 import Grid from '@material-ui/core/Grid';
 import "./CurrentPoll.css";
 import PollItem from './PollItem.js';
 import {Accordion} from 'react-bootstrap';
-
 import SubmitPromptDialog from './SubmitPromptDialog';
+import * as urls from './URLs.js';
+
+const url_api = urls.URL_API;
+
 
 function PollList(props){
     const sorted = props.pollingItems.sort(((a, b) => b.votes - a.votes));    
@@ -19,7 +21,7 @@ function PollList(props){
     />);
 
     return(
-        <div className="poll-list">
+        <div className="poll-list/">
             <Grid container spacing={3}>
                 {items}
             </Grid>
@@ -31,7 +33,7 @@ function LastSCP() {
     const [lastSCP, setLastSCP] = useState("");
 
     useEffect(() => {
-        fetch("https://thisscpdoesnotexist.pythonanywhere.com/last_scp_desc/")
+        fetch(url_api + "last_scp_desc/")
             .then((res) => res.text())
             .then((data) =>{
                 setLastSCP(data);
@@ -51,14 +53,14 @@ function CurrentPoll() {
     const [needupdate, setNeedUpdate] = useState(0);
 
     useEffect(() => {
-        let cur_url = 'https://thisscpdoesnotexist.pythonanywhere.com/get_poll/';
+        let cur_url = url_api + 'get_poll/';
         fetch(cur_url)
             .then((res) => res.json())
             .then((data) => {
                 setPollingItems(data.poll);
             })
 
-        fetch("https://thisscpdoesnotexist.pythonanywhere.com/current_scp_number/")
+        fetch(url_api + "current_scp_number/")
             .then((res) => res.json())
             .then((data) =>{
                 setCurscp(data);
@@ -83,12 +85,13 @@ function CurrentPoll() {
 
         <br></br>
 
+        <h3><b>Current Poll :</b></h3>
         <div className="pollwrapper">
-        <h3>Current Poll :</h3>
+            <br/>
             <PollList pollingItems={pollingItems} />
-        </div>
+            <br/>
             <SubmitPromptDialog className="openDialogBtn" curscp ={curscp} needupdate={setNeedUpdate}/>
-
+        </div>
         <br/><br/>
 
         <h3><b>Last SCP :</b></h3>
