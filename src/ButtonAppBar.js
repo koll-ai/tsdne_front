@@ -51,13 +51,14 @@ export default function ButtonAppBar() {
             <Grid container spacing={1} style={{display: "flex", alignItems: "center"}}>
 
                 <Grid item xs={12} sm={4} >
+                  <a href="/">
                     <img src={logo}/>
                     <Button color="inherit">
                       <Typography variant="h6" className={classes.title}>
                           This SCP Does Not Exist
                       </Typography>
-                  </Button>
-
+                    </Button>
+                  </a>
                 </Grid>
                 
                 <Grid item xs={12} sm={4} >

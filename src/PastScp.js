@@ -17,15 +17,16 @@ function getScp(file) {
 }
 
 class PastScp extends Component {
-    state = {
-        activeSections: [],
-        collapsed: true,
-        multipleSelect: false,
-        content: []
-    };
-
     constructor(props) {
         super(props);
+
+        this.state = {
+            activeSections: [],
+            collapsed: true,
+            multipleSelect: false,
+            content: [],
+            upvoted : []
+        };
 
         this.getAccodionHeader().then((data) => {
             this.setState({
@@ -47,11 +48,24 @@ class PastScp extends Component {
             var j = sections[i];
             getScp(content[j].url).then((data) => {
                 content[j].desc = data;
-                this.setState({content});
+                this.setState({
+                    content : content
+                });
             })
         }
     }
     
+    handleClick = (e, id) => {
+        e.stopPropagation();
+
+        if(this.state.upvoted.includes(id)) {
+            this.setState(state => ({ upvoted: state.upvoted.filter(function(e) { return e !== id })}));
+        } else {
+            fetch('https://thisscpdoesnotexist.pythonanywhere.com/vote/?id=' + id  + '&ip=' + Math.floor(Math.random() * 10000).toString());
+            this.setState(state => ({ upvoted: state.upvoted.concat(id)}));
+        }
+    }
+
     renderHeader = (section, _, isActive) => {
         return (
             <Accordion.Header>
@@ -65,12 +79,18 @@ class PastScp extends Component {
 
                         <td style={{paddingLeft : 5, paddingRight : 5}}>
                             <strong>{section.prompt}</strong>
+                            &nbsp;
+                            <span  style={{color : 'red'}}>
+                                {section.nsfw == "true" ? "NSFW" : ""}
+                            </span>
                         </td>
 
                         <td style={{textAlign : 'right'}}>
-                            <Button size="small" style={{backgroundColor:'lightgrey'}} disabled={false}>
-                                {section.n_upvotes} &nbsp; <SuitHeart/>                      
+                            <Button size="small" style={{backgroundColor:'lightgrey'}} onClick={(e) => this.handleClick(e, section.id)}>
+                                {this.state.upvoted.includes(section.id) ? <SuitHeartFill color="#fc4257"/> : <SuitHeart/>}                    
+                                &nbsp; {section.n_upvotes}
                             </Button>
+
                         </td>
                     </tr>
                 </table>
@@ -96,12 +116,15 @@ class PastScp extends Component {
 
         let scp = [];
         for(var i = 0; i < list_scp.data.length; i++) {
+            let scpid = list_scp.data[i][0]
             scp.push(
                 {
-                    prompt: list_scp.data[i][0],
-                    class: list_scp.data[i][1],
-                    url: list_scp.data[i][2],
-                    n_upvotes: 1862,
+                    id: scpid,
+                    prompt: "SCP-" + scpid + " is " + list_scp.data[i][1],
+                    class: list_scp.data[i][2],
+                    url: list_scp.data[i][3],
+                    nsfw: list_scp.data[i][4],
+                    n_upvotes: 0,
                     desc: 'Loading SCP...'
                 }
             );
