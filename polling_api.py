@@ -85,7 +85,53 @@ def get_poll():
         return Response(status=204)
 
     return {'poll': poll}
-    
+
+@app.route('/upvote/')
+def upvote():
+    ip = request.args.get('ip')
+    id_scp = request.args.get('id')
+
+
+    try:
+        #open file
+        with open('./upvotes.json', 'r') as json_file:
+            data = json.load(json_file)
+    except FileNotFoundError:
+        #file does not exist, create it
+        data = dict()
+
+    if id_scp.isdigit():
+        id_scp = int(id_scp)
+        if id_scp < 9000 or id_scp > scp_number:
+            return Response(response="not a valid id", status=412)   
+    else:
+        return Response(response="not a valid id", status=412)   
+
+    if id_scp in data:
+        if ip not in data[id_scp]["ips"]:
+            data[id_scp]["n_upvotes"] += 1
+            data[id_scp]["ips"].append(ip)
+        else:
+            return Response(response="already voted", status=412)   
+    else:
+        data[id_scp] = {
+            "n_upvotes" : 1,
+            "ips" : [ip]
+        }
+        
+    with open('upvotes.json', 'w') as outfile:
+        json.dump(data, outfile)
+
+    return Response(response="upvote counted",status=200) 
+
+
+@app.route('/get_upvotes/', methods=['GET'])
+def get_upvotes():
+    with open('upvotes.json', 'r') as json_file:
+        data = json.load(json_file)
+
+    return data
+
 @app.route('/vote/', methods=['GET'])
 def vote():
     #ip = request.remote_addr
@@ -135,17 +181,25 @@ def add_prompt():
         prompt = request.args.get('prompt')
         scp_class = request.args.get('class')
         author = request.args.get('author')
-        
+        nsfw = request.args.get('nsfw')
+
+        # check prompt length
         if len(prompt) > MAX_PROMPT_LEN:
             return Response(response="prompt is too long", status=412)
         if len(prompt) <= 0:
             return Response(response="prompt is too long", status=412)
 
+        # check author lenght
         if len(author) > MAX_AUTHOR_LEN:
             return Response(response="author is too long", status=412)
         if len(author) <= 0:
             return Response(response="author is too long", status=412)
-        
+
+        # check if nsfw is boolean:
+        if not(nsfw == 'true' or nsfw == 'false'):
+            return Response(response="nsfw is not bool", status=412)
+
+        # check if scp_class is a digit
         if scp_class.isdigit():
             scp_class = int(scp_class)
             if scp_class > 3 or scp_class < 0:
@@ -159,6 +213,7 @@ def add_prompt():
             'votes': 0,
             'index': len(poll),
             'author' : author,
+            'nsfw' : nsfw
         }
         
         poll.append(submission)
