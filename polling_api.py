@@ -171,7 +171,6 @@ def last_scp_desc():
     with open("/home/thisscpdoesnotexist/tsde/last.txt", "r") as f:
         last_scp_str = f.read()
 
-
     return str(last_scp_str)
 
 @app.route('/current_scp_number/', methods=['GET'])
@@ -215,6 +214,12 @@ def upvote():
 
     return Response(response="upvote counted",status=200) 
 
+@app.route('/get_upvotes/')
+def get_upvotes():
+    with open('upvotes.json') as json_file:
+        data = json.load(json_file)
+    return data
+
 @app.route('/save_data/', methods=['GET'])
 def save_data():
     k = request.args.get('key')
@@ -229,5 +234,7 @@ def save_data():
             json.dump(data, f)
     return "ok"
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    app.run(ssl_context='adhoc')
+
+    
