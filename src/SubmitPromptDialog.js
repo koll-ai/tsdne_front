@@ -8,6 +8,12 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
+import {Switch} from "@material-ui/core";
+import { useAlert } from 'react-alert'
+import * as urls from './URLs.js';
+
+const url_api = urls.URL_API;
+
 
 function UserForm(props){
     // Champ de texte qui commencera toujours par la valeur de son prop starting_value
@@ -58,6 +64,9 @@ export default function FormDialog(props) {
   const [prompt, setPrompt] = React.useState("");
   const [scpClass, setScpClass] = React.useState(0);
   const [author, setAuthor] = React.useState("Dr. [REDACTED]");
+  const [nsfw, setNsfw] = React.useState(false);
+
+  const alert = useAlert()
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -68,11 +77,19 @@ export default function FormDialog(props) {
   };
 
   const handleSubmit = () =>{
-      let url = "https://thisscpdoesnotexist.pythonanywhere.com/add_prompt/"
+        console.log(prompt.length);
+      if (prompt.length < 15) {
+          handleClose();
+          alert.show('Prompt length is too short !')
+
+          return;
+      }
+      let url = url_api + "add_prompt/"
       + "?prompt=" + prompt.substring(11)
       + "&class=" + scpClass.toString()
       + "&ip=" + Math.floor(Math.random() * 100).toString()
-      + "&author=" + author;
+      + "&author=" + author
+      + "&nswf=" + nsfw;
 
       fetch(url).then(value => window.location.href = '/');
 
@@ -82,9 +99,9 @@ export default function FormDialog(props) {
 
   return (
     <div>
-      <Button variant="contained" color="primary" onClick={handleClickOpen}>
+      <div className="buttonsubmit" onClick={handleClickOpen}>
         <h5>Submit a prompt</h5>
-      </Button>
+      </div>
       <Dialog fullWidth maxWidth="sm" open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Submit your SCP idea !</DialogTitle>
         <DialogContent>
@@ -92,7 +109,7 @@ export default function FormDialog(props) {
           <DialogContentText>
             Describe your SCP :
           </DialogContentText>
-            <UserForm starting_value={"SCP-" + props.curscp + " is "} onValueChange={(event) =>{
+            <UserForm starting_value={"SCP-" + props.curscp + "-GPT is "} onValueChange={(event) =>{
                 setPrompt(event.target.value);
             }} />
 
@@ -105,7 +122,14 @@ export default function FormDialog(props) {
                 setScpClass( event.target.value);
                 }} value={scpClass}
               />
-
+                <InputLabel id="scpNSFW">
+                  NSFW:
+                  <Switch  onChange={(event => {
+                      console.log(event.target.checked);
+                      setNsfw(event.target.checked);
+                  })}/>
+                </InputLabel>
+                
               <div>
                 <InputLabel id="scpClassLabel">Author :</InputLabel>
                 <input name="Author" placeholder="Dr. [REDACTED]" onChange={(event) =>{

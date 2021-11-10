@@ -7,8 +7,9 @@ import Button from '@material-ui/core/Button';
 import {Link} from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Countdown from "react-countdown";
-import logo from './favicon.ico'
-import * as urls from './URLs.js';
+import logo from '../favicon.ico';
+import "./ButtonAppBar.css"
+import * as urls from '../URLs.js';
 
 const url_api = urls.URL_API;
 
@@ -18,18 +19,20 @@ const useStyles = makeStyles((theme) => ({
   },
   menuButton: {
     marginRight: theme.spacing(2),
+    backgroundColor: "black"
   },
   title: {
     flexGrow: 1,
+    fontFamily: "BauhausDemi"
   },
 }));
 
 
 function MyCoundown(props){
     return (
-      <h2>
-        <h1 ><Countdown date={props.time  } key={"MyTimer"} daysInHours={true}/></h1>
-      </h2>
+      <div>
+        <h1><Countdown date={props.time} key={"MyTimer"} daysInHours={true}/></h1>
+      </div>
     )
 }
 
@@ -49,19 +52,18 @@ export default function ButtonAppBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar className="appBar" position="fixe">
         <Toolbar>
             <Grid container spacing={1} style={{display: "flex", alignItems: "center"}}>
 
                 <Grid item xs={12} sm={4} >
-                  <a href="/">
                     <img src={logo}/>
                     <Button color="inherit">
                       <Typography variant="h6" className={classes.title}>
                           This SCP Does Not Exist
                       </Typography>
-                    </Button>
-                  </a>
+                  </Button>
+
                 </Grid>
                 
                 <Grid item xs={12} sm={4} >
