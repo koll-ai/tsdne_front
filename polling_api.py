@@ -88,7 +88,7 @@ def get_poll():
 
 @app.route('/upvote/')
 def upvote():
-    ip = request.args.get('ip')
+    ip = request.remote_addr
     id_scp = request.args.get('id')
 
 
@@ -134,8 +134,7 @@ def get_upvotes():
 
 @app.route('/vote/', methods=['GET'])
 def vote():
-    #ip = request.remote_addr
-    ip = request.args.get('ip')
+    ip = request.remote_addr
 
     # if already voted
     if ip in votes.keys():
@@ -156,22 +155,11 @@ def vote():
     poll[n]['votes'] += 1
     votes[ip] = n
     
-    return Response(status=200)
-
-@app.route('/my_vote/', methods=['GET'])
-def my_vote():
-    #ip = request.remote_addr
-    ip = request.args.get('ip')
-
-    if ip in votes.keys():
-        return Response(response=str(votes[ip]),status=200)
-    else:
-        return Response(response="you haven't voted yet", status=204)       
+    return Response(status=200)   
 
 @app.route('/add_prompt/', methods=['GET'])
 def add_prompt():
-    #ip = request.remote_addr
-    ip = request.args.get('ip')
+    ip = request.remote_addr
     
     # if ip has already submitted one prompt
     if ip in submitted_ips:
