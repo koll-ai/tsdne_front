@@ -96,7 +96,7 @@ def upvote():
         #open file
         with open('./upvotes.json', 'r') as json_file:
             data = json.load(json_file)
-    except FileNotFoundError:
+    except (FileNotFoundError, JSONDecodeError) as e:
         #file does not exist, create it
         data = dict()
 
@@ -131,7 +131,7 @@ def get_upvotes():
         #open file
         with open('./upvotes.json', 'r') as json_file:
             data = json.load(json_file)
-    except FileNotFoundError:
+    except (FileNotFoundError, JSONDecodeError) as e:
         #file does not exist, create it
         data = dict()
 
