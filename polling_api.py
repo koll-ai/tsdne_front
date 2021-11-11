@@ -68,10 +68,10 @@ def next_round():
         scp_number += 1
 
         # save scp number
-        with open('/home/thisscpdoesnotexist/tsde/current_scp.txt') as f:
+        with open('current_scp.txt') as f:
             f.write(str(scp_number+1))
 
-        with open("/home/thisscpdoesnotexist/tsde/last.txt", "r") as f:
+        with open("last.txt", "r") as f:
             # f.write()
             last_scp_str = f.read().rstrip()
 
