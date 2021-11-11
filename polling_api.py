@@ -4,6 +4,7 @@ from flask import Flask, request, Response
 import json
 import time
 from flask_cors import CORS
+from json import JSONDecodeError
 
 MAX_PROMPT_LEN = 300
 MAX_AUTHOR_LEN = 20
