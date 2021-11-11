@@ -223,7 +223,7 @@ def add_prompt():
 @app.route('/last_scp_desc/',  methods=['GET'])
 def last_scp_desc():
 
-    with open("/home/thisscpdoesnotexist/tsde/last.txt", "r") as f:
+    with open("last.txt", "r") as f:
         last_scp_str = f.read()
 
     return str(last_scp_str)
