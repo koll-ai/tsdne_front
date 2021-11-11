@@ -127,8 +127,13 @@ def upvote():
 
 @app.route('/get_upvotes/', methods=['GET'])
 def get_upvotes():
-    with open('upvotes.json', 'r') as json_file:
-        data = json.load(json_file)
+    try:
+        #open file
+        with open('./upvotes.json', 'r') as json_file:
+            data = json.load(json_file)
+    except FileNotFoundError:
+        #file does not exist, create it
+        data = dict()
 
     return data
 
