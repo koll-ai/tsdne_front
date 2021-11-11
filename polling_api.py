@@ -13,18 +13,18 @@ CORS(app)
 
 last_scp_str = ""
 
-with open("/home/thisscpdoesnotexist/tsde/polling_api.key", "r") as f:
+with open("polling_api.key", "r") as f:
     NEXT_ROUND_KEY = f.read().rstrip()
 
-with open("/home/thisscpdoesnotexist/tsde/last.txt", "r") as f:
+with open("last.txt", "r") as f:
     last_scp_str = f.read().rstrip()
 
-with open('/home/thisscpdoesnotexist/tsde/current_scp.txt') as f:
+with open('current_scp.txt') as f:
     scp_number = int(f.read().rstrip())
 
 object_classes = ['Safe', 'Euclid', 'Keter', 'Thaumiel']
 
-initial_data_path = "/home/thisscpdoesnotexist/tsde/initial_data.json"
+initial_data_path = "initial_data.json"
 
 
 # Set initial variable with savec file or with initial value otherwise
@@ -226,7 +226,6 @@ def last_scp_desc():
     with open("/home/thisscpdoesnotexist/tsde/last.txt", "r") as f:
         last_scp_str = f.read()
 
-
     return str(last_scp_str)
 
 @app.route('/current_scp_number/', methods=['GET'])
@@ -252,5 +251,7 @@ def save_data():
             json.dump(data, f)
     return "ok"
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    app.run(ssl_context='adhoc')
+
+    
