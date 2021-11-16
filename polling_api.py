@@ -5,12 +5,30 @@ import json
 import time
 from flask_cors import CORS
 from json import JSONDecodeError
+from flask_httpauth import HTTPBasicAuth
+from werkzeug.security import generate_password_hash, check_password_hash
 
 MAX_PROMPT_LEN = 300
 MAX_AUTHOR_LEN = 20
 
+db_path = '../SCP-GPT_db/'
+
+with open("users.json", "r") as f:
+    users = json.load(f)
+    users = {u : generate_password_hash(p) for u, p in users.items()}
+
 app = Flask(__name__)
 CORS(app)
+
+auth = HTTPBasicAuth()
+
+
+@auth.verify_password
+def verify_password(username, password):
+    if username in users and \
+            check_password_hash(users.get(username), password):
+        return username
+
 
 last_scp_str = ""
 
@@ -46,6 +64,7 @@ votes = params['votes']
 submitted_ips = params['submitted_ips']
 
 @app.route('/', methods=['GET'])
+@auth.login_required
 def main():
     return "gpt scp api live and running"
 
@@ -81,6 +100,7 @@ def next_round():
     return Response(status=403)
 
 @app.route('/get_poll/', methods=['GET'])
+@auth.login_required
 def get_poll():
     if len(poll) == 0:
         return Response(status=204)
@@ -215,6 +235,7 @@ def add_prompt():
         return Response(response="submission has been added!",status=200)
 
 @app.route('/last_scp_desc/',  methods=['GET'])
+@auth.login_required
 def last_scp_desc():
 
     with open("last.txt", "r") as f:
@@ -245,7 +266,19 @@ def save_data():
             json.dump(data, f)
     return "ok"
 
+@app.route('/save_data/', methods=['GET'])
+
+@app.route('/get_past_scp/', methods=['GET'])
+@auth.login_required
+def get_past_scp():
+    file = request.args.get('file')
+    with open(db_path + file, 'r') as f:
+        return f.readlines()[0]
+
+
+
+
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=45900)
+    app.run(host='0.0.0.0', port=45900, debug=True)
 
     
