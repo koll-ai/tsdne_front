@@ -1,6 +1,7 @@
 image: "python:3.9"
 
 before_script:
+  - pwd
   - python --version
   - pip install -r requierements.txt
 
