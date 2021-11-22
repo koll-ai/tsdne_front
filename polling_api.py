@@ -267,18 +267,22 @@ def save_data():
     return "ok"
 
 @app.route('/get_past_scp/', methods=['GET'])
-@auth.login_required
+# @auth.login_required
 def get_past_scp():
+    print('coucou')
     file = request.args.get('file')
-    with open(db_path + file, 'r') as f:
-        return f.readlines()[0]
+    if not file.isnumeric():
+        return 'ERROR'
+
+    with open(db_path + 'SCP-' + file + '-GPT.txt', 'r') as f:
+        return f.read()
 
 
 @app.route('/get_past_list/', methods=['GET'])
 # @auth.login_required
 def get_past_list():
     with open(db_path+'scp_list.csv', "r") as f:
-        return dict(data = f.readlines())
+        return f.read()
 
 
 if __name__ == "__main__":
