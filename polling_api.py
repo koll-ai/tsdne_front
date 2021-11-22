@@ -130,14 +130,14 @@ def upvote():
         if id_scp < 9000 or id_scp > scp_number:
             return Response(response="not a valid id", status=412)   
     else:
-        return Response(response="not a valid id", status=412)   
+        return Response(response="not a valid id", status=413)
 
     if id_scp in data:
         if ip not in data[id_scp]["ips"]:
             data[id_scp]["n_upvotes"] += 1
             data[id_scp]["ips"].append(ip)
         else:
-            return Response(response="already voted", status=412)   
+            return Response(response="already voted", status=414)
     else:
         data[id_scp] = {
             "n_upvotes" : 1,
@@ -266,6 +266,12 @@ def save_data():
                   votes = votes,
                   submitted_ips = submitted_ips
             )
+
+        with open("current_scp.txt", "w") as f:
+            f.write(str(scp_number))
+
+
+
 
             json.dump(data, f)
     return "ok"
