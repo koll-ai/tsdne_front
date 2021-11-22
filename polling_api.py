@@ -58,6 +58,10 @@ except FileNotFoundError:
                   submitted_ips = []
     )
 
+if params['next_time'] < time.time():
+    print('reseted')
+    params['next_time'] = time.time() + 3600
+
 next_time = params['next_time']
 poll = params['poll']
 votes = params['votes']
@@ -267,7 +271,7 @@ def save_data():
     return "ok"
 
 @app.route('/get_past_scp/', methods=['GET'])
-# @auth.login_required
+@auth.login_required
 def get_past_scp():
     print('coucou')
     file = request.args.get('file')
