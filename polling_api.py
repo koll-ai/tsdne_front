@@ -274,6 +274,11 @@ def get_past_scp():
         return f.readlines()[0]
 
 
+@app.route('/get_past_list/', methods=['GET'])
+# @auth.login_required
+def get_past_list():
+    with open(db_path+'scp_list.csv', "r") as f:
+        return dict(data = f.readlines())
 
 
 if __name__ == "__main__":
