@@ -29,6 +29,10 @@ function PoolItem(props) {
             .then((res) => res.text())
             .then((data) => {
                 setTime(parseInt(data) - Date.now());
+                console.log(data);
+                console.log(Date.now());
+                console.log(parseInt(data) - Date.now());
+                console.log('time' + time);
             })}, []
 );
 
@@ -40,7 +44,8 @@ function PoolItem(props) {
             if (state.hasClicked === false) {
                 fetch(url_api + '/vote/?n=' + n.toString() + '&ip=' + Math.floor(Math.random() * 10000).toString());
                 setState(state => ({n_votes: state.n_votes + 1, hasClicked: true}));
-                ls.set(n, true, {ttl: time});
+                console.log(time);
+                ls.set(n, true, {ttl: time/1000});
             }
         }
 

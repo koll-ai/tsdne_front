@@ -91,7 +91,14 @@ export default function FormDialog(props) {
       + "&author=" + author
       + "&nsfw=" + nsfw;
 
-      fetch(url).then(value => window.location.href = '/');
+      fetch(url, {
+            headers: new Headers({
+                'Authorization': 'Basic '+btoa(localStorage.getItem('id') + ':' + localStorage.getItem('mdp')),
+                'Content-Type': 'application/x-www-form-urlencoded'
+
+            })
+        })
+          .then(value => window.location.href = '/');
 
       handleClose();
 
