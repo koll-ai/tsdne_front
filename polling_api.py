@@ -266,8 +266,6 @@ def save_data():
             json.dump(data, f)
     return "ok"
 
-@app.route('/save_data/', methods=['GET'])
-
 @app.route('/get_past_scp/', methods=['GET'])
 @auth.login_required
 def get_past_scp():
