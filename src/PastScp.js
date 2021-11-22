@@ -9,10 +9,24 @@ import { SuitHeart, SuitHeartFill } from 'react-bootstrap-icons';
 import * as urls from './URLs.js';
 
 const url_db = urls.URL_DB;
+const url_api = urls.URL_API;
 const upvotes_url = urls.URL_API + "get_upvotes/"
 
 function getScp(file) {
     let cur_url = url_db + file
+    return fetch(cur_url, {
+            headers: new Headers({
+                'Authorization': 'Basic '+btoa(localStorage.getItem('id') + ':' + localStorage.getItem('mdp')),
+                'Content-Type': 'application/x-www-form-urlencoded'
+
+            })
+        })
+        .then((res) => {return res.text()})
+        .then((data) => {return data});
+}
+
+function getScpList(){
+    let cur_url = url_api + 'get_past_list/'
     return fetch(cur_url, {
             headers: new Headers({
                 'Authorization': 'Basic '+btoa(localStorage.getItem('id') + ':' + localStorage.getItem('mdp')),
@@ -54,7 +68,7 @@ class PastScp extends Component {
     loadContent = (content, sections) => {
         for(var i = 0; i < sections.length; i++) {
             let j = sections[i];
-            getScp(content[j].url).then((data) => {
+            getScp(content[j].id).then((data) => {
                 content[j].desc = data;
                 this.setState({
                     content : content
@@ -114,7 +128,7 @@ class PastScp extends Component {
     }
 
     async getAccodionHeader() {
-        let str = await getScp("scp_list.csv");
+        let str = await getScpList();
         let list_scp = readString(str);
 
         let upvotes_count = await fetch(upvotes_url).then((res) => {return res.json()});
