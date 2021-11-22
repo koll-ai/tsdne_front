@@ -83,7 +83,7 @@ class PastScp extends Component {
         if(this.state.upvoted.includes(id)) {
             this.setState(state => ({ upvoted: state.upvoted.filter(function(e) { return e !== id })}));
         } else {
-            fetch('https://thisscpdoesnotexist.pythonanywhere.com/vote/?id=' + id  + '&ip=' + Math.floor(Math.random() * 10000).toString());
+            fetch(url_api + 'upvote/?id=' + id  );
             this.setState(state => ({ upvoted: state.upvoted.concat(id)}));
         }
     }
