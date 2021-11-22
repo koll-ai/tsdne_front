@@ -64,7 +64,13 @@ function CurrentPoll() {
 
     useEffect(() => {
         let cur_url = url_api + 'get_poll/';
-        fetch(cur_url)
+        fetch(cur_url, {
+            headers: new Headers({
+                'Authorization': 'Basic '+btoa(localStorage.getItem('id') + ':' + localStorage.getItem('mdp')),
+                'Content-Type': 'application/x-www-form-urlencoded'
+
+            })
+        })
             .then((res) => res.json())
             .then((data) => {
                 setPollingItems(data.poll);
