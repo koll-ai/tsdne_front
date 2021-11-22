@@ -13,7 +13,13 @@ const upvotes_url = urls.URL_API + "get_upvotes/"
 
 function getScp(file) {
     let cur_url = url_db + file
-    return fetch(cur_url)
+    return fetch(cur_url, {
+            headers: new Headers({
+                'Authorization': 'Basic '+btoa(localStorage.getItem('id') + ':' + localStorage.getItem('mdp')),
+                'Content-Type': 'application/x-www-form-urlencoded'
+
+            })
+        })
         .then((res) => {return res.text()})
         .then((data) => {return data});
 }

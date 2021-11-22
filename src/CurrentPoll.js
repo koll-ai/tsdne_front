@@ -36,13 +36,6 @@ function PollList(props){
 function LastSCP() {
     const [lastSCP, setLastSCP] = useState("");
 
-    const [id, setId] = useState(
-    localStorage.getItem('myValueInLocalStorage') || ''
-  );
-    const [mdp, setMdp] = useState(
-    localStorage.getItem('myValueInLocalStorage') || ''
-  );
-
     useEffect(() => {
         fetch(url_api + "last_scp_desc/", {
             headers: new Headers({
