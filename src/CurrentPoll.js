@@ -5,6 +5,10 @@ import PollItem from './PollItem.js';
 import {Accordion} from 'react-bootstrap';
 import SubmitPromptDialog from './SubmitPromptDialog';
 import * as urls from './URLs.js';
+import identify from './connect';
+import Button from "@material-ui/core/Button";
+
+
 
 const url_api = urls.URL_API;
 
@@ -32,8 +36,21 @@ function PollList(props){
 function LastSCP() {
     const [lastSCP, setLastSCP] = useState("");
 
+    const [id, setId] = useState(
+    localStorage.getItem('myValueInLocalStorage') || ''
+  );
+    const [mdp, setMdp] = useState(
+    localStorage.getItem('myValueInLocalStorage') || ''
+  );
+
     useEffect(() => {
-        fetch(url_api + "last_scp_desc/")
+        fetch(url_api + "last_scp_desc/", {
+            headers: new Headers({
+                'Authorization': 'Basic '+btoa(localStorage.getItem('id') + ':' + localStorage.getItem('mdp')),
+                'Content-Type': 'application/x-www-form-urlencoded'
+
+            })
+        })
             .then((res) => res.text())
             .then((data) =>{
                 setLastSCP(data);
@@ -81,6 +98,12 @@ function CurrentPoll() {
                 <br/>
                 If you're still  lost please check out our <a href="./about">FAQ</a>.
             </p>
+
+            <Button onClick={identify}> Please identify you :) </Button>
+
+
+
+
         </div>
 
         <br></br>
