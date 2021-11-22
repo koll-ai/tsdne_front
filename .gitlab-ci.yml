@@ -4,6 +4,7 @@ before_script:
   - pwd
   - python --version
   - pip install -r requirements.txt
+  - pip install pytest
 
 stages:
   - Test
