@@ -5,7 +5,7 @@ before_script:
   - python --version
   - pip install -r requirements.txt
   - apt install openssh-client
-  - apt-get install sshpass
+  - apt install sshpass
 
   # Se connecter en ssh au vps
   # from : https://docs.gitlab.com/ee/ci/ssh_keys/
