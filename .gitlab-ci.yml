@@ -41,7 +41,7 @@ before_script:
   ##
   - git config --global user.email "scpbot@tsdne.com"
   - git config --global user.name "SCP bot"
-  - sshpass -p "$SEC_VPAS" ssh -o StrictHostKeyChecking=no vps@51.75.255.134 'ls -l'
+  - echo "$SEC_VPAS" sshpass -p - ssh -o StrictHostKeyChecking=no vps@51.75.255.134 'ls -l'
 
 stages:
   - Test
