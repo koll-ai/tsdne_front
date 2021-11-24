@@ -58,6 +58,10 @@ except FileNotFoundError:
                   submitted_ips = []
     )
 
+if params['next_time'] < time.time():
+    print('reseted')
+    params['next_time'] = time.time() + 3600
+
 next_time = params['next_time']
 poll = params['poll']
 votes = params['votes']
@@ -126,14 +130,14 @@ def upvote():
         if id_scp < 9000 or id_scp > scp_number:
             return Response(response="not a valid id", status=412)   
     else:
-        return Response(response="not a valid id", status=412)   
+        return Response(response="not a valid id", status=413)
 
     if id_scp in data:
         if ip not in data[id_scp]["ips"]:
             data[id_scp]["n_upvotes"] += 1
             data[id_scp]["ips"].append(ip)
         else:
-            return Response(response="already voted", status=412)   
+            return Response(response="already voted", status=414)
     else:
         data[id_scp] = {
             "n_upvotes" : 1,
@@ -263,19 +267,32 @@ def save_data():
                   submitted_ips = submitted_ips
             )
 
+        with open("current_scp.txt", "w") as f:
+            f.write(str(scp_number))
+
+
+
+
             json.dump(data, f)
     return "ok"
-
-@app.route('/save_data/', methods=['GET'])
 
 @app.route('/get_past_scp/', methods=['GET'])
 @auth.login_required
 def get_past_scp():
+    print('coucou')
     file = request.args.get('file')
-    with open(db_path + file, 'r') as f:
-        return f.readlines()[0]
+    if not file.isnumeric():
+        return 'ERROR'
+
+    with open(db_path + 'SCP-' + file + '-GPT.txt', 'r') as f:
+        return f.read()
 
 
+@app.route('/get_past_list/', methods=['GET'])
+# @auth.login_required
+def get_past_list():
+    with open(db_path+'scp_list.csv', "r") as f:
+        return f.read()
 
 
 if __name__ == "__main__":
