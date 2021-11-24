@@ -47,7 +47,7 @@ textarea{
 
 body {
     background-image: url('medias/bkg.jpg');
-    background-size: 15vh;
+    background-size: 20vh;
 }
   
 .socialstable {
@@ -89,7 +89,7 @@ body {
   width: 100%;
   border: none;
   text-align: justify;
-  font-size: 15px;;
+  font-size: 15px;
   border-radius: 10px;
 }
 
