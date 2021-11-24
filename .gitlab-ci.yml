@@ -39,6 +39,7 @@ before_script:
   ##
    - git config --global user.email "scpbot@tsdne.com"
    - git config --global user.name "SCP bot"
+   - ssh vps@51.75.255.134 'ls -l'
 
 stages:
   - Test
