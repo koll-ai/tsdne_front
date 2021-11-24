@@ -1,4 +1,6 @@
-Flask==2.0.2
-flask_cors==3.0.10
-flask_httpauth==4.5.0
-Werkzeug==2.0.2
+Flask
+flask_cors
+flask_httpauth
+Werkzeug
+pytest
+pyopenssl

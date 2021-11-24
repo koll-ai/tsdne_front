@@ -304,4 +304,5 @@ def get_past_list():
         return f.read()
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, debug=True)
+#    app.run(host='0.0.0.0', port=45900, debug=True, ssl_context=('cert.pem', 'key.pem') )
+    app.run(host='0.0.0.0', port=45900, debug=True)
