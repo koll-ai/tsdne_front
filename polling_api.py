@@ -293,7 +293,7 @@ def get_past_scp():
     else:
         return Response(response="not a valid id", status=412)
 
-    with open(db_path + 'SCP-' + idscp + '-GPT.txt', 'r') as f:
+    with open(db_path + 'SCP-' + str(idscp) + '-GPT.txt', 'r') as f:
         return f.read()
 
 
