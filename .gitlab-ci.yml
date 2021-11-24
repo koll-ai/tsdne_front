@@ -54,4 +54,4 @@ pytest:
 github_pages:
   stage: GH_pages
   script:
-    -
+    - pwd
