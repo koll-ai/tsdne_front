@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import { ThreeDotsVertical } from 'react-bootstrap-icons';
+import React from 'react';
 import Badge from 'react-bootstrap/Badge';
 
 function About() {
