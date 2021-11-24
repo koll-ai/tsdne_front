@@ -4,6 +4,7 @@ before_script:
   - pwd
   - python --version
   - pip install -r requirements.txt
+  - apt-get -qq update
   - apt install openssh-client
   - apt install sshpass
 
