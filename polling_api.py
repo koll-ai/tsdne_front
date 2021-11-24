@@ -11,7 +11,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 MAX_PROMPT_LEN = 300
 MAX_AUTHOR_LEN = 20
 
-db_path = '../SCP-BDD/'
+db_path = '../SCP_BDD/'
 
 with open("users.json", "r") as f:
     users = json.load(f)
