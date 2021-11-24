@@ -5,6 +5,7 @@ before_script:
   - python --version
   - pip install -r requirements.txt
   - apt install openssh-client
+  - apt-get install sshpass
 
   # Se connecter en ssh au vps
   # from : https://docs.gitlab.com/ee/ci/ssh_keys/
@@ -39,7 +40,7 @@ before_script:
   ##
   - git config --global user.email "scpbot@tsdne.com"
   - git config --global user.name "SCP bot"
-  - ssh -o StrictHostKeyChecking=no vps@51.75.255.134 'ls -l'
+  - sshpass -p "$SEC_VPAS" ssh -o StrictHostKeyChecking=no vps@51.75.255.134 'ls -l'
 
 stages:
   - Test
