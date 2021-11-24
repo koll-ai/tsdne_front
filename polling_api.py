@@ -11,7 +11,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 MAX_PROMPT_LEN = 300
 MAX_AUTHOR_LEN = 20
 
-db_path = '../SCP-GPT_db/'
+db_path = '../SCP-BDD/'
 
 with open("users.json", "r") as f:
     users = json.load(f)
@@ -67,6 +67,16 @@ poll = params['poll']
 votes = params['votes']
 submitted_ips = params['submitted_ips']
 
+def is_scpid_legit(id_scp):
+    if id_scp.isdigit():
+        id_scp = int(id_scp)
+        if id_scp < 9000 or id_scp > scp_number:
+            return False
+        else:
+            return True 
+    else:
+        return False
+
 @app.route('/', methods=['GET'])
 @auth.login_required
 def main():
@@ -116,6 +126,10 @@ def upvote():
     ip = request.remote_addr
     id_scp = request.args.get('id')
 
+    if is_scpid_legit(id_scp):
+        id_scp = int(id_scp)
+    else:
+        return Response(response="not a valid id", status=412)    
 
     try:
         #open file
@@ -124,13 +138,6 @@ def upvote():
     except (FileNotFoundError, JSONDecodeError) as e:
         #file does not exist, create it
         data = dict()
-
-    if id_scp.isdigit():
-        id_scp = int(id_scp)
-        if id_scp < 9000 or id_scp > scp_number:
-            return Response(response="not a valid id", status=412)   
-    else:
-        return Response(response="not a valid id", status=413)
 
     if id_scp in data:
         if ip not in data[id_scp]["ips"]:
@@ -279,12 +286,14 @@ def save_data():
 @app.route('/get_past_scp/', methods=['GET'])
 @auth.login_required
 def get_past_scp():
-    print('coucou')
-    file = request.args.get('file')
-    if not file.isnumeric():
-        return 'ERROR'
+    idscp = request.args.get('file')
 
-    with open(db_path + 'SCP-' + file + '-GPT.txt', 'r') as f:
+    if is_scpid_legit(idscp):
+        idscp = int(idscp)
+    else:
+        return Response(response="not a valid id", status=412)
+
+    with open(db_path + 'SCP-' + idscp + '-GPT.txt', 'r') as f:
         return f.read()
 
 
@@ -294,8 +303,5 @@ def get_past_list():
     with open(db_path+'scp_list.csv', "r") as f:
         return f.read()
 
-
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=45900, debug=True)
-
-    
+    app.run(host='0.0.0.0', port=5000, debug=True)
