@@ -22,13 +22,11 @@ CORS(app)
 
 auth = HTTPBasicAuth()
 
-
 @auth.verify_password
 def verify_password(username, password):
     if username in users and \
             check_password_hash(users.get(username), password):
         return username
-
 
 last_scp_str = ""
 
@@ -78,7 +76,6 @@ def is_scpid_legit(id_scp):
         return False
 
 @app.route('/', methods=['GET'])
-@auth.login_required
 def main():
     return "gpt scp api live and running"
 
@@ -114,7 +111,6 @@ def next_round():
     return Response(status=403)
 
 @app.route('/get_poll/', methods=['GET'])
-@auth.login_required
 def get_poll():
     if len(poll) == 0:
         return Response(status=204)
@@ -298,7 +294,6 @@ def get_past_scp():
 
 
 @app.route('/get_past_list/', methods=['GET'])
-# @auth.login_required
 def get_past_list():
     with open(db_path+'scp_list.csv', "r") as f:
         return f.read()
