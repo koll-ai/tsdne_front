@@ -12,28 +12,48 @@ import '../App.css';
 
 const url_api = urls.URL_API;
 
+function item_voted(idx) {
+    var n = ls.get('current_scp_number');
+    var votes = ls.get(n);
+
+    //returns true is idx is in votes
+    if (votes === null) {
+        return false;
+    } else {
+        for (let i = 0; i < votes.length; i++) {
+            if (parseInt(votes[i]) === parseInt(idx)) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
 function PoolItem(props) {
     const [raised, setRaised]   = useState(false);
+    
     const [state, setState] = useState({
         n_votes: props.votes,
-        hasClicked: ls.get(props.idx) === null ? false : true
+        hasClicked: item_voted(props.idx)
     });
 
-    ls.set('current_poll_votes');
-
-    function handleClick(n) {
-        if (state.hasClicked === false) {
-            fetch(url_api + 'vote/?n=' + n.toString());
+    function handleClick(idx) {
+        if (state.hasClicked === undefined || state.hasClicked === false) {
+            fetch(url_api + 'vote/?n=' + idx.toString());
             setState(state => ({n_votes: state.n_votes + 1, hasClicked: true}));
             
-            // get next time to know cookie ttl
-            let cur_url = url_api + 'next_time/';
-            fetch(cur_url)
-                .then((res) => res.text())
-                .then((data) => {
-                    var time = parseInt(data) - Date.now();
-                    ls.set(n, true, {ttl: time/1000});;
-                })
+            var scp_num = ls.get('current_scp_number');
+            var vote_list = []
+            var vote_cookie = ls.get(scp_num);
+            if(vote_cookie != null) {
+                vote_list = vote_cookie
+            }
+
+            if(vote_list.indexOf(idx) === -1) {
+                vote_list.push(idx)
+            }
+
+            ls.set(scp_num, vote_list, {ttl: 3600});
         }
     }
 
@@ -49,9 +69,10 @@ function PoolItem(props) {
                                 {props.scpClass}
                             {/*</Typography>*/}
                         </Badge>
-                        <br />
-                        <br/>
-                        <p className={"coucou"}>
+
+                        <br/><br/>
+
+                        <p>
                         {props.prompt}
                         </p>
 

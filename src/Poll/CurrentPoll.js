@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import PollItem from './PollItem.js';
 import * as urls from '../URLs.js';
 import identify from '../connect';
+import ls from 'localstorage-slim';
 
 import "../App.css";
 
@@ -61,13 +62,7 @@ function CurrentPoll() {
 
     useEffect(() => {
         let cur_url = url_api + 'get_poll/';
-        fetch(cur_url, {
-            headers: new Headers({
-                'Authorization': 'Basic '+btoa(localStorage.getItem('id') + ':' + localStorage.getItem('mdp')),
-                'Content-Type': 'application/x-www-form-urlencoded'
-
-            })
-        })
+        fetch(cur_url)
             .then((res) => res.json())
             .then((data) => {
                 setPollingItems(data.poll);
@@ -77,6 +72,7 @@ function CurrentPoll() {
             .then((res) => res.json())
             .then((data) =>{
                 setCurscp(data);
+                ls.set('current_scp_number', data);
             })
 
     }, [needupdate]);
