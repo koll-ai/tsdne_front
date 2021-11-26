@@ -1,3 +1,4 @@
+
 .App {
   text-align: center;
 }
@@ -42,40 +43,40 @@
 }
 
 textarea{
-    width: 100%;
+  width: 100%;
 }  
 
 body {
-    background-image: url('medias/bkg.jpg');
-    background-size: 20vh;
+  background-image: url('medias/bkg.jpg');
+  background-size: 20vh;
 }
   
 .socialstable {
-    width: 100%;
-    text-align: center;
+  width: 100%;
+  text-align: center;
 }
 
 .right {
-    text-align: right;
+  text-align: right;
 }
 
 .smallpadding {
-    padding-left: 10px;
+  padding-left: 10px;
 }
 
 .accordionheader {
-    background-color: #3a3a3a;
-    color: white;
-    cursor: pointer;
-    padding: 0.8em;
-    width: 100%;
-    border: none;
-    text-align: justify;
-    outline: none;
-    font-size: 15px;
-    margin-top: 0.6em;
-    border-radius: 0.5em;
-    transition: 0.4s;
+  background-color: #3a3a3a;
+  color: white;
+  cursor: pointer;
+  padding: 0.8em;
+  width: 100%;
+  border: none;
+  text-align: justify;
+  outline: none;
+  font-size: 15px;
+  margin-top: 0.6em;
+  border-radius: 0.5em;
+  transition: 0.4s;
 }
 
 .accordionheader:hover {
@@ -109,30 +110,30 @@ body {
 }
 
 .buttonsubmit {
-    border-radius: 0.5em;
-    border: 2px solid white;
+  border-radius: 0.5em;
+  border: 2px solid white;
 
-    background-color: #111111;
-    color: white;
+  background-color: #111111;
+  color: white;
 
-    text-transform: uppercase;
-    margin-left: auto;
-    margin-right: auto;
-    cursor: pointer;
-    margin: auto;
-    /* set width according to innner content */
-    width: fit-content;
-    padding: 10px;
+  text-transform: uppercase;
+  margin-left: auto;
+  margin-right: auto;
+  cursor: pointer;
+  margin: auto;
+  /* set width according to innner content */
+  width: fit-content;
+  padding: 10px;
 }
 
 .greywrap {
-    background-color: #3a3a3a;
-    color: white;
-    padding: 18px;
-    width: 100%;
-    border: none;
-    font-size: 15px;
-    border-radius: 10px;
+  background-color: #3a3a3a;
+  color: white;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  font-size: 15px;
+  border-radius: 10px;
 }
 
 .justifytext {
@@ -142,38 +143,50 @@ body {
 
 /* h2 style in pollwrapper */
 .pollwrapper h2 {
-    color: white;
+  color: white;
 }
 
 .pollitem {
-    background-color: #252525;
-    color: white;
+  background-color: #252525;
+  color: white;
 }
 
 /* make the button lighter on hover */
 .buttonsubmit:hover {
-    background-color: #252525;
-    transition: 0.3s;
+  background-color: #494949;
+  transition: 0.3s;
 }
 
 .appbody{
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 20px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
 }
 
 header a, header a:hover, header a:focus, header a:active {
-    text-decoration: none;
-    color: inherit;
+  text-decoration: none;
+  color: inherit;
 }
 
 a {
-    text-decoration: none;
-    color: inherit;
-    text-decoration: underline;
+  text-decoration: none;
+  color: inherit;
+  text-decoration: underline;
 }
 
 a:hover {
-    color: rgb(255, 112, 112);
+  color: rgb(255, 112, 112);
+}
+
+.loginButton {
+  color: rgb(255, 255, 255) !important;
+  border-radius: 5em;
+  border : 2px solid white !important;
+  background-color: #000000 !important
+}
+
+.loginButton:hover {
+  background-color: #494949 !important;
+  transition: 0.3s;
 }

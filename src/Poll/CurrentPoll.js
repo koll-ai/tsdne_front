@@ -91,7 +91,7 @@ function CurrentPoll() {
                 If you're still  lost please check out our <a href="./about">FAQ</a>.
             </p>
 
-            <Button onClick={identify}> Please identify yourself :) </Button>
+            <Button onClick={identify} className='loginButton'> Please identify yourself :) </Button>
 
         </div>
 
