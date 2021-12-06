@@ -1,17 +1,15 @@
+import SubmitPromptDialog from './SubmitPromptDialog.js';
+import Button from "@material-ui/core/Button";
 import {useEffect, useState} from "react";
 import Grid from '@material-ui/core/Grid';
-import "./CurrentPoll.css";
 import PollItem from './PollItem.js';
-import {Accordion} from 'react-bootstrap';
-import SubmitPromptDialog from './SubmitPromptDialog';
-import * as urls from './URLs.js';
-import identify from './connect';
-import Button from "@material-ui/core/Button";
+import * as urls from '../URLs.js';
+import identify from '../connect';
+import ls from 'localstorage-slim';
 
-
+import "../App.css";
 
 const url_api = urls.URL_API;
-
 
 function PollList(props){
     const sorted = props.pollingItems.sort(((a, b) => b.votes - a.votes));    
@@ -64,13 +62,7 @@ function CurrentPoll() {
 
     useEffect(() => {
         let cur_url = url_api + 'get_poll/';
-        fetch(cur_url, {
-            headers: new Headers({
-                'Authorization': 'Basic '+btoa(localStorage.getItem('id') + ':' + localStorage.getItem('mdp')),
-                'Content-Type': 'application/x-www-form-urlencoded'
-
-            })
-        })
+        fetch(cur_url)
             .then((res) => res.json())
             .then((data) => {
                 setPollingItems(data.poll);
@@ -80,6 +72,7 @@ function CurrentPoll() {
             .then((res) => res.json())
             .then((data) =>{
                 setCurscp(data);
+                ls.set('current_scp_number', data);
             })
 
     }, [needupdate]);
@@ -87,9 +80,9 @@ function CurrentPoll() {
     return (
     <div>
 
-        <div className="presentation">
-            <h2> What is this website ? </h2>
-            <p>
+        <div className="greywrap">
+            <p className="justifytext">
+                <h2> What is this website ? </h2>
                 This website uses artifical intelligence to generate customs SCP from a simple prompt.
                 Every hour the prompt with the most votes is chosen to create a new SCP. Previous SCPs can be found in the <a href="./list"> archives</a>.
                 You can vote for your favorite SCP or submit your own description on the poll <a href="./poll"> here</a>.
@@ -98,30 +91,33 @@ function CurrentPoll() {
                 If you're still  lost please check out our <a href="./about">FAQ</a>.
             </p>
 
-            <Button onClick={identify}> Please identify you :) </Button>
-
-
-
+            <Button onClick={identify} className='loginButton'> Please identify yourself :) </Button>
 
         </div>
 
-        <br></br>
+        <br/>
 
-        <h3><b>Current Poll :</b></h3>
-        <div className="pollwrapper">
+        <div className="greywrap">
+            <div className="justifytext">
+                <h2>Current Poll :</h2>
+            </div>
             <br/>
             <PollList pollingItems={pollingItems} />
             <br/>
             <SubmitPromptDialog className="openDialogBtn" curscp ={curscp} needupdate={setNeedUpdate}/>
         </div>
-        <br/><br/>
+        
+        <br/>
 
-        <h3><b>Last SCP :</b></h3>
-            <Accordion.Item className="scpcont">
-                <Accordion.Body>
-                    <LastSCP/>
-                </Accordion.Body>
-            </Accordion.Item>
+        <div className="greywrap">
+            <div className="justifytext">
+                <h2>Last SCP :</h2>
+            </div>
+
+            <br/><br/>
+
+            <LastSCP className="scpcont"/>
+        </div>
     </div>
   );
 }

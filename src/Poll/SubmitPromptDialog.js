@@ -1,19 +1,18 @@
-import React, {useState} from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Dialog from '@material-ui/core/Dialog';
+import Select from '@material-ui/core/Select';
+import Button from '@material-ui/core/Button';
 import {Switch} from "@material-ui/core";
-import { useAlert } from 'react-alert'
-import * as urls from './URLs.js';
+import { useAlert } from 'react-alert';
+import React, {useState} from 'react';
+import * as urls from '../URLs.js';
 
 const url_api = urls.URL_API;
-
 
 function UserForm(props){
     // Champ de texte qui commencera toujours par la valeur de son prop starting_value
@@ -77,7 +76,6 @@ export default function FormDialog(props) {
   };
 
   const handleSubmit = () =>{
-        console.log(prompt.length);
       if (prompt.length < 15) {
           handleClose();
           alert.show('Prompt length is too short !')
@@ -85,9 +83,8 @@ export default function FormDialog(props) {
           return;
       }
       let url = url_api + "add_prompt/"
-      + "?prompt=" + prompt.substring(11)
+      + "?prompt=" + prompt.substring(12)
       + "&class=" + scpClass.toString()
-      + "&ip=" + Math.floor(Math.random() * 100).toString()
       + "&author=" + author
       + "&nsfw=" + nsfw;
 
@@ -116,7 +113,7 @@ export default function FormDialog(props) {
           <DialogContentText>
             Describe your SCP :
           </DialogContentText>
-            <UserForm starting_value={"SCP-" + props.curscp + "-GPT is "} onValueChange={(event) =>{
+            <UserForm starting_value={"SCP-" + props.curscp + " is "} onValueChange={(event) =>{
                 setPrompt(event.target.value);
             }} />
 
