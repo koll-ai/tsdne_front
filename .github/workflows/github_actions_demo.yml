@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Installe pip
-        run: sudo apt install python-pip
+        run: sudo apt install python3-pip
       - run: pip install pytest
       - name: Lance les tests python
         run: pytest ${{ github.workspace }}
