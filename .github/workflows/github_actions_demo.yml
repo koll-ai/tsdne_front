@@ -21,6 +21,8 @@ jobs:
     steps:
       - name: Installe pip
         run: sudo apt install python3-pip
+      - run: pwd
+      - run: ls -l
       - run: pip install pytest
       - name: Lance les tests python
         run: pytest ${{ github.workspace }}
