@@ -1,7 +1,7 @@
-name: GitHub Actions Demo
+name: Pytest
 on: [push]
 jobs:
-  Explore-GitHub-Actions:
+  tests:
     runs-on: ubuntu-latest
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
@@ -19,10 +19,18 @@ jobs:
   Run-Python-Tests:
     runs-on: ubuntu-latest
     steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+       # Setup Python (faster than using Python container)
+#      - name: Setup Python
+#        uses: actions/setup-python@v2
+#        with:
+#          python-version: "3.x"
       - name: Installe pip
         run: sudo apt install python3-pip
       - run: pwd
-      - run: ls -l ..
+      - run: ls -l
       - run: pip install pytest
       - name: Lance les tests python
         run: pytest ${{ github.workspace }}
