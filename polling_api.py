@@ -241,7 +241,6 @@ def add_prompt():
         return Response(response="submission has been added!",status=200)
 
 @app.route('/last_scp_desc/',  methods=['GET'])
-@auth.login_required
 def last_scp_desc():
 
     with open("last.txt", "r") as f:
@@ -279,7 +278,6 @@ def save_data():
     return "ok"
 
 @app.route('/get_past_scp/', methods=['GET'])
-@auth.login_required
 def get_past_scp():
     idscp = request.args.get('file')
 
