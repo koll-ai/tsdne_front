@@ -1,15 +1,16 @@
-import React, {useEffect, useState} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import React, {useEffect, useState} from 'react';
+import Toolbar from '@material-ui/core/Toolbar';
+import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
-import {Link} from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Countdown from "react-countdown";
-import logo from '../favicon.ico';
-import "./ButtonAppBar.css"
+import {Link} from "react-router-dom";
 import * as urls from '../URLs.js';
+import logo from './favicon.ico';
+
+import "./ButtonAppBar.css"
 
 const url_api = urls.URL_API;
 
@@ -57,7 +58,7 @@ export default function ButtonAppBar() {
             <Grid container spacing={1} style={{display: "flex", alignItems: "center"}}>
 
                 <Grid item xs={12} sm={4} >
-                    <img src={logo}/>
+                    <img src={logo} alt="website logo"/>
                     <Button color="inherit">
                       <Typography variant="h6" className={classes.title}>
                           This SCP Does Not Exist

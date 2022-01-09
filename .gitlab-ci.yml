@@ -1,0 +1,14 @@
+image: "python:3.9"
+
+before_script:
+  - pwd
+
+stages:
+  - Test
+  - GH_pages
+
+
+github_pages:
+  stage: GH_pages
+  script:
+    - npm run deploy

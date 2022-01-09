@@ -1,12 +1,12 @@
-import './App.css';
-import React, { Component } from 'react';
-import AccordionDyn from './AccordionDyn';
-import {Accordion} from 'react-bootstrap';
-import Badge from 'react-bootstrap/Badge';
+import { SuitHeart, SuitHeartFill } from 'react-bootstrap-icons';
 import { readString } from 'react-papaparse'
 import Button from '@material-ui/core/Button';
-import { SuitHeart, SuitHeartFill } from 'react-bootstrap-icons';
-import * as urls from './URLs.js';
+import React, { Component } from 'react';
+import AccordionDyn from './AccordionDyn';
+import Badge from 'react-bootstrap/Badge';
+import * as urls from '../URLs.js';
+
+import '../App.css';
 
 const url_db = urls.URL_DB;
 const url_api = urls.URL_API;
@@ -99,7 +99,7 @@ class PastScp extends Component {
                             </Badge>
                         </td>
 
-                        <td style={{paddingLeft : 5, paddingRight : 5}}>
+                        <td style={{paddingLeft : 5, paddingRight : 15}}>
                             <strong> SCP-{section.id} is {section.prompt}</strong>
                             <div style={{color: 'red'}}>
                                 {section.nsfw === "true" ? <span>NSFW</span> : null}
@@ -121,9 +121,7 @@ class PastScp extends Component {
 
     renderContent(section, _, isActive) {
         return (
-            <Accordion.Item className="scpcont">
-                <div style={{padding: '1.5em'}} dangerouslySetInnerHTML={{__html: section.desc}}/>
-            </Accordion.Item>
+            <div className='scpcont' dangerouslySetInnerHTML={{__html: section.desc}}/>
         );
     }
 
@@ -157,10 +155,10 @@ class PastScp extends Component {
 
     render() {
         return (
-            <div className="ListOfSCPs">
-                <h2> List of Past SCPs</h2>
+            <div>
+                <h3 className='white'> List of Past SCPs</h3>
 
-                <br></br>
+                <br/>
 
                 <AccordionDyn
                     activeSections={this.state.activeSections}

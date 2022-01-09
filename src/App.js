@@ -1,13 +1,13 @@
-import './App.css';
-import CurrentPoll from './CurrentPoll.js'
-import PastScp from './PastScp.js'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import "./customStyle.css"
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import About from "./About";
 import { transitions, positions, Provider as AlertProvider } from 'react-alert'
-import AlertTemplate from 'react-alert-template-basic'
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ButtonAppBar from "./ButtonAppBar/ButtonAppBar";
+import AlertTemplate from 'react-alert-template-basic'
+import CurrentPoll from './Poll/CurrentPoll.js'
+import PastScp from './Archives/PastScp.js'
+import About from "./About/About.js";
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 
 const options = {
   // you can also just use 'bottom center'
@@ -20,7 +20,6 @@ const options = {
 
 function App() {
   return (
-
         <AlertProvider template={AlertTemplate} {...options}>
 
           <div className="App">
