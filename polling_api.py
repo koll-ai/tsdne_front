@@ -291,6 +291,9 @@ def generate_scp():
     key = request.args.get('key')
     if key == NEXT_ROUND_KEY:
         os.system(generator_command)
+        return 'ok'
+    else:
+        return 'ko'
 
 
 if __name__ == "__main__":
