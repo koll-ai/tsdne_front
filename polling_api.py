@@ -294,8 +294,8 @@ def generate_scp():
         with open(initial_data_path, "w") as f:
             data = dict(next_time = next_time,
                   poll=[],
-                  votes = votes,
-                  submitted_ips = submitted_ips
+                  votes = dict(),
+                  submitted_ips = []
             )
 
             json.dump(data, f)
