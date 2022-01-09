@@ -1,10 +1,8 @@
 import SubmitPromptDialog from './SubmitPromptDialog.js';
-import Button from "@material-ui/core/Button";
 import {useEffect, useState} from "react";
 import Grid from '@material-ui/core/Grid';
 import PollItem from './PollItem.js';
 import * as urls from '../URLs.js';
-import identify from '../connect';
 import ls from 'localstorage-slim';
 
 import "../App.css";
@@ -90,9 +88,6 @@ function CurrentPoll() {
                 <br/>
                 If you're still  lost please check out our <a href="./about">FAQ</a>.
             </p>
-
-            <Button onClick={identify} className='loginButton'> Please identify yourself :) </Button>
-
         </div>
 
         <br/>
