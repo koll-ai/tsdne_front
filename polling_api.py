@@ -5,27 +5,16 @@ import time
 from flask_cors import CORS
 from json import JSONDecodeError
 from flask_httpauth import HTTPBasicAuth
-from werkzeug.security import generate_password_hash, check_password_hash
 
 MAX_PROMPT_LEN = 300
 MAX_AUTHOR_LEN = 20
 
 db_path = '../SCP_BDD/'
 
-with open("users.json", "r") as f:
-    users = json.load(f)
-    users = {u : generate_password_hash(p) for u, p in users.items()}
-
 app = Flask(__name__)
 CORS(app)
 
 auth = HTTPBasicAuth()
-
-@auth.verify_password
-def verify_password(username, password):
-    if username in users and \
-            check_password_hash(users.get(username), password):
-        return username
 
 last_scp_str = ""
 
@@ -270,9 +259,6 @@ def save_data():
 
         with open("current_scp.txt", "w") as f:
             f.write(str(scp_number))
-
-
-
 
             json.dump(data, f)
     return "ok"
