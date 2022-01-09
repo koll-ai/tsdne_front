@@ -291,6 +291,14 @@ def generate_scp():
     key = request.args.get('key')
     if key == NEXT_ROUND_KEY:
         os.system(generator_command)
+        with open(initial_data_path, "w") as f:
+            data = dict(next_time = next_time,
+                  poll=[],
+                  votes = votes,
+                  submitted_ips = submitted_ips
+            )
+
+            json.dump(data, f)
         return 'ok'
     else:
         return 'ko'
