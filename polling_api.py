@@ -271,10 +271,6 @@ def save_data():
         with open("current_scp.txt", "w") as f:
             f.write(str(scp_number))
 
-
-
-
-            json.dump(data, f)
     return "ok"
 
 @app.route('/get_past_scp/', methods=['GET'])
