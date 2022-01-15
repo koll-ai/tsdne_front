@@ -87,7 +87,7 @@ function CurrentPoll() {
                 You can vote for your favorite SCP or submit your own description on the poll <Link to="./poll"> here</Link>.
 
                 <br/>
-                If you're still  lost please check out our <Link to="./about">FAQ</Link>.
+                If you're still lost, please check out our <Link to="./about">FAQ</Link>.
             </p>
         </div>
 
