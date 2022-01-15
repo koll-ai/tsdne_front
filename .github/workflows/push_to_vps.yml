@@ -4,7 +4,7 @@ jobs:
   Push-To-VPS:
     runs-on: ubuntu-latest
     steps:
-      - name: executing remote ssh commands using password
+      - name: SSH Pull repo on VPS
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
@@ -14,7 +14,7 @@ jobs:
 
           script: bash -c "cd ~/SCP_front/ && git pull"
 
-      - name: executing remote ssh commands using password
+      - name: SSH build and copy
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
