@@ -1,5 +1,5 @@
 Options -MultiViews
-#RewriteEngine On
+RewriteEngine On
 #RewriteCond %{REQUEST_FILENAME} !-f
 #RewriteRule ^ index.html [QSA,L]
 # Don't rewrite files or directories
