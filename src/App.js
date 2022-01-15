@@ -1,5 +1,5 @@
 import { transitions, positions, Provider as AlertProvider } from 'react-alert'
-import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ButtonAppBar from "./ButtonAppBar/ButtonAppBar";
 import AlertTemplate from 'react-alert-template-basic'
 import CurrentPoll from './Poll/CurrentPoll.js'
