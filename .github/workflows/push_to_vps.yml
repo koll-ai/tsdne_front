@@ -10,6 +10,10 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          port: 22
+          port: ${{ secrets.PORT }}
 
-          script: whoami
+          script:
+           - whoami
+           - cd ~/SCP_front
+           - npm run build
+           - cp -r build/* /var/www/beta_tsde/
