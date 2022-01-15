@@ -32,7 +32,7 @@ function App() {
                 <Route path="/list" exact component={ PastScp } />
                 <Route path="/about" exact component={ About } />
                 {/* Fix for 404 on refresh */}
-                <Route path="/*" exact component={ CurrentPoll } />
+                {/*<Route path="/*" exact component={ CurrentPoll } />*/}
               </Switch>
             </div>
           </Router>
