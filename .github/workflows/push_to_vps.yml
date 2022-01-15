@@ -12,8 +12,4 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
 
-          script:
-           - whoami
-           - cd ~/SCP_front
-           - npm run build
-           - cp -r build/* /var/www/beta_tsde/
+          script: bash ~/SCP_front/build_and_deploy.sh
