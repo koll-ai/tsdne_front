@@ -6,6 +6,7 @@ import * as urls from '../URLs.js';
 import ls from 'localstorage-slim';
 
 import "../App.css";
+import {Link} from "react-router-dom";
 
 const url_api = urls.URL_API;
 
@@ -82,11 +83,11 @@ function CurrentPoll() {
             <p className="justifytext">
                 <h2> What is this website ? </h2>
                 This website uses artifical intelligence to generate customs SCP from a simple prompt.
-                Every hour the prompt with the most votes is chosen to create a new SCP. Previous SCPs can be found in the <a href="./list"> archives</a>.
-                You can vote for your favorite SCP or submit your own description on the poll <a href="./poll"> here</a>.
+                Every hour the prompt with the most votes is chosen to create a new SCP. Previous SCPs can be found in the <Link to="./list"> archives</Link>.
+                You can vote for your favorite SCP or submit your own description on the poll <Link to="./poll"> here</Link>.
 
                 <br/>
-                If you're still  lost please check out our <a href="./about">FAQ</a>.
+                If you're still  lost please check out our <Link to="./about">FAQ</Link>.
             </p>
         </div>
 
