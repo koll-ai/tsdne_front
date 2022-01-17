@@ -2,101 +2,119 @@ import React from 'react';
 import Badge from 'react-bootstrap/Badge';
 
 function About() {
-  return (
-    <div className="presentation">
-      <center><h1>FAQ</h1></center>
+    return (
+        <div className="presentation">
+            <center><h1>FAQ</h1></center>
 
-    <br></br>
+            <br />
 
-      <h4> What is the SCP foundation ?</h4>
-        <p>
-            The SCP Foundation is an international secret society responsible for capturing and containing various paranormal,
-            supernatural, and other mysterious phenomena unexplained by mainstream science (known as "anomalies" or "SCPs"),
-            while also keeping their existence hidden from the rest of global human society.
-        
-            <br></br>
-            <br></br>
+            <h3> What is the SCP foundation ?</h3>
+            <p>
+                The SCP Foundation is an international secret society responsible for capturing and containing various paranormal,
+                supernatural, and other mysterious phenomena unexplained by mainstream science (known as "anomalies" or "SCPs"),
+                while also keeping their existence hidden from the rest of global human society.
 
-            They include living beings and creatures, artifacts and objects, locations and places, abstract concepts,
-            and incomprehensible entities which display supernatural abilities or other extremely unusual properties.
-            If left uncontained, many of the more dangerous anomalies will pose a serious threat to humans or even all life on Earth.
+                <br></br>
+                <br></br>
 
-            <br></br>
-            <br></br>
+                They include living beings and creatures, artifacts and objects, locations and places, abstract concepts,
+                and incomprehensible entities which display supernatural abilities or other extremely unusual properties.
+                If left uncontained, many of the more dangerous anomalies will pose a serious threat to humans or even all life on Earth.
 
-            The SCP are divided in different classes depending on its containment difficulty. There are many classes but
-            we're limiting them to:
+                <br></br>
+                <br></br>
 
-            <br></br>
-            <br></br>
+                The SCP are divided in different classes depending on its containment difficulty. There are many classes but
+                we're limiting them to:
 
-            <table>
+                <br></br>
+                <br></br>
+
+                <table>
+                    <tbody>
+                        <tr>
+                            <td className="right"><Badge bg="success">Safe</Badge></td>
+                            <td className="smallpadding">Anomalies are easily contained.</td>
+                        </tr>
+
+                        <tr>
+                            <td className="right"><Badge bg="warning">Euclid</Badge></td>
+                            <td className="smallpadding">Anomalies require more resources to contain or containment isn't always reliable.</td>
+                        </tr>
+
+                        <tr>
+                            <td className="right"><Badge bg="danger">Keter</Badge></td>
+                            <td className="smallpadding">Anomalies are exceedingly difficult to contain.</td>
+                        </tr>
+
+                        <tr>
+                            <td className="right"><Badge bg="primary">Thaumiel</Badge></td>
+                            <td className="smallpadding">Anomalies that the Foundation specifically uses to contain other SCPs.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </p>
+
+            <br/><br/>
+
+            <h3> How to use this website ? </h3>
+            <br/>
+            <h5> Vote for your favorite SCP : </h5>
+            You can vote for your favorite SCP prompt by clicking on the vote button of your favourite card. You can vote for as many cards as you want. When the timer reaches zero, the SCP with the most votes will be chosen to create a new SCP.
+            <br/><br/>
+            <h5> Submit your own description : </h5>
+            You can submit your own description by clicking on the "submit a prompt" button. You can only submit one prompt per hour.
+            <br /> The prompt has to be family friendly and not contain any offensive language. You can specify your name or leave it blank.
+            <br/><br/>
+            <h5> Lookup the archives :</h5>
+            Every SCP that has ever been generated on this website is available in the <a href="./list"> archives</a>.            
+
+            <br/><br/><br/><br/>
+
+            <h3> How are the SCP generated ? </h3>
+            <p>
+                The SCPs are generated using GPT-3 by <a href="https://openai.com">OpenAI</a>. The Generative Pre-trained Transformer 3
+                (GPT-3) is an autoregressive language model that uses deep learning to produce human-like text. GPT-3's full version has a capacity of 175
+                billion machine learning parameters. The quality of the text generated by GPT-3 is so high that it can be difficult to determine whether or
+                not it was written by a human
+            </p>
+
+            <br/><br/>
+
+            <h3> Who are we ?</h3>
+            <p>
+                We are Ruben and Philippe two young passionate data scientist.
+                The SCP Foundation is a common interest and we figured it would be an interesting challenge for GPT-3. If you have any question or suggestion, feel free to send us an email at <a href="mailto:thisscpdoesnotexist@gmail.com">thisscpdoesnotexist@gmail.com</a>.
+                <br /><br />
+                You can also reach us on our social medias:
+            </p>
+
+            <table className="socialstable">
                 <tbody>
                     <tr>
-                        <td className="right"><Badge bg="success">Safe</Badge></td>
-                        <td className="smallpadding">Anomalies are easily contained.</td>
-                    </tr>
+                        <td>
+                            <b>Ruben Gres</b>
+                            <br />
+                            <a href={"https://www.linkedin.com/in/ruben-gres-484930158/"}>LinkedIn</a>
+                            <br />
+                            <a href={"https://github.com/RubenGres"}>GitHub</a>
+                            <br />
+                            <a href={"https://ohmlet.itch.io/"}>Itch.io</a>
+                        </td>
 
-                    <tr>
-                        <td className="right"><Badge bg="warning">Euclid</Badge></td>
-                        <td className="smallpadding">Anomalies require more resources to contain or containment isn't always reliable.</td>
-                    </tr>
-                    
-                    <tr>
-                        <td className="right"><Badge bg="danger">Keter</Badge></td>
-                        <td className="smallpadding">Anomalies are exceedingly difficult to contain.</td>
-                    </tr>
-                    
-                    <tr>
-                        <td className="right"><Badge bg="primary">Thaumiel</Badge></td>
-                        <td className="smallpadding">Anomalies that the Foundation specifically uses to contain other SCPs.</td>
+                        <td>
+                            <b>Philippe Saadé</b>
+                            <br />
+                            <a href={"https://www.linkedin.com/in/philippe-saad%C3%A9-26972b149/"}>LinkedIn</a>
+                            <br />
+                            <a href={"https://github.com/PhilSad"}>GitHub</a>
+                            <br /><br />
+                        </td>
                     </tr>
                 </tbody>
             </table>
-        </p>
-
-        <h4> How are the SCP generated ? </h4>
-        <p>
-            The SCPs are generated using GPT-3 by <a href="https://openai.com">OpenAI</a>. The Generative Pre-trained Transformer 3
-            (GPT-3) is an autoregressive language model that uses deep learning to produce human-like text. GPT-3's full version has a capacity of 175
-            billion machine learning parameters. The quality of the text generated by GPT-3 is so high that it can be difficult to determine whether or
-            not it was written by a human
-        </p>
-
-      <h4> Who are we ?</h4>
-        <p>
-            We are Ruben and Philippe two young passionate data scientist.
-            The SCP Foundation is a common interest and we figured it would be an interesting challenge for GPT-3. If you have any question or suggestion, feel free to send us an email at <a href="mailto:thisscpdoesnotexist@gmail.com">thisscpdoesnotexist@gmail.com</a>.
-            <br/><br/>
-            You can also reach us on our social medias:
-        </p>
-
-        <table className="socialstable">
-            <tbody>
-                <tr>
-                    <td>
-                        <b>Ruben Gres</b>
-                        <br/>
-                        <a href={"https://www.linkedin.com/in/ruben-gres-484930158/"}>LinkedIn</a>
-                        <br/>
-                        <a href={"https://github.com/RubenGres"}>GitHub</a>
-                        <br/>
-                        <a href={"https://ohmlet.itch.io/"}>Itch.io</a>
-                    </td>
-                    
-                    <td>
-                        <b>Philippe Saadé</b>
-                        <br/>
-                        <a href={"https://www.linkedin.com/in/philippe-saad%C3%A9-26972b149/"}>LinkedIn</a>
-                        <br/>
-                        <a href={"https://github.com/PhilSad"}>GitHub</a>
-                        <br/><br/>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-  );
+        </div>
+    );
 }
 
 export default About;
