@@ -6,6 +6,7 @@ import * as urls from '../URLs.js';
 import ls from 'localstorage-slim';
 
 import "../App.css";
+import {Link} from "react-router-dom";
 
 const url_api = urls.URL_API;
 

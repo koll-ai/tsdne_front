@@ -1,0 +1,25 @@
+name: PUSH to VPS
+on: [push]
+jobs:
+  Push-To-VPS:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH Pull repo on VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+
+          script: bash -c "cd ~/SCP_front/ && git pull"
+
+      - name: SSH build and copy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+
+          script: bash ~/SCP_front/build_and_deploy.sh

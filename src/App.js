@@ -5,6 +5,7 @@ import AlertTemplate from 'react-alert-template-basic'
 import CurrentPoll from './Poll/CurrentPoll.js'
 import PastScp from './Archives/PastScp.js'
 import About from "./About/About.js";
+import IndependantScp from "./Archives/IndependantScp";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -30,9 +31,10 @@ function App() {
               <Switch>
                 <Route path="/" exact component={ CurrentPoll} />
                 <Route path="/list" exact component={ PastScp } />
+                <Route path="/list/:id" exact component={ IndependantScp } />
                 <Route path="/about" exact component={ About } />
                 {/* Fix for 404 on refresh */}
-                <Route path="/*" exact component={ CurrentPoll } />
+                {/*<Route path="/*" exact component={ CurrentPoll } />*/}
               </Switch>
             </div>
           </Router>

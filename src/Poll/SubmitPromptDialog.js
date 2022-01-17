@@ -76,12 +76,12 @@ export default function FormDialog(props) {
   };
 
   const handleSubmit = () =>{
-      if (prompt.length < 15) {
-          handleClose();
-          alert.show('Prompt length is too short !')
-
-          return;
-      }
+      // if (prompt.length < 15) {
+      //     handleClose();
+      //     alert.show('Prompt length is too short !')
+      //
+      //     return;
+      // }
       let url = url_api + "add_prompt/"
       + "?prompt=" + prompt.substring(12)
       + "&class=" + scpClass.toString()
@@ -95,7 +95,9 @@ export default function FormDialog(props) {
 
             })
         })
-          .then(value => window.location.href = '/');
+          // .then(value => window.location.href = '/');
+          .then(value=> value.text())
+          .then(text => alert.show(text))
 
       handleClose();
 
