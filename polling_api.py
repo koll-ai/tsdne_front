@@ -6,6 +6,7 @@ from flask_cors import CORS
 from json import JSONDecodeError
 from flask_httpauth import HTTPBasicAuth
 import os
+import regex
 
 MAX_PROMPT_LEN = 300
 MAX_AUTHOR_LEN = 20
@@ -190,7 +191,7 @@ def add_prompt():
         return Response(response="already submitted a scp for this round",status=403)
     
     else:
-        prompt = request.args.get('prompt')
+        prompt = regex.match(r'[\p{Latin}\p{posix_punct} ]+', request.args.get('prompt')) # remove all non latin + espace + ponctioation char
         scp_class = request.args.get('class')
         author = request.args.get('author')
         nsfw = request.args.get('nsfw')
