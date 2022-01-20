@@ -83,7 +83,7 @@ export default function FormDialog(props) {
       //     return;
       // }
       let url = url_api + "add_prompt/"
-      + "?prompt=" + prompt.substring(12)
+      + "?prompt=" + prompt
       + "&class=" + scpClass.toString()
       + "&author=" + author
       + "&nsfw=" + nsfw;
@@ -113,7 +113,7 @@ export default function FormDialog(props) {
         <DialogContent>
 
           <DialogContentText>
-            Describe your SCP :
+            SCP-{props.curscp} ...
           </DialogContentText>
             <UserForm starting_value={""} onValueChange={(event) =>{
                 setPrompt(event.target.value);
