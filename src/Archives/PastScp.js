@@ -57,26 +57,44 @@ class PastScp extends Component {
         });
     }
 
+    async moveViewToSCP(scpid) {
+        await new Promise(r => setTimeout(r, 500));
+
+        // move to anchor scpid
+        let anchor = document.getElementById(scpid);
+        if (anchor) {
+            anchor.scrollIntoView();
+        }
+    }
+
     setSections = (sections) => {
-        console.log(sections);
         const {content} = this.state
-        this.loadContent(content, sections)
+        let scpid = this.loadContent(content, sections)
         this.setState({
           activeSections: sections.includes(undefined) ? [] : sections,
         });
+
+        //change page url without redirecting
+        window.history.pushState(null, null, '#' + scpid);
+
+        this.moveViewToSCP(scpid);
     };
 
     loadContent = (content, sections) => {
         let j = sections[0];
+        let scpid;
 
         if(content[j] !== undefined){
-            getScp(content[j].id).then((data) => {
+            scpid = content[j].id;
+            getScp(scpid).then((data) => {
                 content[j].desc = data;
                 this.setState({
                     content : content
                 });
             })
         }
+
+        return scpid
     }
     
     handleClick = (e, id) => {
@@ -167,12 +185,6 @@ class PastScp extends Component {
                     if(content[i].id === scpid){
                         this.setSections([i]);
                     }
-                }
-
-                // move to anchor scpid
-                let anchor = document.getElementById(scpid);
-                if (anchor) {
-                    anchor.scrollIntoView();
                 }
             }
         });
