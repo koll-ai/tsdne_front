@@ -58,6 +58,7 @@ class PastScp extends Component {
     }
 
     setSections = (sections) => {
+        console.log(sections);
         const {content} = this.state
         this.loadContent(content, sections)
         this.setState({
@@ -66,8 +67,9 @@ class PastScp extends Component {
     };
 
     loadContent = (content, sections) => {
-        for(var i = 0; i < sections.length; i++) {
-            let j = sections[i];
+        let j = sections[0];
+
+        if(content[j] !== undefined){
             getScp(content[j].id).then((data) => {
                 content[j].desc = data;
                 this.setState({
@@ -91,7 +93,7 @@ class PastScp extends Component {
     renderHeader = (section, _, isActive) => {
         return (
             <div className='accordionheader'>
-                <table style={{width : '100%'}}>
+                <table  id={section.id} style={{width : '100%'}}>
                     <tr>
                         <td style={{width:70, textAlign:'center'}}>
                             <Badge bg={section.class === "Keter" ? "danger" : section.class === "Euclid" ? "warning" : "success" }>
@@ -111,7 +113,6 @@ class PastScp extends Component {
                                 {this.state.upvoted.includes(section.id) ? <SuitHeartFill color="#fc4257"/> : <SuitHeart/>}                    
                                 &nbsp; {section.n_upvotes}
                             </Button>
-
                         </td>
                     </tr>
                 </table>
@@ -153,11 +154,33 @@ class PastScp extends Component {
         return scp;
     }
 
+    async componentDidMount() {
+        await new Promise(r => setTimeout(r, 500));
+        window.requestAnimationFrame( () => {
+            const {content} = this.state
+
+            //if url contains a "#"
+            if(window.location.href.includes("#")){
+                let scpid = window.location.href.split("#")[1];
+
+                for(var i = 0; i < content.length; i++){
+                    if(content[i].id === scpid){
+                        this.setSections([i]);
+                    }
+                }
+
+                // move to anchor scpid
+                let anchor = document.getElementById(scpid);
+                if (anchor) {
+                    anchor.scrollIntoView();
+                }
+            }
+        });
+    }
+
     render() {
         return (
             <div>
-                <h3 className='white'> List of Past SCPs</h3>
-
                 <br/>
 
                 <AccordionDyn
