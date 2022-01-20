@@ -83,11 +83,11 @@ function CurrentPoll() {
             <p className="justifytext">
                 <h2> What is this website ? </h2>
                 This website uses artifical intelligence to generate customs SCP from a simple prompt.
-                Every hour the prompt with the most votes is chosen to create a new SCP. Previous SCPs can be found in the <Link to="./list"> archives</Link>.
-                You can vote for your favorite SCP or submit your own description on the poll <Link to="./poll"> here</Link>.
+                Every hour the prompt with the most votes is chosen to create a new SCP. Previous SCPs can be found in the <a href="./list"> archives</a>.
+                You can vote for your favorite SCP or submit your own description on the poll below. <b>We now have a community <a href="https://discord.gg/WeXkUP6f5H">discord server</a> !</b>
 
-                <br/>
-                If you're still lost, please check out our <Link to="./about">FAQ</Link>.
+                <br/><br/>
+                If you're still  lost please check out our <a href="./about">FAQ</a>.
             </p>
         </div>
 
