@@ -53,6 +53,61 @@ poll = params['poll']
 votes = params['votes']
 submitted_ips = params['submitted_ips']
 
+def getSafetyLabel(text):
+    content_to_classify = text
+
+    response = openai.Completion.create(
+        engine="content-filter-alpha",
+        prompt = "<|endoftext|>"+content_to_classify+"\n--\nLabel:",
+        temperature=0,
+        max_tokens=1,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0,
+        logprobs=10,
+        user=username
+        )
+
+    output_label = response["choices"][0]["text"]
+
+    # This is the probability at which we evaluate that a "2" is likely real
+    # vs. should be discarded as a false positive
+    toxic_threshold = -0.355
+
+    if output_label == "2":
+        # If the model returns "2", return its confidence in 2 or other output-labels
+        logprobs = response["choices"][0]["logprobs"]["top_logprobs"][0]
+
+        # If the model is not sufficiently confident in "2",
+        # choose the most probable of "0" or "1"
+        # Guaranteed to have a confidence for 2 since this was the selected token.
+        if logprobs["2"] < toxic_threshold:
+            logprob_0 = logprobs.get("0", None)
+            logprob_1 = logprobs.get("1", None)
+
+            # If both "0" and "1" have probabilities, set the output label
+            # to whichever is most probable
+            if logprob_0 is not None and logprob_1 is not None:
+                if logprob_0 >= logprob_1:
+                    output_label = "0"
+                else:
+                    output_label = "1"
+            # If only one of them is found, set output label to that one
+            elif logprob_0 is not None:
+                output_label = "0"
+            elif logprob_1 is not None:
+                output_label = "1"
+
+            # If neither "0" or "1" are available, stick with "2"
+            # by leaving output_label unchanged.
+
+    # if the most probable token is none of "0", "1", or "2"
+    # this should be set as unsafe
+    if output_label not in ["0", "1", "2"]:
+        output_label = "2"
+
+    return output_label
+
 def is_scpid_legit(id_scp):
     if id_scp.isdigit():
         id_scp = int(id_scp)
@@ -184,7 +239,7 @@ def add_prompt():
     
     # if ip has already submitted one prompt
     if ip in submitted_ips:
-        return Response(response="already submitted a scp for this round",status=403)
+        return Response(response="already submitted a scp for this round",status=429)
     
     else:
         prompt = request.args.get('prompt')
@@ -212,10 +267,14 @@ def add_prompt():
         if scp_class.isdigit():
             scp_class = int(scp_class)
             if scp_class > 3 or scp_class < 0:
-                return Response(response="class number is between 0 (Safe) and 3 (Thaumiel)", status=412)
+                return Response(response="class number is not included between 0 (Safe) and 3 (Thaumiel)", status=412)
         else:
             return Response(response="not a number", status=412)            
         
+        # check if prompt is sfw or nsfw
+        if getSafetyLabel(prompt) == 2:
+            return Response(response="the prompt contains prohibited language", status=412) 
+
         submission = {
             'prompt': "SCP-" + str(scp_number) + " is " + prompt,
             'scpClass': object_classes[scp_class],
