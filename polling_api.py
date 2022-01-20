@@ -5,9 +5,12 @@ import time
 from flask_cors import CORS
 from json import JSONDecodeError
 from flask_httpauth import HTTPBasicAuth
+import os
 
 MAX_PROMPT_LEN = 300
 MAX_AUTHOR_LEN = 20
+
+generator_command = "bash /home/scp/SCP_gen/generator.sh"
 
 db_path = '../SCP_BDD/'
 
@@ -315,11 +318,12 @@ def save_data():
                   votes = votes,
                   submitted_ips = submitted_ips
             )
+            json.dump(data, f)
+
 
         with open("current_scp.txt", "w") as f:
             f.write(str(scp_number))
 
-            json.dump(data, f)
     return "ok"
 
 @app.route('/get_past_scp/', methods=['GET'])
@@ -339,6 +343,25 @@ def get_past_scp():
 def get_past_list():
     with open(db_path+'scp_list.csv', "r") as f:
         return f.read()
+
+
+@app.route('/generate/')
+def generate_scp():
+    key = request.args.get('key')
+    if key == NEXT_ROUND_KEY:
+        os.system(generator_command)
+        with open(initial_data_path, "w") as f:
+            data = dict(next_time = next_time,
+                  poll=[],
+                  votes = dict(),
+                  submitted_ips = []
+            )
+
+            json.dump(data, f)
+        return 'ok'
+    else:
+        return 'ko'
+
 
 if __name__ == "__main__":
 #    app.run(host='0.0.0.0', port=45900, debug=True, ssl_context=('cert.pem', 'key.pem') )
