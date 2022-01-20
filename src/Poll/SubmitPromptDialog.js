@@ -113,7 +113,7 @@ export default function FormDialog(props) {
         <DialogContent>
 
           <DialogContentText>
-            Describe your SCP :
+            SCP-{props.curscp} is ...
           </DialogContentText>
             <UserForm starting_value={""} onValueChange={(event) =>{
                 setPrompt(event.target.value);
