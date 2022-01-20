@@ -191,7 +191,7 @@ def add_prompt():
         return Response(response="already submitted a scp for this round",status=403)
     
     else:
-        prompt = regex.match(r'[\p{Latin}\p{posix_punct} ]+', request.args.get('prompt')) # remove all non latin + espace + ponctioation char
+        prompt = regex.match(r'[\p{Latin}\p{posix_punct} ]+', request.args.get('prompt')).group(0) # remove all non latin + espace + ponctioation char
         scp_class = request.args.get('class')
         author = request.args.get('author')
         nsfw = request.args.get('nsfw')
