@@ -12,7 +12,12 @@ const url_db = urls.URL_DB;
 const url_api = urls.URL_API;
 const upvotes_url = urls.URL_API + "get_upvotes/"
 
+const PiwikReactRouter = require('piwik-react-router');
 
+const piwik = PiwikReactRouter({
+	url: 'your-piwik-installation.com',
+	siteId: 1
+});
 
 function getScp(file) {
     let cur_url = url_db + file
@@ -95,6 +100,12 @@ class PastScp extends Component {
                 });
             })
         }
+
+        //Ajout a matomo
+        let scp_num = scpid.toString();
+        piwik.push(['setCustomUrl', '/' + scp_num]);
+        piwik.push(['setDocumentTitle', scp_num]);
+        piwik.push(['trackPageView']);
 
         return scpid
     }
