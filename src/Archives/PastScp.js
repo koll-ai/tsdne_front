@@ -74,8 +74,8 @@ class PastScp extends Component {
           activeSections: sections.includes(undefined) ? [] : sections,
         });
 
-        //change page url without redirecting
-        window.history.pushState(null, null, '#' + scpid);
+        if(scpid !== undefined)
+            window.history.pushState(null, null, '#' + scpid);
 
         this.moveViewToSCP(scpid);
     };
@@ -92,9 +92,10 @@ class PastScp extends Component {
                     content : content
                 });
             })
+            return scpid
         }
 
-        return scpid
+        return undefined
     }
     
     handleClick = (e, id) => {
