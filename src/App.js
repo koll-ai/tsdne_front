@@ -1,6 +1,6 @@
 import { transitions, positions, Provider as AlertProvider } from 'react-alert'
-// import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import {  Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+// import {  Route, Switch } from "react-router-dom";
 import ButtonAppBar from "./ButtonAppBar/ButtonAppBar";
 import AlertTemplate from 'react-alert-template-basic'
 import CurrentPoll from './Poll/CurrentPoll.js'
@@ -11,7 +11,7 @@ import IndependantScp from "./Archives/IndependantScp";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
-import { Router } from "react-router-dom";
+// import { Router } from "react-router-dom";
 import history from "./history";
 
 import ReactPiwik from 'react-piwik';
@@ -47,7 +47,7 @@ function App() {
         <AlertProvider template={AlertTemplate} {...options}>
 
           <div className="App">
-          <Router history={piwik.connectToHistory(history, trackAtConnect)}>
+          <Router history={piwik.connectToHistory(history)}>
             <ButtonAppBar />
             <div className="appbody">
               <br/>
