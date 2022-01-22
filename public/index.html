@@ -51,7 +51,17 @@
   })();
 </script>
 <!-- End Matomo Code -->
+<script>
 
+var _paq = window._paq || [];
+  window._paq=_paq;
+
+window.addEventListener('hashchange', function() {
+        _paq.push(['setCustomUrl', '/' + window.location.hash.substr(1)]);
+        _paq.push(['setDocumentTitle', 'My New Title']);
+        _paq.push(['trackPageView']);
+});
+</script>
 
 
   </head>
