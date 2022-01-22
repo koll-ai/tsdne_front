@@ -7,17 +7,20 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Dialog from '@material-ui/core/Dialog';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
-import {Switch} from "@material-ui/core";
+import {FormControl, Switch, TextField} from "@material-ui/core";
 import { useAlert } from 'react-alert';
 import React, {useState} from 'react';
 import * as urls from '../URLs.js';
-
+// import TextField from '@mui/material/TextField';
 const url_api = urls.URL_API;
 
 function UserForm(props){
     // Champ de texte qui commencera toujours par la valeur de son prop starting_value
     const [value, setValue] = useState(props.starting_value);
-    return  <textarea type="text" name="user_prompt" value={value} fullWidth maxlength={300} placeholder="an unlit platform staircase"
+    return  <FormControl fullWidth>
+    <TextField multiline placeholder="an unlit platform staircase" name="user_prompt" minRows={5}  width="100%"/>
+        </FormControl>
+    // <textarea type="text" name="user_prompt" value={value} fullWidth maxlength={300} placeholder="an unlit platform staircase"
 
         // onChange={event => {
         //     if (event.target.value.startsWith(props.starting_value)){
@@ -25,7 +28,7 @@ function UserForm(props){
         //         props.onValueChange(event);
         //     }
         // }}
-    />;
+    // />;
 }
 
 
