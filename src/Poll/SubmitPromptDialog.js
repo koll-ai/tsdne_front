@@ -19,7 +19,7 @@ function UserForm(props){
     const [value, setValue] = useState(props.starting_value);
     return  <textarea type="text" name="user_prompt" value={value} fullWidth maxlength={300}
                       
-                      placeholder={"an unlit platform staircase"}
+                      placeholder={"an unlit platform staircase2"}
 
         onChange={event => {
             if (event.target.value.startsWith(props.starting_value)){
