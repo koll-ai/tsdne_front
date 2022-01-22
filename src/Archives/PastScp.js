@@ -12,6 +12,17 @@ const url_db = urls.URL_DB;
 const url_api = urls.URL_API;
 const upvotes_url = urls.URL_API + "get_upvotes/"
 
+
+var _paq = window._paq || [];
+window._paq=_paq
+
+window.addEventListener('hashchange', function() {
+        _paq.push(['setCustomUrl', '/' + window.location.hash.substr(1)]);
+        _paq.push(['setDocumentTitle', 'My New Title']);
+        _paq.push(['trackPageView']);
+});
+
+
 function getScp(file) {
     let cur_url = url_db + file
     return fetch(cur_url, {
