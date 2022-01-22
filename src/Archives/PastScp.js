@@ -6,11 +6,12 @@ import AccordionDyn from './AccordionDyn';
 import Badge from 'react-bootstrap/Badge';
 import * as urls from '../URLs.js';
 import '../App.css';
-import { useMatomo } from '@datapunt/matomo-tracker-react'
+// import { useMatomo } from '@datapunt/matomo-tracker-react'
 
 const url_db = urls.URL_DB;
 const url_api = urls.URL_API;
 const upvotes_url = urls.URL_API + "get_upvotes/"
+
 
 // const PiwikReactRouter = require('piwik-react-router');
 //
@@ -46,17 +47,6 @@ function getScpList(){
         .then((data) => {return data});
 }
 
-
-function CallMatomo(){
-    const { trackPageView, trackEvent } = useMatomo()
-    // Track page view
-      React.useEffect(() => {
-        trackPageView();
-        console.log('called_matomo');
-      }, [])
-
-    return <div></div>
-}
 
 class PastScp extends Component {
     constructor(props) {

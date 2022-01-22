@@ -32,12 +32,12 @@ import history from "./history";
 // const trackAtConnect = false;
 
 
-import { MatomoProvider, createInstance } from '@datapunt/matomo-tracker-react'
-
-const instance = createInstance({
-    urlBase: 'http://api.thisscpdoesnotexist.ml',
-    siteId: 1
-});
+// import { MatomoProvider, createInstance } from '@datapunt/matomo-tracker-react'
+//
+// const instance = createInstance({
+//     urlBase: 'http://api.thisscpdoesnotexist.ml',
+//     siteId: 1
+// });
 
 
 const options = {
