@@ -4,37 +4,37 @@ import json
 import time
 from flask_cors import CORS
 from json import JSONDecodeError
-from flask_httpauth import HTTPBasicAuth
-import os
 import regex
+import openai
+import os
+from dotenv import load_dotenv
 
-MAX_PROMPT_LEN = 300
-MAX_AUTHOR_LEN = 20
+load_dotenv()
 
-generator_command = "bash /home/scp/SCP_gen/generator.sh"
+OPENAI_KEY = os.getenv("OPENAI_KEY")
+NEXT_ROUND_KEY = os.getenv("NEXT_ROUND_KEY")
+MAX_PROMPT_LEN = int(os.getenv('MAX_PROMPT_LEN'))
+MIN_PROMPT_LEN = int(os.getenv('MIN_PROMPT_LEN'))
+MAX_AUTHOR_LEN = int(os.getenv('MAX_AUTHOR_LEN'))
+DB_PATH = os.getenv('DB_PATH')
+generator_command = os.getenv('GEN_CMD')
+initial_data_path = os.getenv('INIT_DATA_PATH')
 
-db_path = '../SCP_BDD/'
+object_classes = ['Safe', 'Euclid', 'Keter', 'Thaumiel']
 
 app = Flask(__name__)
 CORS(app)
 
-auth = HTTPBasicAuth()
+def connect():
+    openai.api_key = OPENAI_KEY
+    print("connected to openAI")
 
 last_scp_str = ""
-
-with open("polling_api.key", "r") as f:
-    NEXT_ROUND_KEY = f.read().rstrip()
-
 with open("last.txt", "r") as f:
     last_scp_str = f.read().rstrip()
 
 with open('current_scp.txt') as f:
     scp_number = int(f.read().rstrip())
-
-object_classes = ['Safe', 'Euclid', 'Keter', 'Thaumiel']
-
-initial_data_path = "initial_data.json"
-
 
 # Set initial variable with savec file or with initial value otherwise
 
@@ -45,7 +45,7 @@ except FileNotFoundError:
     params = dict(next_time = time.time() + 3600,
                   poll=[],
                   votes = dict(),
-                  submitted_ips = []
+                  submitted_ips_count = dict()
     )
 
 if params['next_time'] < time.time():
@@ -57,7 +57,7 @@ poll = params['poll']
 votes = params['votes']
 submitted_ips_count = params['submitted_ips_count']
 
-def getSafetyLabel(text):
+def getSafetyLabel(text, username):
     content_to_classify = text
 
     response = openai.Completion.create(
@@ -239,13 +239,22 @@ def vote():
 
 @app.route('/add_prompt/', methods=['GET'])
 def add_prompt():
+    global submitted_ips_count
+    
     ip = request.remote_addr
+    
+    # if ip has already submitted one prompt
+    if ip in submitted_ips_count.keys():
+        if submitted_ips_count[ip] >= 3:
+            return Response(response="You can submit a maximum of three prompts per round",status=429)
+    else:
+        submitted_ips_count[ip] = 0
 
     prompt = request.args.get('prompt')
     # check prompt length
     if len(prompt) > MAX_PROMPT_LEN:
         return Response(response="prompt is too long", status=412)
-    if len(prompt) <= 15:
+    if len(prompt) <= MIN_PROMPT_LEN:
         return Response(response="prompt is too short", status=412)
 
     prompt_filtered = regex.match(r'[\p{Latin} !?.-]+', prompt).group(0) # remove all non latin + espace + ponctioation char
@@ -259,12 +268,10 @@ def add_prompt():
     if len(author) <= 0:
         return Response(response="author is too long", status=412)
 
-
     nsfw = request.args.get('nsfw')
     # check if nsfw is boolean:
     if not(nsfw == 'true' or nsfw == 'false'):
         return Response(response="nsfw is not bool", status=412)
-
 
     scp_class = request.args.get('class')
     # check if scp_class is a digit
@@ -277,17 +284,8 @@ def add_prompt():
 
     
     # check if prompt is sfw or nsfw
-    if getSafetyLabel(prompt) == "2":
+    if getSafetyLabel(prompt, author) == "2":
         return Response(response="The prompt was flagged", status=412)
-
-
-    # if ip has already submitted one prompt
-    if ip in submitted_ips_count.keys():
-        if submitted_ips_count[ip] >= 3:
-            return Response(response="You can submit a maximum of three prompts per round",status=429)
-        else:
-            submitted_ips_count[ip] += 1
-
 
     submission = {
         'prompt': "SCP-" + str(scp_number) + " is " + prompt,
@@ -299,7 +297,7 @@ def add_prompt():
     }
     
     poll.append(submission)
-    submitted_ips_count[ip] = 1        
+    submitted_ips_count[ip] += 1       
     return Response(response="submission has been added!",status=200)
 
 @app.route('/last_scp_desc/',  methods=['GET'])
@@ -346,13 +344,13 @@ def get_past_scp():
     else:
         return Response(response="not a valid id", status=412)
 
-    with open(db_path + 'SCP-' + str(idscp) + '-GPT.txt', 'r') as f:
+    with open(DB_PATH + 'SCP-' + str(idscp) + '-GPT.txt', 'r') as f:
         return f.read()
 
 
 @app.route('/get_past_list/', methods=['GET'])
 def get_past_list():
-    with open(db_path+'scp_list.csv', "r") as f:
+    with open(DB_PATH+'scp_list.csv', "r") as f:
         return f.read()
 
 
