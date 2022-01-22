@@ -6,6 +6,7 @@ from flask_cors import CORS
 from json import JSONDecodeError
 from flask_httpauth import HTTPBasicAuth
 import os
+import regex
 
 MAX_PROMPT_LEN = 300
 MAX_AUTHOR_LEN = 20
@@ -239,39 +240,46 @@ def vote():
 @app.route('/add_prompt/', methods=['GET'])
 def add_prompt():
     ip = request.remote_addr
-    
-    prompt = request.args.get('prompt')
-    scp_class = request.args.get('class')
-    author = request.args.get('author')
-    nsfw = request.args.get('nsfw')
 
+    prompt = request.args.get('prompt')
     # check prompt length
     if len(prompt) > MAX_PROMPT_LEN:
         return Response(response="prompt is too long", status=412)
     if len(prompt) <= 15:
         return Response(response="prompt is too short", status=412)
 
+    prompt_filtered = regex.match(r'[\p{Latin} !?.-]+', prompt).group(0) # remove all non latin + espace + ponctioation char
+    if prompt_filtered != prompt:
+        return Response(response="prompt contains invalid characters", status=412)
+
+    author = request.args.get('author')
     # check author lenght
     if len(author) > MAX_AUTHOR_LEN:
         return Response(response="author is too long", status=412)
     if len(author) <= 0:
         return Response(response="author is too long", status=412)
 
+
+    nsfw = request.args.get('nsfw')
     # check if nsfw is boolean:
     if not(nsfw == 'true' or nsfw == 'false'):
         return Response(response="nsfw is not bool", status=412)
 
+
+    scp_class = request.args.get('class')
     # check if scp_class is a digit
     if scp_class.isdigit():
         scp_class = int(scp_class)
         if scp_class > 3 or scp_class < 0:
             return Response(response="class number is not included between 0 (Safe) and 3 (Thaumiel)", status=412)
     else:
-        return Response(response="not a number", status=412)            
+        return Response(response="not a number", status=412)      
+
     
     # check if prompt is sfw or nsfw
     if getSafetyLabel(prompt) == "2":
         return Response(response="The prompt was flagged", status=412)
+
 
     # if ip has already submitted one prompt
     if ip in submitted_ips_count.keys():
@@ -279,6 +287,7 @@ def add_prompt():
             return Response(response="You can submit a maximum of three prompts per round",status=429)
         else:
             submitted_ips_count[ip] += 1
+
 
     submission = {
         'prompt': "SCP-" + str(scp_number) + " is " + prompt,
