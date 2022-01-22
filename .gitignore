@@ -1,3 +1,4 @@
 *.key
 current_scp.txt
-ssl/*
+initial_data.json
+last.txt

@@ -55,7 +55,62 @@ if params['next_time'] < time.time():
 next_time = params['next_time']
 poll = params['poll']
 votes = params['votes']
-submitted_ips = params['submitted_ips']
+submitted_ips_count = params['submitted_ips_count']
+
+def getSafetyLabel(text):
+    content_to_classify = text
+
+    response = openai.Completion.create(
+        engine="content-filter-alpha",
+        prompt = "<|endoftext|>"+content_to_classify+"\n--\nLabel:",
+        temperature=0,
+        max_tokens=1,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0,
+        logprobs=10,
+        user=username
+        )
+
+    output_label = response["choices"][0]["text"]
+
+    # This is the probability at which we evaluate that a "2" is likely real
+    # vs. should be discarded as a false positive
+    toxic_threshold = -0.355
+
+    if output_label == "2":
+        # If the model returns "2", return its confidence in 2 or other output-labels
+        logprobs = response["choices"][0]["logprobs"]["top_logprobs"][0]
+
+        # If the model is not sufficiently confident in "2",
+        # choose the most probable of "0" or "1"
+        # Guaranteed to have a confidence for 2 since this was the selected token.
+        if logprobs["2"] < toxic_threshold:
+            logprob_0 = logprobs.get("0", None)
+            logprob_1 = logprobs.get("1", None)
+
+            # If both "0" and "1" have probabilities, set the output label
+            # to whichever is most probable
+            if logprob_0 is not None and logprob_1 is not None:
+                if logprob_0 >= logprob_1:
+                    output_label = "0"
+                else:
+                    output_label = "1"
+            # If only one of them is found, set output label to that one
+            elif logprob_0 is not None:
+                output_label = "0"
+            elif logprob_1 is not None:
+                output_label = "1"
+
+            # If neither "0" or "1" are available, stick with "2"
+            # by leaving output_label unchanged.
+
+    # if the most probable token is none of "0", "1", or "2"
+    # this should be set as unsafe
+    if output_label not in ["0", "1", "2"]:
+        output_label = "2"
+
+    return output_label
 
 def is_scpid_legit(id_scp):
     if id_scp.isdigit():
@@ -76,7 +131,7 @@ def next_round():
     global scp_number
     global poll
     global votes
-    global submitted_ips
+    global submitted_ips_count
     global next_time
     global last_scp_str
 
@@ -86,7 +141,7 @@ def next_round():
     if k == NEXT_ROUND_KEY:
         poll = []
         votes = dict()
-        submitted_ips = []
+        submitted_ips_count = dict()
         next_time = int(nt)
         scp_number += 1
 
@@ -185,53 +240,67 @@ def vote():
 @app.route('/add_prompt/', methods=['GET'])
 def add_prompt():
     ip = request.remote_addr
-    
-    # if ip has already submitted one prompt
-    if ip in submitted_ips:
-        return Response(response="already submitted a scp for this round",status=403)
-    
+
+    prompt = request.args.get('prompt')
+    # check prompt length
+    if len(prompt) > MAX_PROMPT_LEN:
+        return Response(response="prompt is too long", status=412)
+    if len(prompt) <= 15:
+        return Response(response="prompt is too short", status=412)
+
+    prompt_filtered = regex.match(r'[\p{Latin} !?.-]+', prompt).group(0) # remove all non latin + espace + ponctioation char
+    if prompt_filtered != prompt:
+        return Response(response="prompt contains invalid characters", status=412)
+
+    author = request.args.get('author')
+    # check author lenght
+    if len(author) > MAX_AUTHOR_LEN:
+        return Response(response="author is too long", status=412)
+    if len(author) <= 0:
+        return Response(response="author is too long", status=412)
+
+
+    nsfw = request.args.get('nsfw')
+    # check if nsfw is boolean:
+    if not(nsfw == 'true' or nsfw == 'false'):
+        return Response(response="nsfw is not bool", status=412)
+
+
+    scp_class = request.args.get('class')
+    # check if scp_class is a digit
+    if scp_class.isdigit():
+        scp_class = int(scp_class)
+        if scp_class > 3 or scp_class < 0:
+            return Response(response="class number is not included between 0 (Safe) and 3 (Thaumiel)", status=412)
     else:
-        prompt = regex.match(r'[\p{Latin} !?.-]+', request.args.get('prompt')).group(0) # remove all non latin + espace + ponctioation char
-        scp_class = request.args.get('class')
-        author = request.args.get('author')
-        nsfw = request.args.get('nsfw')
+        return Response(response="not a number", status=412)      
 
-        # check prompt length
-        if len(prompt) > MAX_PROMPT_LEN:
-            return Response(response="prompt is too long", status=412)
-        if len(prompt) <= 15:
-            return Response(response="prompt is too short", status=412)
+    
+    # check if prompt is sfw or nsfw
+    if getSafetyLabel(prompt) == "2":
+        return Response(response="The prompt was flagged", status=412)
 
-        # check author lenght
-        if len(author) > MAX_AUTHOR_LEN:
-            return Response(response="author is too long", status=412)
-        if len(author) <= 0:
-            return Response(response="author is too long", status=412)
 
-        # check if nsfw is boolean:
-        if not(nsfw == 'true' or nsfw == 'false'):
-            return Response(response="nsfw is not bool", status=412)
-
-        # check if scp_class is a digit
-        if scp_class.isdigit():
-            scp_class = int(scp_class)
-            if scp_class > 3 or scp_class < 0:
-                return Response(response="class number is between 0 (Safe) and 3 (Thaumiel)", status=412)
+    # if ip has already submitted one prompt
+    if ip in submitted_ips_count.keys():
+        if submitted_ips_count[ip] >= 3:
+            return Response(response="You can submit a maximum of three prompts per round",status=429)
         else:
-            return Response(response="not a number", status=412)            
-        
-        submission = {
-            'prompt': "SCP-" + str(scp_number) + " is " + prompt,
-            'scpClass': object_classes[scp_class],
-            'votes': 0,
-            'index': len(poll),
-            'author' : author,
-            'nsfw' : nsfw
-        }
-        
-        poll.append(submission)
-        submitted_ips.append(ip)        
-        return Response(response="submission has been added!",status=200)
+            submitted_ips_count[ip] += 1
+
+
+    submission = {
+        'prompt': "SCP-" + str(scp_number) + " is " + prompt,
+        'scpClass': object_classes[scp_class],
+        'votes': 0,
+        'index': len(poll),
+        'author' : author,
+        'nsfw' : nsfw
+    }
+    
+    poll.append(submission)
+    submitted_ips_count[ip] = 1        
+    return Response(response="submission has been added!",status=200)
 
 @app.route('/last_scp_desc/',  methods=['GET'])
 def last_scp_desc():
@@ -258,7 +327,7 @@ def save_data():
             data = dict(next_time = next_time,
                   poll=poll,
                   votes = votes,
-                  submitted_ips = submitted_ips
+                  submitted_ips_count = submitted_ips_count
             )
             json.dump(data, f)
 
