@@ -13,9 +13,9 @@ load_dotenv()
 
 OPENAI_KEY = os.getenv("OPENAI_KEY")
 NEXT_ROUND_KEY = os.getenv("NEXT_ROUND_KEY")
-MAX_PROMPT_LEN = int(os.getenv('MAX_PROMPT_LEN'))
-MIN_PROMPT_LEN = int(os.getenv('MIN_PROMPT_LEN'))
-MAX_AUTHOR_LEN = int(os.getenv('MAX_AUTHOR_LEN'))
+MAX_PROMPT_LEN = 300
+MIN_PROMPT_LEN = 10
+MAX_AUTHOR_LEN = 20
 DB_PATH = os.getenv('DB_PATH')
 generator_command = os.getenv('GEN_CMD')
 initial_data_path = os.getenv('INIT_DATA_PATH')
