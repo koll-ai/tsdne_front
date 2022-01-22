@@ -18,7 +18,9 @@ function UserForm(props){
     // Champ de texte qui commencera toujours par la valeur de son prop starting_value
     const [value, setValue] = useState(props.starting_value);
     return  <FormControl fullWidth>
-    <TextField multiline placeholder="an unlit platform staircase" name="user_prompt" minRows={5}  width="100%"/>
+    <TextField multiline placeholder="an unlit platform staircase"
+               name="user_prompt" minRows={3}  width="100%" variant={"filled"}
+               label={"SCP-" + props.curscp+ " is ..."}/>
         </FormControl>
     // <textarea type="text" name="user_prompt" value={value} fullWidth maxlength={300} placeholder="an unlit platform staircase"
 
@@ -116,7 +118,7 @@ export default function FormDialog(props) {
         <DialogContent>
 
           <DialogContentText>
-            SCP-{props.curscp} is ...
+            {/*SCP-{props.curscp} is ...*/}
           </DialogContentText>
             <UserForm starting_value={""} onValueChange={(event) =>{
                 setPrompt(event.target.value);
