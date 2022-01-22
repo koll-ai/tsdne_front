@@ -14,13 +14,22 @@ import './App.css';
 import { Router } from "react-router-dom";
 import history from "./history";
 
+import ReactPiwik from 'react-piwik';
 
-const PiwikReactRouter = require('piwik-react-router');
+// const PiwikReactRouter = require('piwik-react-router');
+//
+// const piwik = PiwikReactRouter({
+//     url: 'api.thisscpdoesnotexist.ml',
+//     siteId: 1
+// });
 
-const piwik = PiwikReactRouter({
-    url: 'api.thisscpdoesnotexist.ml',
-    siteId: 1
+
+const piwik = new ReactPiwik({
+  url: 'api.thisscpdoesnotexist.ml',
+  siteId: 1,
 });
+
+const trackAtConnect = false;
 
 
 
@@ -38,7 +47,7 @@ function App() {
         <AlertProvider template={AlertTemplate} {...options}>
 
           <div className="App">
-          <Router history={piwik.connectToHistory(history)}>
+          <Router history={piwik.connectToHistory(history, trackAtConnect)}>
             <ButtonAppBar />
             <div className="appbody">
               <br/>

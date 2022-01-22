@@ -8,16 +8,19 @@ import * as urls from '../URLs.js';
 
 import '../App.css';
 
+import ReactPiwik from 'react-piwik';
+
 const url_db = urls.URL_DB;
 const url_api = urls.URL_API;
 const upvotes_url = urls.URL_API + "get_upvotes/"
 
-const PiwikReactRouter = require('piwik-react-router');
+// const PiwikReactRouter = require('piwik-react-router');
+//
+// const piwik = PiwikReactRouter({
+// 	url: 'your-piwik-installation.com',
+// 	siteId: 1
+// });
 
-const piwik = PiwikReactRouter({
-	url: 'your-piwik-installation.com',
-	siteId: 1
-});
 
 function getScp(file) {
     let cur_url = url_db + file
@@ -103,9 +106,9 @@ class PastScp extends Component {
 
         //Ajout a matomo
         let scp_num = scpid.toString();
-        piwik.push(['setCustomUrl', '/' + scp_num]);
-        piwik.push(['setDocumentTitle', scp_num]);
-        piwik.push(['trackPageView']);
+        ReactPiwik.push(['setCustomUrl', '/' + scp_num]);
+        ReactPiwik.push(['setDocumentTitle', "SCP-" + scp_num]);
+        ReactPiwik.push(['trackPageView']);
 
         return scpid
     }
