@@ -5,12 +5,21 @@ import React, { Component } from 'react';
 import AccordionDyn from './AccordionDyn';
 import Badge from 'react-bootstrap/Badge';
 import * as urls from '../URLs.js';
-
 import '../App.css';
+import { useMatomo } from '@datapunt/matomo-tracker-react'
+import ReactPiwik from 'react-piwik';
 
 const url_db = urls.URL_DB;
 const url_api = urls.URL_API;
 const upvotes_url = urls.URL_API + "get_upvotes/"
+
+// const PiwikReactRouter = require('piwik-react-router');
+//
+// const piwik = PiwikReactRouter({
+// 	url: 'your-piwik-installation.com',
+// 	siteId: 1
+// });
+
 
 function getScp(file) {
     let cur_url = url_db + file
@@ -36,6 +45,16 @@ function getScpList(){
         })
         .then((res) => {return res.text()})
         .then((data) => {return data});
+}
+
+
+function CallMatomo(){
+    const { trackPageView, trackEvent } = useMatomo()
+    // Track page view
+      React.useEffect(() => {
+        trackPageView();
+        console.log('called_matomo');
+      }, [])
 }
 
 class PastScp extends Component {
@@ -112,6 +131,7 @@ class PastScp extends Component {
     renderHeader = (section, _, isActive) => {
         return (
             <div className='accordionheader'>
+                <CallMatomo />
                 <table  id={section.id} style={{width : '100%'}}>
                     <tr>
                         <td style={{width:70, textAlign:'center'}}>
@@ -194,6 +214,8 @@ class PastScp extends Component {
     render() {
         return (
             <div>
+
+                <strong className={"white"}> Click on the prompt to expand the content</strong>
                 <br/>
 
                 <AccordionDyn
