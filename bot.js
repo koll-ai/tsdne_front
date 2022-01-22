@@ -44,9 +44,9 @@ function start() {
                 .setURL('http://www.thisscpdoesnotexist.ml/list#' + scp[0])
                 .setDescription('\n **SCP-' + scp[0] + ' is ' + scp[1] + '.** \n')
                 .setThumbnail('https://i.imgur.com/56QhP4A.jpeg')
-                .setFooter(scp[5]);
+                .setFooter({text: scp[5]});
                 
-            chan.send(embed);
+            chan.send({ embeds: [embed] });
 
 
 
