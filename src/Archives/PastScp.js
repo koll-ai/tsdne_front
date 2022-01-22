@@ -193,6 +193,8 @@ class PastScp extends Component {
     render() {
         return (
             <div>
+
+                Click on the prompt to expand the content
                 <br/>
 
                 <AccordionDyn
