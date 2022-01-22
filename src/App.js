@@ -24,13 +24,20 @@ import ReactPiwik from 'react-piwik';
 // });
 
 
-const piwik = new ReactPiwik({
-  url: 'api.thisscpdoesnotexist.ml',
-  siteId: 1,
+// const piwik = new ReactPiwik({
+//   url: 'api.thisscpdoesnotexist.ml',
+//   siteId: 1,
+// });
+//
+// const trackAtConnect = false;
+
+
+import { MatomoProvider, createInstance } from '@datapunt/matomo-tracker-react'
+
+const instance = createInstance({
+    urlBase: 'http://api.thisscpdoesnotexist.ml',
+    siteId: 1
 });
-
-const trackAtConnect = false;
-
 
 
 const options = {
@@ -43,12 +50,16 @@ const options = {
 }
 
 function App() {
+
+
   return (
+      <MatomoProvider value={instance}>
         <AlertProvider template={AlertTemplate} {...options}>
 
           <div className="App">
-          <Router history={piwik.connectToHistory(history)}>
-            <ButtonAppBar />
+          {/*<Router history={piwik.connectToHistory(history)}>*/}
+            <Router>
+              <ButtonAppBar />
             <div className="appbody">
               <br/>
               <Switch>
@@ -63,6 +74,8 @@ function App() {
           </Router>
         </div>
         </AlertProvider>
+      </MatomoProvider>
+
   )
 }
 
