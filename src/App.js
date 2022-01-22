@@ -53,7 +53,7 @@ function App() {
 
 
   return (
-      <MatomoProvider value={instance}>
+      // <MatomoProvider value={instance}>
         <AlertProvider template={AlertTemplate} {...options}>
 
           <div className="App">
@@ -74,7 +74,7 @@ function App() {
           </Router>
         </div>
         </AlertProvider>
-      </MatomoProvider>
+      // </MatomoProvider>
 
   )
 }
