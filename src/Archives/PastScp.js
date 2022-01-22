@@ -194,7 +194,7 @@ class PastScp extends Component {
         return (
             <div>
 
-                Click on the prompt to expand the content
+                <strong className={"white"}> Click on the prompt to expand the content</strong>
                 <br/>
 
                 <AccordionDyn
