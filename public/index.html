@@ -38,6 +38,13 @@
 <!--    MATOMO   -->
 <script>
   var _paq = window._paq = window._paq || [];
+
+    window.addEventListener('hashchange', function() {
+    console.log('pushing');
+        _paq.push(['setCustomUrl', '/' + window.location.hash.substr(1)]);
+        _paq.push(['setDocumentTitle', 'My New Title']);
+        _paq.push(['trackPageView']);
+
   /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
   _paq.push(['trackPageView']);
   _paq.push(['enableLinkTracking']);
@@ -48,11 +55,8 @@
     var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
     g.async=true; g.src=u+'m.js'; s.parentNode.insertBefore(g,s);
   })();
-  window.addEventListener('hashchange', function() {
-    console.log('pushing');
-        _paq.push(['setCustomUrl', '/' + window.location.hash.substr(1)]);
-        _paq.push(['setDocumentTitle', 'My New Title']);
-        _paq.push(['trackPageView']);
+
+
 })
 </script>
 <!-- End Matomo Code -->

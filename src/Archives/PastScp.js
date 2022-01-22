@@ -7,7 +7,6 @@ import Badge from 'react-bootstrap/Badge';
 import * as urls from '../URLs.js';
 import '../App.css';
 import { useMatomo } from '@datapunt/matomo-tracker-react'
-import ReactPiwik from 'react-piwik';
 
 const url_db = urls.URL_DB;
 const url_api = urls.URL_API;
@@ -55,6 +54,8 @@ function CallMatomo(){
         trackPageView();
         console.log('called_matomo');
       }, [])
+
+    return <div></div>
 }
 
 class PastScp extends Component {
@@ -131,7 +132,6 @@ class PastScp extends Component {
     renderHeader = (section, _, isActive) => {
         return (
             <div className='accordionheader'>
-                <CallMatomo />
                 <table  id={section.id} style={{width : '100%'}}>
                     <tr>
                         <td style={{width:70, textAlign:'center'}}>

@@ -14,7 +14,7 @@ import './App.css';
 // import { Router } from "react-router-dom";
 import history from "./history";
 
-import ReactPiwik from 'react-piwik';
+// import ReactPiwik from 'react-piwik';
 
 // const PiwikReactRouter = require('piwik-react-router');
 //
