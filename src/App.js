@@ -1,5 +1,6 @@
 import { transitions, positions, Provider as AlertProvider } from 'react-alert'
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+// import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {  Route, Switch } from "react-router-dom";
 import ButtonAppBar from "./ButtonAppBar/ButtonAppBar";
 import AlertTemplate from 'react-alert-template-basic'
 import CurrentPoll from './Poll/CurrentPoll.js'
@@ -9,6 +10,19 @@ import IndependantScp from "./Archives/IndependantScp";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+
+import { Router } from "react-router-dom";
+import history from "./history";
+
+
+const PiwikReactRouter = require('piwik-react-router');
+
+const piwik = PiwikReactRouter({
+    url: 'api.thisscpdoesnotexist.ml',
+    siteId: 1
+});
+
+
 
 const options = {
   // you can also just use 'bottom center'
@@ -24,7 +38,7 @@ function App() {
         <AlertProvider template={AlertTemplate} {...options}>
 
           <div className="App">
-          <Router>
+          <Router history={piwik.connectToHistory(history)}>
             <ButtonAppBar />
             <div className="appbody">
               <br/>
