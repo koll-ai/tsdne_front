@@ -49,6 +49,7 @@
     g.async=true; g.src=u+'m.js'; s.parentNode.insertBefore(g,s);
   })();
   window.addEventListener('hashchange', function() {
+    console.log('pushing');
         _paq.push(['setCustomUrl', '/' + window.location.hash.substr(1)]);
         _paq.push(['setDocumentTitle', 'My New Title']);
         _paq.push(['trackPageView']);
