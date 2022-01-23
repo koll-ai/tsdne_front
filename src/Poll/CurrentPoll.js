@@ -14,6 +14,7 @@ const url_api = urls.URL_API;
 // create the socket
 const socket = io(url_api);
 
+
 function PollList(props) {
     const sorted = props.pollingItems.sort(((a, b) => b.votes - a.votes));
 
