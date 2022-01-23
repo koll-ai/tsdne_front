@@ -1,13 +1,15 @@
 import math
-from flask import Flask, request, Response
 import json
 import time
-from flask_cors import CORS
-from json import JSONDecodeError
 import regex
 import openai
 import os
+
 from dotenv import load_dotenv
+from json import JSONDecodeError
+from flask import Flask, request, Response
+from flask_cors import CORS
+from flask_socketio import SocketIO, emit
 
 load_dotenv()
 
@@ -24,7 +26,7 @@ object_classes = ['Safe', 'Euclid', 'Keter', 'Thaumiel']
 
 app = Flask(__name__)
 CORS(app)
-
+socketio = SocketIO(app)
 
 openai.api_key = OPENAI_KEY
 print("connected to openAI")
@@ -153,6 +155,9 @@ def next_round():
             # f.write()
             last_scp_str = f.read().rstrip()
 
+        #TODO smth like that for later
+        socketio.emit('next_round', {}, broadcast=True)
+        
         return Response(status=200)
 
     return Response(status=403)
@@ -297,6 +302,10 @@ def add_prompt():
     }
     
     poll.append(submission)
+
+    #broadcast to all clients
+    socketio.emit('new_prompt', {'prompt': submission}, broadcast=True)
+
     submitted_ips_count[ip] += 1       
     return Response(response="submission has been added!",status=200)
 
@@ -371,7 +380,9 @@ def generate_scp():
     else:
         return 'ko'
 
+@socketio.on('connect')
+def test_connect():
+    print('Client connected')
 
 if __name__ == "__main__":
-#    app.run(host='0.0.0.0', port=45900, debug=True, ssl_context=('cert.pem', 'key.pem') )
-    app.run(host='0.0.0.0', port=45900, debug=True)
+    socketio.run(app=app, host='0.0.0.0', port=45900, debug=True)
