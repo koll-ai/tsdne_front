@@ -257,9 +257,9 @@ def add_prompt():
     if len(prompt) <= MIN_PROMPT_LEN:
         return Response(response="prompt is too short", status=412)
 
-    prompt_filtered = regex.match(r'[\p{Latin} !?.-]+', prompt).group(0) # remove all non latin + espace + ponctioation char
-    if prompt_filtered != prompt:
-        return Response(response="prompt contains invalid characters", status=412)
+    # prompt_filtered = regex.match(r'[\p{Latin} !?.-]+', prompt).group(0) # remove all non latin + espace + ponctioation char
+    # if prompt_filtered != prompt:
+    #     return Response(response="prompt contains invalid characters", status=412)
 
     author = request.args.get('author')
     # check author lenght
