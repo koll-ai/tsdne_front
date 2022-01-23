@@ -26,7 +26,7 @@ object_classes = ['Safe', 'Euclid', 'Keter', 'Thaumiel']
 
 app = Flask(__name__)
 CORS(app)
-socketio = SocketIO(app)
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 openai.api_key = OPENAI_KEY
 print("connected to openAI")
