@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@datapunt/matomo-tracker-react": "^0.5.1",
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
     "@react-icons/all-files": "^4.1.0",
@@ -28,6 +29,7 @@
     "react-native-collapsible": "^1.6.0",
     "react-native-web": "^0.17.1",
     "react-papaparse": "^3.17.1",
+    "react-piwik": "^1.12.0",
     "react-polls": "^1.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
