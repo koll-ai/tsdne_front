@@ -7,6 +7,7 @@ import CurrentPoll from './Poll/CurrentPoll.js'
 import PastScp from './Archives/PastScp.js'
 import About from "./About/About.js";
 import IndependantScp from "./Archives/IndependantScp";
+import {useEffect} from "react";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -14,7 +15,7 @@ import './App.css';
 // import { Router } from "react-router-dom";
 import history from "./history";
 
-import ReactPiwik from 'react-piwik';
+// import ReactPiwik from 'react-piwik';
 
 // const PiwikReactRouter = require('piwik-react-router');
 //
@@ -32,12 +33,12 @@ import ReactPiwik from 'react-piwik';
 // const trackAtConnect = false;
 
 
-import { MatomoProvider, createInstance } from '@datapunt/matomo-tracker-react'
-
-const instance = createInstance({
-    urlBase: 'http://api.thisscpdoesnotexist.ml',
-    siteId: 1
-});
+// import { MatomoProvider, createInstance } from '@datapunt/matomo-tracker-react'
+//
+// const instance = createInstance({
+//     urlBase: 'http://api.thisscpdoesnotexist.ml',
+//     siteId: 1
+// });
 
 
 const options = {
@@ -53,7 +54,7 @@ function App() {
 
 
   return (
-      <MatomoProvider value={instance}>
+      // <MatomoProvider value={instance}>
         <AlertProvider template={AlertTemplate} {...options}>
 
           <div className="App">
@@ -74,7 +75,7 @@ function App() {
           </Router>
         </div>
         </AlertProvider>
-      </MatomoProvider>
+      // </MatomoProvider>
 
   )
 }

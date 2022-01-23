@@ -7,27 +7,43 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Dialog from '@material-ui/core/Dialog';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
-import {Switch} from "@material-ui/core";
+import {FormControl, Switch, TextField} from "@material-ui/core";
 import { useAlert } from 'react-alert';
 import React, {useState} from 'react';
 import * as urls from '../URLs.js';
-
+// import TextField from '@mui/material/TextField';
 const url_api = urls.URL_API;
+
+function track_with_matomo(custom_url, custom_title){
+    var _paq = window._paq;
+    _paq.push(['setCustomUrl', custom_url]);
+    _paq.push(['setDocumentTitle', custom_title]);
+    _paq.push(['trackPageView']);
+}
+
 
 function UserForm(props){
     // Champ de texte qui commencera toujours par la valeur de son prop starting_value
     const [value, setValue] = useState(props.starting_value);
-    return  <textarea type="text" name="user_prompt" value={value} fullWidth maxlength={300}
-                      
-                      placeholder={"an unlit platform staircase2"}
+    return  <FormControl fullWidth>
+    <TextField multiline placeholder="an unlit platform staircase"
+               name="user_prompt" minRows={3}  width="100%" variant={"filled"}
+               label={"SCP-" + props.curscp+ " is ..."}
+               onChange={event => {
+                   props.onValueChange(event);
+               }}
+                   />
 
-        onChange={event => {
-            if (event.target.value.startsWith(props.starting_value)){
-                setValue(event.target.value);
-                props.onValueChange(event);
-            }
-        }}
-    />;
+        </FormControl>
+    // <textarea type="text" name="user_prompt" value={value} fullWidth maxlength={300} placeholder="an unlit platform staircase"
+
+        // onChange={event => {
+        //     if (event.target.value.startsWith(props.starting_value)){
+        //         setValue(event.target.value);
+        //         props.onValueChange(event);
+        //     }
+        // }}
+    // />;
 }
 
 
@@ -71,10 +87,15 @@ export default function FormDialog(props) {
 
   const handleClickOpen = () => {
     setOpen(true);
+
+    track_with_matomo('/poll/', 'Poll: Open Dialog');
   };
 
   const handleClose = () => {
     setOpen(false);
+
+    track_with_matomo('/poll/', 'Poll: Close Dialog');
+
   };
 
   const handleSubmit = () =>{
@@ -101,6 +122,8 @@ export default function FormDialog(props) {
           .then(value=> value.text())
           .then(text => alert.show(text))
 
+      track_with_matomo('/poll/', 'Poll: Submit');
+
       handleClose();
 
   };
@@ -115,9 +138,9 @@ export default function FormDialog(props) {
         <DialogContent>
 
           <DialogContentText>
-            SCP-{props.curscp} is ...
+            {/*SCP-{props.curscp} is ...*/}
           </DialogContentText>
-            <UserForm starting_value={""} onValueChange={(event) =>{
+            <UserForm starting_value={""} curscp={props.curscp} onValueChange={(event) =>{
                 setPrompt(event.target.value);
             }} />
 

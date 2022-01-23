@@ -100,7 +100,7 @@ function CurrentPoll() {
             <br/>
             <PollList pollingItems={pollingItems} />
             <br/>
-            <SubmitPromptDialog className="openDialogBtn" curscp ={curscp} needupdate={setNeedUpdate}/>
+            <SubmitPromptDialog className="openDialogBtn" curscp ={curscp} needupdate={setNeedUpdate} />
         </div>
         
         <br/>

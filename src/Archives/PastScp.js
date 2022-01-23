@@ -6,19 +6,21 @@ import AccordionDyn from './AccordionDyn';
 import Badge from 'react-bootstrap/Badge';
 import * as urls from '../URLs.js';
 import '../App.css';
-import { useMatomo } from '@datapunt/matomo-tracker-react'
-import ReactPiwik from 'react-piwik';
+// import { useMatomo } from '@datapunt/matomo-tracker-react'
+import ls from 'localstorage-slim';
 
 const url_db = urls.URL_DB;
 const url_api = urls.URL_API;
 const upvotes_url = urls.URL_API + "get_upvotes/"
 
-// const PiwikReactRouter = require('piwik-react-router');
-//
-// const piwik = PiwikReactRouter({
-// 	url: 'your-piwik-installation.com',
-// 	siteId: 1
-// });
+
+function track_with_matomo(custom_url, custom_title){
+    var _paq = window._paq;
+    _paq.push(['setCustomUrl', custom_url]);
+    _paq.push(['setDocumentTitle', custom_title]);
+    _paq.push(['trackPageView']);
+}
+
 
 
 function getScp(file) {
@@ -48,14 +50,18 @@ function getScpList(){
 }
 
 
-function CallMatomo(){
-    const { trackPageView, trackEvent } = useMatomo()
-    // Track page view
-      React.useEffect(() => {
-        trackPageView();
-        console.log('called_matomo');
-      }, [])
+function get_or_set_upvoted_cookie(){
+    let upvoted = ls.get('archive_upvoted');
+    console.log(upvoted);
+    if (upvoted === null){
+        upvoted = [];
+        console.log('reseted');
+        ls.set('archive_upvoted', upvoted);
+    }
+    return upvoted;
+
 }
+
 
 class PastScp extends Component {
     constructor(props) {
@@ -66,7 +72,7 @@ class PastScp extends Component {
             collapsed: true,
             multipleSelect: false,
             content: [],
-            upvoted : []
+            upvoted : get_or_set_upvoted_cookie() // list of id
         };
 
         this.getAccodionHeader().then((data) => {
@@ -93,9 +99,13 @@ class PastScp extends Component {
           activeSections: sections.includes(undefined) ? [] : sections,
         });
 
-        if(scpid !== undefined)
+        if(scpid !== undefined) {
             window.history.pushState(null, null, '#' + scpid);
+            // push to Matomo
+            let cur_scp_num = window.location.hash.substr(1);
+            track_with_matomo('/list#' + cur_scp_num,'SCP-' + cur_scp_num );
 
+        }
         this.moveViewToSCP(scpid);
     };
 
@@ -114,6 +124,12 @@ class PastScp extends Component {
             return scpid
         }
 
+
+        window.addEventListener('hashchange', function () {
+          console.log('addEventListener method works');
+        }, false);
+
+
         return undefined
     }
     
@@ -122,16 +138,20 @@ class PastScp extends Component {
 
         if(this.state.upvoted.includes(id)) {
             this.setState(state => ({ upvoted: state.upvoted.filter(function(e) { return e !== id })}));
+
         } else {
-            fetch(url_api + 'upvote/?id=' + id  );
-            this.setState(state => ({ upvoted: state.upvoted.concat(id)}));
+            fetch(url_api + 'upvote/?id=' + id  )
+                .then(() => {
+                    this.setState(state => ({upvoted: state.upvoted.concat(id)}));
+                    ls.set('archive_upvoted', this.state.upvoted);
+                });
         }
+
     }
 
     renderHeader = (section, _, isActive) => {
         return (
             <div className='accordionheader'>
-                <CallMatomo />
                 <table  id={section.id} style={{width : '100%'}}>
                     <tr>
                         <td style={{width:70, textAlign:'center'}}>
