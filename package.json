@@ -29,9 +29,11 @@
     "react-native-collapsible": "^1.6.0",
     "react-native-web": "^0.17.1",
     "react-papaparse": "^3.17.1",
+    "react-piwik": "^1.12.0",
     "react-polls": "^1.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "socket.io-client": "^4.4.1",
     "web-vitals": "^1.1.2",
     "xlsx": "^0.17.1"
   },
