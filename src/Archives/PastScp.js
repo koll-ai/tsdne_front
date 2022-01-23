@@ -102,7 +102,7 @@ class PastScp extends Component {
             window.history.pushState(null, null, '#' + scpid);
             var _paq = window._paq;
             let cur_scp_num = window.location.hash.substr(1);
-            _paq.push(['setCustomUrl', '/list/' + cur_scp_num]);
+            _paq.push(['setCustomUrl', '/list#' + cur_scp_num]);
             _paq.push(['setDocumentTitle', 'SCP-' + cur_scp_num]);
             _paq.push(['trackPageView']);
         }
