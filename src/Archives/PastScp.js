@@ -101,8 +101,9 @@ class PastScp extends Component {
         if(scpid !== undefined) {
             window.history.pushState(null, null, '#' + scpid);
             var _paq = window._paq;
-            _paq.push(['setCustomUrl', '/' + window.location.hash.substr(1)]);
-            _paq.push(['setDocumentTitle', 'My New Title']);
+            let cur_scp_num = window.location.hash.substr(1);
+            _paq.push(['setCustomUrl', '/list/' + cur_scp_num]);
+            _paq.push(['setDocumentTitle', 'SCP-' + cur_scp_num]);
             _paq.push(['trackPageView']);
         }
         this.moveViewToSCP(scpid);
