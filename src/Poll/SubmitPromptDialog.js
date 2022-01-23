@@ -20,7 +20,12 @@ function UserForm(props){
     return  <FormControl fullWidth>
     <TextField multiline placeholder="an unlit platform staircase"
                name="user_prompt" minRows={3}  width="100%" variant={"filled"}
-               label={"SCP-" + props.curscp+ " is ..."}/>
+               label={"SCP-" + props.curscp+ " is ..."}
+               onChange={event => {
+                   props.onValueChange(event);
+               }}
+                   />
+
         </FormControl>
     // <textarea type="text" name="user_prompt" value={value} fullWidth maxlength={300} placeholder="an unlit platform staircase"
 
