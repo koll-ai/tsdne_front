@@ -14,15 +14,6 @@ jobs:
 
           script: bash -c "cd ~/SCP_front/ && git pull"
 
-      - name: SSH Pull repo on VPS
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-
-          script: bash -c "cd ~/SCP_front/ && npm install"
 
       - name: SSH build and  copy
         uses: appleboy/ssh-action@master
