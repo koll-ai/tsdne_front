@@ -25,9 +25,9 @@ object_classes = ['Safe', 'Euclid', 'Keter', 'Thaumiel']
 app = Flask(__name__)
 CORS(app)
 
-def connect():
-    openai.api_key = OPENAI_KEY
-    print("connected to openAI")
+
+openai.api_key = OPENAI_KEY
+print("connected to openAI")
 
 last_scp_str = ""
 with open("last.txt", "r") as f:
