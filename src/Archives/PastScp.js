@@ -134,7 +134,6 @@ class PastScp extends Component {
                 .then(() => {
                     this.setState(state => ({upvoted: state.upvoted.concat(id)}));
                     ls.set('archive_upvoted', this.state.upvoted);
-
                 });
         }
 
