@@ -14,12 +14,13 @@ const url_api = urls.URL_API;
 const upvotes_url = urls.URL_API + "get_upvotes/"
 
 
-// const PiwikReactRouter = require('piwik-react-router');
-//
-// const piwik = PiwikReactRouter({
-// 	url: 'your-piwik-installation.com',
-// 	siteId: 1
-// });
+function track_with_matomo(custom_url, custom_title){
+    var _paq = window._paq;
+    _paq.push(['setCustomUrl', custom_url]);
+    _paq.push(['setDocumentTitle', custom_title]);
+    _paq.push(['trackPageView']);
+}
+
 
 
 function getScp(file) {
@@ -101,11 +102,9 @@ class PastScp extends Component {
         if(scpid !== undefined) {
             window.history.pushState(null, null, '#' + scpid);
             // push to Matomo
-            var _paq = window._paq;
             let cur_scp_num = window.location.hash.substr(1);
-            _paq.push(['setCustomUrl', '/list#' + cur_scp_num]);
-            _paq.push(['setDocumentTitle', 'SCP-' + cur_scp_num]);
-            _paq.push(['trackPageView']);
+            track_with_matomo('/list#' + cur_scp_num,'SCP-' + cur_scp_num );
+
         }
         this.moveViewToSCP(scpid);
     };
