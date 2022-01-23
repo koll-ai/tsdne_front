@@ -64,13 +64,19 @@ function CurrentPoll() {
 
     const [needupdate, setNeedUpdate] = useState(0);
 
-    useEffect(() => {
-        socket.on("new_prompt", (data) => {
-            console.log('omg new prompt');
-            console.log(data);
 
-            setPollingItems(pollingItems.push(data['prompt']));
-        });
+    // useEffect(() => {
+    //     socket.on("new_prompt", (data) => {
+    //         console.log('omg new prompt');
+    //         console.log(data);
+    //         pollingItems.push(data['prompt'])
+    //         setPollingItems(pollingItems);
+    //         console.log(pollingItems);
+    //     });
+    // });
+
+    useEffect(() => {
+
 
         let cur_url = url_api + 'get_poll/';
         fetch(cur_url)
