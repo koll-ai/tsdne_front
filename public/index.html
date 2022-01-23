@@ -52,12 +52,12 @@
 <script>
   var _paq = window._paq = window._paq || [];
     // NE PAS SUPPRIMER
-    // window.addEventListener('hashchange', function() {
-    //   console.log('pushing');
-    //   _paq.push(['setCustomUrl', '/' + window.location.hash.substr(1)]);
-    //   _paq.push(['setDocumentTitle', 'My New Title']);
-    //   _paq.push(['trackPageView']);
-    // })
+    window.addEventListener('hashchange', function() {
+      console.log('pushing');
+      _paq.push(['setCustomUrl', '/' + window.location.hash.substr(1)]);
+      _paq.push(['setDocumentTitle', 'My New Title']);
+      _paq.push(['trackPageView']);
+    })
 
 
   /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
