@@ -122,7 +122,7 @@ export default function FormDialog(props) {
           .then(value=> value.text())
           .then(text => alert.show(text))
 
-      track_with_matomo('/poll/', 'Poll: Submit');
+      track_with_matomo('/poll/submit', 'Poll: Submit');
 
       handleClose();
 
