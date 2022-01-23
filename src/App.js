@@ -7,6 +7,7 @@ import CurrentPoll from './Poll/CurrentPoll.js'
 import PastScp from './Archives/PastScp.js'
 import About from "./About/About.js";
 import IndependantScp from "./Archives/IndependantScp";
+import {useEffect} from "react";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';

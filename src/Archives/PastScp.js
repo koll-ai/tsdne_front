@@ -98,9 +98,13 @@ class PastScp extends Component {
           activeSections: sections.includes(undefined) ? [] : sections,
         });
 
-        if(scpid !== undefined)
+        if(scpid !== undefined) {
             window.history.pushState(null, null, '#' + scpid);
-
+            var _paq = window._paq;
+            _paq.push(['setCustomUrl', '/' + window.location.hash.substr(1)]);
+            _paq.push(['setDocumentTitle', 'My New Title']);
+            _paq.push(['trackPageView']);
+        }
         this.moveViewToSCP(scpid);
     };
 
@@ -119,6 +123,12 @@ class PastScp extends Component {
             return scpid
         }
 
+
+        window.addEventListener('hashchange', function () {
+          console.log('addEventListener method works');
+        }, false);
+
+
         return undefined
     }
     
@@ -127,7 +137,6 @@ class PastScp extends Component {
 
         if(this.state.upvoted.includes(id)) {
             this.setState(state => ({ upvoted: state.upvoted.filter(function(e) { return e !== id })}));
-            console.log('filtered');
 
         } else {
             fetch(url_api + 'upvote/?id=' + id  )
