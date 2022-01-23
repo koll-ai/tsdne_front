@@ -7,6 +7,7 @@ import Badge from 'react-bootstrap/Badge';
 import * as urls from '../URLs.js';
 import '../App.css';
 // import { useMatomo } from '@datapunt/matomo-tracker-react'
+import ls from 'localstorage-slim';
 
 const url_db = urls.URL_DB;
 const url_api = urls.URL_API;
@@ -48,6 +49,19 @@ function getScpList(){
 }
 
 
+function get_or_set_upvoted_cookie(){
+    let upvoted = ls.get('archive_upvoted');
+    console.log(upvoted);
+    if (upvoted === null){
+        upvoted = [];
+        console.log('reseted');
+        ls.set('archive_upvoted', upvoted);
+    }
+    return upvoted;
+
+}
+
+
 class PastScp extends Component {
     constructor(props) {
         super(props);
@@ -57,7 +71,7 @@ class PastScp extends Component {
             collapsed: true,
             multipleSelect: false,
             content: [],
-            upvoted : []
+            upvoted : get_or_set_upvoted_cookie() // list of id
         };
 
         this.getAccodionHeader().then((data) => {
@@ -113,10 +127,17 @@ class PastScp extends Component {
 
         if(this.state.upvoted.includes(id)) {
             this.setState(state => ({ upvoted: state.upvoted.filter(function(e) { return e !== id })}));
+            console.log('filtered');
+
         } else {
-            fetch(url_api + 'upvote/?id=' + id  );
-            this.setState(state => ({ upvoted: state.upvoted.concat(id)}));
+            fetch(url_api + 'upvote/?id=' + id  )
+                .then(() => {
+                    this.setState(state => ({upvoted: state.upvoted.concat(id)}));
+                    ls.set('archive_upvoted', this.state.upvoted);
+
+                });
         }
+
     }
 
     renderHeader = (section, _, isActive) => {
