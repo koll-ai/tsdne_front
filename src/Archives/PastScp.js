@@ -100,6 +100,7 @@ class PastScp extends Component {
 
         if(scpid !== undefined) {
             window.history.pushState(null, null, '#' + scpid);
+            // push to Matomo
             var _paq = window._paq;
             let cur_scp_num = window.location.hash.substr(1);
             _paq.push(['setCustomUrl', '/list#' + cur_scp_num]);

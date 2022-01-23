@@ -14,6 +14,14 @@ import * as urls from '../URLs.js';
 // import TextField from '@mui/material/TextField';
 const url_api = urls.URL_API;
 
+function track_with_matomo(custom_url, custom_title){
+    var _paq = window._paq;
+    _paq.push(['setCustomUrl', custom_url]);
+    _paq.push(['setDocumentTitle', custom_title]);
+    _paq.push(['trackPageView']);
+}
+
+
 function UserForm(props){
     // Champ de texte qui commencera toujours par la valeur de son prop starting_value
     const [value, setValue] = useState(props.starting_value);
@@ -79,10 +87,15 @@ export default function FormDialog(props) {
 
   const handleClickOpen = () => {
     setOpen(true);
+
+    track_with_matomo('/poll/', 'Poll: Open Dialog');
   };
 
   const handleClose = () => {
     setOpen(false);
+
+    track_with_matomo('/poll/', 'Poll: Close Dialog');
+
   };
 
   const handleSubmit = () =>{
@@ -108,6 +121,8 @@ export default function FormDialog(props) {
           // .then(value => window.location.href = '/');
           .then(value=> value.text())
           .then(text => alert.show(text))
+
+      track_with_matomo('/poll/', 'Poll: Submit');
 
       handleClose();
 
