@@ -50,6 +50,16 @@ function LastSCP() {
             .then((data) => {
                 setLastSCP(data);
             })
+
+        socket.on("next_round", (p) => {
+            setLastSCP(p.scp_desc);
+        });
+
+        return () => {
+            socket.off('next_round', (p) => {
+                setLastSCP(p.scp_desc);
+            });
+            }    
     }, []);
 
     return (
@@ -65,18 +75,15 @@ function CurrentPoll() {
     const [needupdate, setNeedUpdate] = useState(0);
 
     useEffect(() => {
-        socket.on("new_prompt", (data) => {
-            console.log('omg new prompt');
-            console.log(data);
-
-            setPollingItems(pollingItems.push(data['prompt']));
-        });
+        const addPrompt = (p) => setPollingItems(previous => [...previous, p]);
 
         let cur_url = url_api + 'get_poll/';
         fetch(cur_url)
             .then((res) => res.json())
             .then((data) => {
-                setPollingItems(data.poll);
+                for(var p of data.poll) {
+                    addPrompt(p);
+                }
             })
 
         fetch(url_api + "current_scp_number/")
@@ -84,7 +91,30 @@ function CurrentPoll() {
             .then((data) => {
                 setCurscp(data);
                 ls.set('current_scp_number', data);
-            })
+            })    
+    
+
+        // sockets shenanigans
+        socket.on("new_prompt", (p) => {
+            addPrompt(p.prompt);
+        });
+
+        socket.on("next_round", () => {
+            console.log('hey there cowboy');
+            setPollingItems([]);
+        });
+
+        // call when will unmount
+        return () => {
+            socket.off('new_prompt', (p) => {
+                addPrompt(p.prompt);
+            });
+
+            socket.off("next_round", () => {
+                console.log('hey there cowboy');
+                setPollingItems([]);
+            });
+         }
 
     }, [needupdate]);
 
