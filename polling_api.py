@@ -148,15 +148,14 @@ def next_round():
         scp_number += 1
 
         # save scp number
-        with open('current_scp.txt') as f:
+        with open('current_scp.txt', 'w') as f:
             f.write(str(scp_number+1))
 
         with open("last.txt", "r") as f:
             # f.write()
             last_scp_str = f.read().rstrip()
 
-        #TODO smth like that for later
-        socketio.emit('next_round', {}, broadcast=True)
+        socketio.emit('next_round', {'scp_desc' : last_scp_str}, broadcast=True)
         
         return Response(status=200)
 
@@ -368,6 +367,7 @@ def generate_scp():
     key = request.args.get('key')
     if key == NEXT_ROUND_KEY:
         os.system(generator_command)
+        
         with open(initial_data_path, "w") as f:
             data = dict(next_time = next_time,
                   poll=[],
