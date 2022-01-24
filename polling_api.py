@@ -44,11 +44,11 @@ try:
     with open(initial_data_path, "r") as f:
         params = json.load(f)
 except FileNotFoundError:
-    params = dict(next_time = time.time() + 3600,
+    params = dict(next_time=time.time() + 3600,
                   poll=[],
-                  votes = dict(),
-                  submitted_ips_count = dict()
-    )
+                  votes=dict(),
+                  submitted_ips_count=dict()
+                  )
 
 if params['next_time'] < time.time():
     print('reseted')
@@ -59,12 +59,13 @@ poll = params['poll']
 votes = params['votes']
 submitted_ips_count = params['submitted_ips_count']
 
+
 def getSafetyLabel(text, username):
     content_to_classify = text
 
     response = openai.Completion.create(
         engine="content-filter-alpha",
-        prompt = "<|endoftext|>"+content_to_classify+"\n--\nLabel:",
+        prompt="<|endoftext|>"+content_to_classify+"\n--\nLabel:",
         temperature=0,
         max_tokens=1,
         top_p=1,
@@ -72,7 +73,7 @@ def getSafetyLabel(text, username):
         presence_penalty=0,
         logprobs=10,
         user=username
-        )
+    )
 
     output_label = response["choices"][0]["text"]
 
@@ -114,19 +115,22 @@ def getSafetyLabel(text, username):
 
     return output_label
 
+
 def is_scpid_legit(id_scp):
     if id_scp.isdigit():
         id_scp = int(id_scp)
         if id_scp < 9000 or id_scp > scp_number:
             return False
         else:
-            return True 
+            return True
     else:
         return False
+
 
 @app.route('/', methods=['GET'])
 def main():
     return "gpt scp api live and running"
+
 
 @app.route('/next_round/', methods=['GET'])
 def next_round():
@@ -139,7 +143,7 @@ def next_round():
 
     k = request.args.get('key')
     nt = request.args.get('next_time')
-    
+
     if k == NEXT_ROUND_KEY:
         poll = []
         votes = dict()
@@ -155,11 +159,15 @@ def next_round():
             # f.write()
             last_scp_str = f.read().rstrip()
 
-        socketio.emit('next_round', {'scp_desc' : last_scp_str}, broadcast=True)
-        
+        socketio.emit('next_round', {
+            'scp_desc': last_scp_str,
+            'next_time': str(math.trunc(next_time * 1000))[0:-2] + "00"
+        }, broadcast=True)
+
         return Response(status=200)
 
     return Response(status=403)
+
 
 @app.route('/get_poll/', methods=['GET'])
 def get_poll():
@@ -167,6 +175,7 @@ def get_poll():
         return Response(status=204)
 
     return {'poll': poll}
+
 
 @app.route('/upvote/')
 def upvote():
@@ -176,14 +185,14 @@ def upvote():
     if is_scpid_legit(id_scp):
         id_scp = int(id_scp)
     else:
-        return Response(response="not a valid id", status=412)    
+        return Response(response="not a valid id", status=412)
 
     try:
-        #open file
+        # open file
         with open('./upvotes.json', 'r') as json_file:
             data = json.load(json_file)
     except (FileNotFoundError, JSONDecodeError) as e:
-        #file does not exist, create it
+        # file does not exist, create it
         data = dict()
 
     if id_scp in data:
@@ -194,27 +203,28 @@ def upvote():
             return Response(response="already voted", status=414)
     else:
         data[id_scp] = {
-            "n_upvotes" : 1,
-            "ips" : [ip]
+            "n_upvotes": 1,
+            "ips": [ip]
         }
-        
+
     with open('upvotes.json', 'w') as outfile:
         json.dump(data, outfile)
 
-    return Response(response="upvote counted",status=200) 
+    return Response(response="upvote counted", status=200)
 
 
 @app.route('/get_upvotes/', methods=['GET'])
 def get_upvotes():
     try:
-        #open file
+        # open file
         with open('./upvotes.json', 'r') as json_file:
             data = json.load(json_file)
     except (FileNotFoundError, JSONDecodeError) as e:
-        #file does not exist, create it
+        # file does not exist, create it
         data = dict()
 
     return data
+
 
 @app.route('/vote/', methods=['GET'])
 def vote():
@@ -226,7 +236,7 @@ def vote():
 
     # gets vote
     n = request.args.get('n')
-    
+
     # if out of bounds
     if n.isdigit():
         n = int(n)
@@ -234,23 +244,24 @@ def vote():
             return Response(status=412)
     else:
         return Response(status=412)
-    
+
     # count vote
     poll[n]['votes'] += 1
     votes[ip] = n
-    
-    return Response(status=200)   
+
+    return Response(status=200)
+
 
 @app.route('/add_prompt/', methods=['GET'])
 def add_prompt():
     global submitted_ips_count
-    
+
     ip = request.remote_addr
-    
+
     # if ip has already submitted one prompt
     if ip in submitted_ips_count.keys():
         if submitted_ips_count[ip] >= 3:
-            return Response(response="You can submit a maximum of three prompts per round",status=429)
+            return Response(response="You can submit a maximum of three prompts per round", status=429)
     else:
         submitted_ips_count[ip] = 0
 
@@ -284,9 +295,8 @@ def add_prompt():
         if scp_class > 3 or scp_class < 0:
             return Response(response="class number is not included between 0 (Safe) and 3 (Thaumiel)", status=412)
     else:
-        return Response(response="not a number", status=412)      
+        return Response(response="not a number", status=412)
 
-    
     # check if prompt is sfw or nsfw
     if getSafetyLabel(prompt, author) == "2":
         return Response(response="The prompt was flagged", status=412)
@@ -296,17 +306,18 @@ def add_prompt():
         'scpClass': object_classes[scp_class],
         'votes': 0,
         'index': len(poll),
-        'author' : author,
-        'nsfw' : nsfw
+        'author': author,
+        'nsfw': nsfw
     }
-    
+
     poll.append(submission)
 
-    #broadcast to all clients
+    # broadcast to all clients
     socketio.emit('new_prompt', {'prompt': submission}, broadcast=True)
 
-    submitted_ips_count[ip] += 1       
-    return Response(response="submission has been added!",status=200)
+    submitted_ips_count[ip] += 1
+    return Response(response="submission has been added!", status=200)
+
 
 @app.route('/last_scp_desc/',  methods=['GET'])
 def last_scp_desc():
@@ -316,32 +327,35 @@ def last_scp_desc():
 
     return str(last_scp_str)
 
+
 @app.route('/current_scp_number/', methods=['GET'])
 def current_scp_number():
     return str(scp_number)
 
+
 @app.route('/next_time/', methods=['GET'])
 def next_time_():
     """Renvoie le next time au format de javascript"""
-    return str( math.trunc(next_time * 1000 ) )[0:-2] + "00"
+    return str(math.trunc(next_time * 1000))[0:-2] + "00"
+
 
 @app.route('/save_data/', methods=['GET'])
 def save_data():
     k = request.args.get('key')
     if k == NEXT_ROUND_KEY:
         with open(initial_data_path, "w") as f:
-            data = dict(next_time = next_time,
-                  poll=poll,
-                  votes = votes,
-                  submitted_ips_count = submitted_ips_count
-            )
+            data = dict(next_time=next_time,
+                        poll=poll,
+                        votes=votes,
+                        submitted_ips_count=submitted_ips_count
+                        )
             json.dump(data, f)
-
 
         with open("current_scp.txt", "w") as f:
             f.write(str(scp_number))
 
     return "ok"
+
 
 @app.route('/get_past_scp/', methods=['GET'])
 def get_past_scp():
@@ -367,22 +381,24 @@ def generate_scp():
     key = request.args.get('key')
     if key == NEXT_ROUND_KEY:
         os.system(generator_command)
-        
+
         with open(initial_data_path, "w") as f:
-            data = dict(next_time = next_time,
-                  poll=[],
-                  votes = dict(),
-                  submitted_ips = []
-            )
+            data = dict(next_time=next_time,
+                        poll=[],
+                        votes=dict(),
+                        submitted_ips=[]
+                        )
 
             json.dump(data, f)
         return 'ok'
     else:
         return 'ko'
 
+
 @socketio.on('connect')
 def test_connect():
     print('Client connected')
+
 
 if __name__ == "__main__":
     socketio.run(app=app, host='0.0.0.0', port=45900, debug=True)
