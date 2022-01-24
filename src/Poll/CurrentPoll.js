@@ -74,6 +74,17 @@ function CurrentPoll() {
 
     const [needupdate, setNeedUpdate] = useState(0);
 
+
+    // useEffect(() => {
+    //     socket.on("new_prompt", (data) => {
+    //         console.log('omg new prompt');
+    //         console.log(data);
+    //         pollingItems.push(data['prompt'])
+    //         setPollingItems(pollingItems);
+    //         console.log(pollingItems);
+    //     });
+    // });
+
     useEffect(() => {
         const addPrompt = (p) => setPollingItems(previous => [...previous, p]);
 
