@@ -1,6 +1,7 @@
 *.key
 current_scp.txt
 initial_data.json
+upvotes.json
 last.txt
 .env
 ./ssl/
