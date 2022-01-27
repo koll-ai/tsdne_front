@@ -1,1 +1,1 @@
-from polling_api import app as application
+from .polling_api import app as application
