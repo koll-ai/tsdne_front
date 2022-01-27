@@ -1,19 +1,15 @@
+import "../App.css";
 import SubmitPromptDialog from './SubmitPromptDialog.js';
+import SCPSocket from '../CommonObjects.js';
 import { useEffect, useState } from "react";
 import Grid from '@material-ui/core/Grid';
 import PollItem from './PollItem.js';
-import { io } from "socket.io-client";
-import * as urls from '../URLs.js';
 import ls from 'localstorage-slim';
 
-import "../App.css";
-import { Link } from "react-router-dom";
-
+import * as urls from '../URLs.js';
 const url_api = urls.URL_API;
 
-// create the socket
-const socket = io(url_api);
-
+const socket = SCPSocket.getSocketInstance();
 
 function PollList(props) {
     const sorted = props.pollingItems.sort(((a, b) => b.votes - a.votes));
