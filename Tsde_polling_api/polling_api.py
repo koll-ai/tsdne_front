@@ -164,7 +164,7 @@ def next_round():
             last_scp_str = f.read().rstrip()
 
         # save poll data
-        date_time = datetime.now().strftime("%m-%d-%Y-%H-%M-%S")
+        date_time = datetime.datetime.now().strftime("%m-%d-%Y-%H-%M-%S")
         with open(f"history/'{date_time}_history.json", "w") as f:
             data = dict(next_time=next_time,
                         poll=poll,
