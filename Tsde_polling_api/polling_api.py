@@ -4,6 +4,7 @@ import time
 import regex
 import openai
 import os
+import datetime
 
 from dotenv import load_dotenv
 from json import JSONDecodeError
@@ -58,6 +59,9 @@ next_time = params['next_time']
 poll = params['poll']
 votes = params['votes']
 submitted_ips_count = params['submitted_ips_count']
+
+if not os.path.exists('history'):
+    os.mkdir('history')
 
 
 def getSafetyLabel(text, username):
@@ -158,6 +162,16 @@ def next_round():
         with open("last.txt", "r") as f:
             # f.write()
             last_scp_str = f.read().rstrip()
+
+        # save poll data
+        date_time = datetime.now().strftime("%m-%d-%Y-%H-%M-%S")
+        with open(f"history/'{date_time}_history.json", "w") as f:
+            data = dict(next_time=next_time,
+                        poll=poll,
+                        votes=votes,
+                        submitted_ips_count=submitted_ips_count
+                        )
+            json.dump(data, f)
 
         socketio.emit('next_round', {
             'scp_desc': last_scp_str,
