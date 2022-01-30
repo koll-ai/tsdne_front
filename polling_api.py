@@ -386,8 +386,8 @@ def generate_scp():
             data = dict(next_time=next_time,
                         poll=[],
                         votes=dict(),
-                        submitted_ips=[]
-                        )
+                        submitted_ips_count=dict()
+                    )                        
 
             json.dump(data, f)
         return 'ok'
