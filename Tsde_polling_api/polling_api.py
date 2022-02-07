@@ -253,12 +253,13 @@ def vote():
     else:
         ip = request.remote_addr
 
-    # if already voted
-    if ip in votes.keys():
-        return Response(response="Already voted", status=403)
-
     # gets vote
     n = request.args.get('n')
+
+    # if already voted
+    if ip in votes.keys():
+        if n in votes[ip]:
+            return Response(response="Already voted", status=403)
 
     # if out of bounds
     if n.isdigit():
