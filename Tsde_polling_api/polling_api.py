@@ -270,7 +270,11 @@ def vote():
 
     # count vote
     poll[n]['votes'] += 1
-    votes[ip] = n
+
+    if ip not in votes.keys():
+        votes[ip] = [n]
+    else:
+        votes[ip].append(n)
 
     return Response(status=200)
 
