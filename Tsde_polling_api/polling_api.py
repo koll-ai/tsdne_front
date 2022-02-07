@@ -242,9 +242,10 @@ def get_upvotes():
 
 @app.route('/vote/', methods=['GET'])
 def vote():
-    ip = request.remote_addr
-
-    print(votes)
+    if request.headers.getlist("X-Forwarded-For"):
+        ip = request.headers.getlist("X-Forwarded-For")[0]
+    else:
+        ip = request.remote_addr
 
     # if already voted
     if ip in votes.keys():
