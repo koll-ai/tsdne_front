@@ -244,9 +244,11 @@ def get_upvotes():
 def vote():
     ip = request.remote_addr
 
+    print(votes)
+
     # if already voted
     if ip in votes.keys():
-        return Response(status=403)
+        return Response(response="Already voted", status=403)
 
     # gets vote
     n = request.args.get('n')
@@ -255,9 +257,9 @@ def vote():
     if n.isdigit():
         n = int(n)
         if(n >= len(poll) or n < 0):
-            return Response(status=412)
+            return Response(response="Incorrect number", status=412)
     else:
-        return Response(status=412)
+        return Response(response="Not a digit", status=412)
 
     # count vote
     poll[n]['votes'] += 1
