@@ -193,7 +193,11 @@ def get_poll():
 
 @app.route('/upvote/')
 def upvote():
-    ip = request.remote_addr
+    if request.headers.getlist("X-Forwarded-For"):
+        ip = request.headers.getlist("X-Forwarded-For")[0]
+    else:
+        ip = request.remote_addr
+
     id_scp = request.args.get('id')
 
     if is_scpid_legit(id_scp):
@@ -273,7 +277,11 @@ def vote():
 def add_prompt():
     global submitted_ips_count
 
-    ip = request.remote_addr
+    if request.headers.getlist("X-Forwarded-For"):
+        ip = request.headers.getlist("X-Forwarded-For")[0]
+    else:
+        ip = request.remote_addr
+
 
     # if ip has already submitted one prompt
     if ip in submitted_ips_count.keys():
