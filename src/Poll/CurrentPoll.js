@@ -137,6 +137,9 @@ function CurrentPoll() {
 
                     <br /><br />
                     If you're still  lost please check out our <a href="./about">FAQ</a>.
+                
+                    <br/>
+                    <b> We are currently having problems with our voting system, we are working on it right now ! </b>
                 </p>
             </div>
 

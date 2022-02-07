@@ -158,10 +158,17 @@ body {
 }
 
 .appbody{
-  width: 80%;
+  width: 55%;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 20px;
+}
+
+/* if on mobile use width of 100% */
+@media only screen and (max-width: 600px) {
+  .appbody {
+    width: 80%;
+  }
 }
 
 header a, header a:hover, header a:focus, header a:active {
