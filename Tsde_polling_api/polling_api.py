@@ -246,6 +246,8 @@ def get_upvotes():
 
 @app.route('/vote/', methods=['GET'])
 def vote():
+    print(votes)
+
     if request.headers.getlist("X-Forwarded-For"):
         ip = request.headers.getlist("X-Forwarded-For")[0]
     else:
