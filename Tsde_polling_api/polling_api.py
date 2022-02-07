@@ -247,6 +247,7 @@ def get_upvotes():
 @app.route('/vote/', methods=['GET'])
 def vote():
     print(votes)
+    print(poll)
 
     if request.headers.getlist("X-Forwarded-For"):
         ip = request.headers.getlist("X-Forwarded-For")[0]
@@ -259,7 +260,7 @@ def vote():
     # if already voted
     if ip in votes.keys():
         if n in votes[ip]:
-            return Response(response="Already voted", status=403)
+            return Response(response="Already voted for this SCP", status=403)
 
     # if out of bounds
     if n.isdigit():
