@@ -2,7 +2,7 @@ const fs = require("fs");
 require('dotenv').config();
 const Discord = require('discord.js');
 const { MessageEmbed } = require('discord.js');
-import * as CSV from 'csv-string';
+const CSV = require('csv-string');
  
 
 //discord shenanigans
