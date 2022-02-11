@@ -2,6 +2,8 @@ const fs = require("fs");
 require('dotenv').config();
 const Discord = require('discord.js');
 const { MessageEmbed } = require('discord.js');
+import * as CSV from 'csv-string';
+ 
 
 //discord shenanigans
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"] });
@@ -22,13 +24,11 @@ function start() {
         if (watching) return;
         watching = true;
 
-
-
         fs.readFile(path, "utf8", function (err, data) {
             var lines = data.split("\n");
             var lastLine = lines[lines.length - 2];
 
-            var scp = lastLine.split(",");
+            const scp = CSV.parse('lastLine');            
             console.log(scp);
 
             colors = {
