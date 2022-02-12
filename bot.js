@@ -28,7 +28,7 @@ function start() {
             var lines = data.split("\n");
             var lastLine = lines[lines.length - 2];
 
-            const scp = CSV.parse('lastLine');            
+            const scp = CSV.parse(lastLine);            
             console.log(scp);
 
             colors = {
