@@ -1,7 +1,6 @@
 import math
 import json
 import time
-import regex
 import openai
 import os
 import datetime
@@ -377,4 +376,4 @@ def test_connect():
 
 
 if __name__ == "__main__":
-    socketio.run(app=app, host='0.0.0.0', port=45900, debug=True)
+    socketio.run(app=app, host='0.0.0.0', port=45900, debug=True, allow_unsafe_werkzeug=True)
