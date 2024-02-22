@@ -197,3 +197,7 @@ a:hover {
   background-color: #494949 !important;
   transition: 0.3s;
 }
+
+.scp-image {
+  width: 100%;
+}
