@@ -5,4 +5,4 @@ upvotes.json
 last.txt
 .env
 ./ssl/
-./history/*
+history/*

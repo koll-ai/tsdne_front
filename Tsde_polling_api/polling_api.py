@@ -63,63 +63,6 @@ submitted_ips_count = params['submitted_ips_count']
 if not os.path.exists('history'):
     os.mkdir('history')
 
-
-def getSafetyLabel(text, username):
-    content_to_classify = text
-
-    response = openai.Completion.create(
-        engine="content-filter-alpha",
-        prompt="<|endoftext|>"+content_to_classify+"\n--\nLabel:",
-        temperature=0,
-        max_tokens=1,
-        top_p=1,
-        frequency_penalty=0,
-        presence_penalty=0,
-        logprobs=10,
-        user=username
-    )
-
-    output_label = response["choices"][0]["text"]
-
-    # This is the probability at which we evaluate that a "2" is likely real
-    # vs. should be discarded as a false positive
-    toxic_threshold = -0.355
-
-    if output_label == "2":
-        # If the model returns "2", return its confidence in 2 or other output-labels
-        logprobs = response["choices"][0]["logprobs"]["top_logprobs"][0]
-
-        # If the model is not sufficiently confident in "2",
-        # choose the most probable of "0" or "1"
-        # Guaranteed to have a confidence for 2 since this was the selected token.
-        if logprobs["2"] < toxic_threshold:
-            logprob_0 = logprobs.get("0", None)
-            logprob_1 = logprobs.get("1", None)
-
-            # If both "0" and "1" have probabilities, set the output label
-            # to whichever is most probable
-            if logprob_0 is not None and logprob_1 is not None:
-                if logprob_0 >= logprob_1:
-                    output_label = "0"
-                else:
-                    output_label = "1"
-            # If only one of them is found, set output label to that one
-            elif logprob_0 is not None:
-                output_label = "0"
-            elif logprob_1 is not None:
-                output_label = "1"
-
-            # If neither "0" or "1" are available, stick with "2"
-            # by leaving output_label unchanged.
-
-    # if the most probable token is none of "0", "1", or "2"
-    # this should be set as unsafe
-    if output_label not in ["0", "1", "2"]:
-        output_label = "2"
-
-    return output_label
-
-
 def is_scpid_legit(id_scp):
     if id_scp.isdigit():
         id_scp = int(id_scp)
@@ -149,7 +92,8 @@ def next_round():
     nt = request.args.get('next_time')
 
     if k == NEXT_ROUND_KEY:
-        poll = []
+        sorted_poll = list(reversed(sorted(poll, key=lambda k: k['votes'])))
+        poll = sorted_poll[1:]
         votes = dict()
         submitted_ips_count = dict()
         next_time = int(nt)
@@ -330,10 +274,6 @@ def add_prompt():
     else:
         return Response(response="not a number", status=412)
 
-    # check if prompt is sfw or nsfw
-    if getSafetyLabel(prompt, author) == "2":
-        return Response(response="The prompt was flagged", status=412)
-
     submission = {
         'prompt': "SCP-" + str(scp_number) + " is " + prompt,
         'scpClass': object_classes[scp_class],
@@ -414,10 +354,13 @@ def generate_scp():
     key = request.args.get('key')
     if key == NEXT_ROUND_KEY:
         os.system(generator_command)
-
+        
+        sorted_poll = list(reversed(sorted(poll, key=lambda k: k['votes'])))
+        winner = sorted_poll[0]
+        rest_poll = sorted_poll[1:]
         with open(initial_data_path, "w") as f:
             data = dict(next_time=next_time,
-                        poll=[],
+                        poll=rest_poll,
                         votes=dict(),
                         submitted_ips_count=dict()
                     )                        
