@@ -6,3 +6,4 @@ last.txt
 .env
 ./ssl/
 *_history.json
+venv
