@@ -7,7 +7,7 @@ import datetime
 
 from dotenv import load_dotenv
 from json import JSONDecodeError
-from flask import Flask, request, Response
+from flask import Flask, request, Response, stream_with_context, send_from_directory, abort
 from flask_cors import CORS
 from flask_socketio import SocketIO, emit
 
@@ -21,6 +21,7 @@ MAX_AUTHOR_LEN = 20
 DB_PATH = os.getenv('DB_PATH')
 generator_command = os.getenv('GEN_CMD')
 initial_data_path = os.getenv('INIT_DATA_PATH')
+IMAGE_FOLDER = os.getenv('IMAGE_FOLDER')
 
 object_classes = ['Safe', 'Euclid', 'Keter', 'Thaumiel']
 
@@ -327,6 +328,24 @@ def save_data():
             f.write(str(scp_number))
 
     return "ok"
+
+
+@app.route('/images/<filename>')
+def get_past_illustration(filename):
+    # Ensure the filename is secure and does not contain any directory traversal characters
+    if '..' in filename or filename.startswith('/'):
+        abort(404)  # Not found, to avoid revealing any directory structure
+
+    # Securely join the directory and filename to prevent directory traversal
+    safe_path = os.path.join(IMAGE_FOLDER, filename)
+
+    # Check if the file exists in the directory
+    if not os.path.isfile(safe_path):
+        abort(404)  # If the file does not exist, return a 404 error
+
+    # Serve the image from the directory
+    return send_from_directory(IMAGE_FOLDER, filename)
+
 
 
 @app.route('/get_past_scp/', methods=['GET'])
