@@ -4,54 +4,23 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ButtonAppBar from "./ButtonAppBar/ButtonAppBar";
 import AlertTemplate from 'react-alert-template-basic'
 import CurrentPoll from './Poll/CurrentPoll.js'
-import PastScp from './Archives/PastScp.js'
+import SCPArchive from './Archives/SCPArchive.js'
+import EntityCard from './Archives/EntityCard.js'
+import ArchiveRedirect from './Archives/ArchiveRedirect.js'
 import About from "./About/About.js";
-import IndependantScp from "./Archives/IndependantScp";
-import {useEffect} from "react";
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-
-// import { Router } from "react-router-dom";
-import history from "./history";
-
-// import ReactPiwik from 'react-piwik';
-
-// const PiwikReactRouter = require('piwik-react-router');
-//
-// const piwik = PiwikReactRouter({
-//     url: 'api.thisscpdoesnotexist.ml',
-//     siteId: 1
-// });
-
-
-// const piwik = new ReactPiwik({
-//   url: 'api.thisscpdoesnotexist.ml',
-//   siteId: 1,
-// });
-//
-// const trackAtConnect = false;
-
-
-// import { MatomoProvider, createInstance } from '@datapunt/matomo-tracker-react'
-//
-// const instance = createInstance({
-//     urlBase: 'http://api.thisscpdoesnotexist.ml',
-//     siteId: 1
-// });
+import { Archive } from 'react-bootstrap-icons';
 
 
 const options = {
-  // you can also just use 'bottom center'
   position: positions.BOTTOM_CENTER,
   timeout: 5000,
   offset: '30px',
-  // you can also just use 'scale'
   transition: transitions.SCALE
 }
 
 function App() {
-
 
   return (
       // <MatomoProvider value={instance}>
@@ -61,12 +30,13 @@ function App() {
           {/*<Router history={piwik.connectToHistory(history)}>*/}
             <Router>
               <ButtonAppBar />
-            <div className="appbody">
+            <div className="container">
               <br/>
               <Switch>
                 <Route path="/" exact component={ CurrentPoll} />
-                <Route path="/list" exact component={ PastScp } />
-                <Route path="/list/:id" exact component={ IndependantScp } />
+                <Route path="/entity" exact component={ EntityCard } />
+                <Route path="/archive" exact component={ SCPArchive } />
+                <Route path="/list" exact component={ ArchiveRedirect } />
                 <Route path="/about" exact component={ About } />
                 {/* Fix for 404 on refresh */}
                 {/*<Route path="/*" exact component={ CurrentPoll } />*/}
@@ -75,8 +45,6 @@ function App() {
           </Router>
         </div>
         </AlertProvider>
-      // </MatomoProvider>
-
   )
 }
 

@@ -59,7 +59,6 @@ function get_or_set_upvoted_cookie(){
         ls.set('archive_upvoted', upvoted);
     }
     return upvoted;
-
 }
 
 

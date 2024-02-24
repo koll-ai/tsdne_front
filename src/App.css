@@ -1,28 +1,33 @@
-
-.App {
-  text-align: center;
-}
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+.App {
+  align-items: center;
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+}
+
+.appbody{
+  width: 800px; /* Set a specific width for the main column */
+  max-width: 100%; /* Ensure it doesn't exceed the container's width */
+  padding: 20px; /* Padding inside the main column */
+  flex: 0 0 auto; /* No flex-grow, no flex-shrink, auto basis */
+  margin: 0 auto; /* This adds automatic margins on both sides, further ensuring centering */
+  color: white;
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
 .App-link {
@@ -47,6 +52,7 @@ textarea{
 }  
 
 body {
+  background-color: #000000;
   background-image: url('medias/bkg.jpg');
   background-size: 20vh;
 }
@@ -102,13 +108,6 @@ body {
   color: rgb(255, 187, 187);
 }
 
-.scpcont{
-    background-color: #252525;
-    color: white;
-    border-radius: 0.5em;
-    padding: 1.5em
-}
-
 .buttonsubmit {
   border-radius: 0.5em;
   border: 2px solid white;
@@ -127,18 +126,14 @@ body {
 }
 
 .greywrap {
-  background-color: #3a3a3a;
+  background-color: #111111;
   color: white;
   padding: 18px;
   width: 100%;
   border: none;
   font-size: 15px;
-  border-radius: 10px;
-}
-
-.justifytext {
-  text-align: justify;
-  text-justify: inter-word;
+  border-radius: 5px;
+  border: 1px solid rgb(138, 138, 138);
 }
 
 /* h2 style in pollwrapper */
@@ -157,19 +152,6 @@ body {
   transition: 0.3s;
 }
 
-.appbody{
-  width: 55%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 20px;
-}
-
-/* if on mobile use width of 100% */
-@media only screen and (max-width: 600px) {
-  .appbody {
-    width: 80%;
-  }
-}
 
 header a, header a:hover, header a:focus, header a:active {
   text-decoration: none;
@@ -199,5 +181,86 @@ a:hover {
 }
 
 .scp-image {
+  max-width: 100%;
+  float: right;
+  padding: 10px;
+  padding-left: 10px;
+  margin-top: 50px;
+  padding-left: 50px;
+  width: 450px;
+}
+
+.justifytext {
+  text-align: left;
+  text-justify: inter-word;
+}
+
+.lastscp-div {
+  background-image: url(medias/logo_corner.png);
+  background-repeat: no-repeat;
+}
+
+.scp-article .justifytext center {
+  display: none;
+}
+
+.scp-article h3 {
+  margin-top: 40px;
+}
+
+.archive-item {
+  display: flex;
+  margin-top: 20px;
+  background-color: rgb(27, 27, 27);
+  border-radius: 10px;
+  color: white;
+  padding-left: 20px;
+  text-align: left;
+}
+
+.archive-item:hover {
+  background-color: rgb(49, 49, 49);
+}
+
+.archive-item a {
+  text-decoration: none;
+  color: white;
+  padding-left: 20px;
+  padding-right: 20px;
+  display: flex;
   width: 100%;
+}
+
+.archive-item a p {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.archive-item a:hover {
+  text-decoration: none;
+  color: white;
+}
+
+.archive-item .info {
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.archive-item .info .badge{
+  height: fit-content;
+}
+
+.archive-item .info button {
+  height: fit-content;
+  margin-top: 10px;
+  background-color: #424242;
+  color: white;
+  z-index: 999;
+}
+
+.entitycard {
+  margin-top: 50px;
+  margin-bottom: 50px;
 }

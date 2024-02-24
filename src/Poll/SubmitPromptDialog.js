@@ -99,12 +99,6 @@ export default function FormDialog(props) {
   };
 
   const handleSubmit = () =>{
-      // if (prompt.length < 15) {
-      //     handleClose();
-      //     alert.show('Prompt length is too short !')
-      //
-      //     return;
-      // }
       let url = url_api + "add_prompt/"
       + "?prompt=" + prompt
       + "&class=" + scpClass.toString()
@@ -131,7 +125,7 @@ export default function FormDialog(props) {
   return (
     <div>
       <div className="buttonsubmit" onClick={handleClickOpen}>
-        <h5>Submit a prompt</h5>
+        <h8>Submit a prompt</h8>
       </div>
       <Dialog fullWidth maxWidth="sm" open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Submit your SCP idea !</DialogTitle>

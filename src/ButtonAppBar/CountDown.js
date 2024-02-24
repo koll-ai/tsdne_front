@@ -3,13 +3,10 @@ import React from "react";
 const CountDown = ({ epoch }) => {
 
   const duree_in_sec = Math.trunc((epoch - Date.now() )/ 1000);
-  console.log(duree_in_sec);
 
   const hours = 0;
   const minutes = Math.trunc( duree_in_sec / 60 );
   const seconds = Math.trunc( duree_in_sec % 60  );
-
-  console.log((hours, minutes, seconds));
 
   const [paused, setPaused] = React.useState(false);
   const [over, setOver] = React.useState(false);
@@ -40,10 +37,11 @@ const CountDown = ({ epoch }) => {
 
   return (
     <div>
-      <p>{`${h.toString().padStart(2, '0')}:${m
+      <p>
+        {`${h.toString().padStart(2, '0')}:${m
         .toString()
-        .padStart(2, '0')}:${s.toString().padStart(2, '0')}`}</p>
-
+        .padStart(2, '0')}:${s.toString().padStart(2, '0')}`}
+      </p>
     </div>
   );
 }

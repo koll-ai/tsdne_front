@@ -100,7 +100,7 @@ export default function ButtonAppBar() {
             </Grid>
 
             <Grid item xs={12} sm={1}>
-              <Link to={'/list'}>
+              <Link to={'/archive'}>
 
                 <Button color="inherit">
                   {/*<Typography variant="h6" className={classes.title}>*/}

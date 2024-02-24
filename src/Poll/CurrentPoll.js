@@ -59,7 +59,7 @@ function LastSCP() {
     }, []);
 
     return (
-        <div dangerouslySetInnerHTML={{ __html: lastSCP }} />
+        <div class="scp-article" dangerouslySetInnerHTML={{ __html: lastSCP }} />
     );
 }
 
@@ -126,26 +126,21 @@ function CurrentPoll() {
     }, [needupdate]);
 
     return (
-        <div>
+        <div className="appbody">
 
-            <div className="greywrap">
+            <div className="">
                 <p className="justifytext">
-                    <h2> What is this website ? </h2>
-                    This website uses artifical intelligence to generate customs SCP from a simple prompt.
-                    Every hour the prompt with the most votes is chosen to create a new SCP. Previous SCPs can be found in the <a href="./list"> archives</a>.
-                    You can vote for your favorite SCP or submit your own description on the poll below. <b>We now have a community <a href="https://discord.gg/WeXkUP6f5H">discord server</a> !</b>
-
-                    <br /><br />
-                    If you're still  lost please check out our <a href="./about">FAQ</a>.
+                    <h4>Every hour a new entity is generated from the prompt most upvoted</h4>
+                    Previous entries can be found in the <a href="./list"> archives</a>, more information take a look at the <a href="./about">FAQ</a>.
+                    <br/>
+                    <b>Join the <a href="https://discord.gg/WeXkUP6f5H">discord server</a> to be alerted when a new entity is created!</b>
                 </p>
             </div>
 
             <br />
 
             <div className="greywrap">
-                <div className="justifytext">
-                    <h2>Current Poll :</h2>
-                </div>
+                <h4>Current poll</h4>
                 <br />
                 <PollList pollingItems={pollingItems} />
                 <br />
@@ -154,13 +149,9 @@ function CurrentPoll() {
 
             <br />
 
-            <div className="greywrap">
-                <div className="justifytext">
-                    <h2>Last SCP :</h2>
-                </div>
+            <h4>Last generated entity:</h4>
 
-                <br /><br />
-
+            <div className="greywrap lastscp-div">
                 <LastSCP className="scpcont" />
             </div>
         </div>
