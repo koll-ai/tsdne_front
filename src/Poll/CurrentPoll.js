@@ -130,10 +130,10 @@ function CurrentPoll() {
 
             <div className="">
                 <p className="justifytext">
-                    <h4>Every hour a new entity is generated from the prompt most upvoted</h4>
-                    Previous entries can be found in the <a href="./list"> archives</a>, more information take a look at the <a href="./about">FAQ</a>.
+                    <h4>Every hour a new entity is generated from the most upvoted prompt</h4>
+                    Previous entries can be found in the <a href="./archive"> archive</a>, more info in the <a href="./about">FAQ</a>.
                     <br/>
-                    <b>Join the <a href="https://discord.gg/WeXkUP6f5H">discord server</a> to be alerted when a new entity is created!</b>
+                    <b>Join our <a href="https://discord.gg/WeXkUP6f5H">discord server</a> to chat and be alerted when a new entity is created!</b>
                 </p>
             </div>
 

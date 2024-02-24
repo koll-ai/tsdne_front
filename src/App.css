@@ -125,6 +125,11 @@ body {
   padding: 10px;
 }
 
+.faq {
+  text-align: left;
+  margin-top: 30px;
+}
+
 .greywrap {
   background-color: #111111;
   color: white;
