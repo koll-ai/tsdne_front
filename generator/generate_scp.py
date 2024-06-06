@@ -67,7 +67,7 @@ with open("../SCP_BDD/" + filename, 'w+') as f:
     f.write(scp)
 f.close()
 
-with open("../SCP_API/Tsde_polling_api/last.txt", 'w+') as f:
+with open("../SCP_API/polling_api/last.txt", 'w+') as f:
     f.write(scp)
 f.close()
 
